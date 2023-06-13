@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: node:18
+    image: node:20
     working_dir: /app
     volumes:
       - .:/app
@@ -10,7 +10,9 @@ services:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://username:password@postgres:5432/mydatabase
-    command: sh -c "npm install -g pnpm && apt update && apt-get install -y chromium && pnpm install && pnpm run start:dev"
+    command: sh -c "npm install -g pnpm && apt update && apt-get install -y chromium && pnpm install && pnpx prisma generate && pnpm run start:dev"
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres
