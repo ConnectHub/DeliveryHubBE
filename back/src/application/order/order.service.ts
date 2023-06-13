@@ -14,15 +14,21 @@ export class OrderService {
     return order;
   }
 
-  async createOrder(order: Order): Promise<Order> {
+  async createOrder(
+    order: Order,
+  ): Promise<Order & { addressee: { phoneNumber: string } }> {
     return await this.orderRepository.create(order);
   }
 
   async deleteOrder(id: string): Promise<void> {
+    const order = await this.orderRepository.findById(id);
+    if (!order) throw new OrderNotFound();
     await this.orderRepository.delete(id);
   }
 
   async updateOrderStatus(orderId: string, status: Status): Promise<Order> {
+    const order = await this.orderRepository.findById(orderId);
+    if (!order) throw new OrderNotFound();
     return await this.orderRepository.updateStatus(orderId, status);
   }
 }

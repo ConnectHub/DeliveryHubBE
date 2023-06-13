@@ -24,8 +24,8 @@ model order {
   status          Status   @default(PENDING)
   sender          String?
   addresseeId     String
-  deletedAt       DateTime @default(now())
   updatedAt       DateTime @default(now()) @updatedAt
+  deletedAt       DateTime
   addressee       resident @relation(fields: [addresseeId], references: [id])
 
   @@map("Order")
@@ -39,8 +39,8 @@ model resident {
   email             String?     @unique
   condominiumId     String
   createdAt         DateTime    @default(now())
-  deletedAt         DateTime    @default(now())
   updatedAt         DateTime    @default(now()) @updatedAt
+  deletedAt         DateTime
   condominium       condominium @relation(fields: [condominiumId], references: [id])
   order             order[]
 
@@ -53,8 +53,10 @@ model condominium {
   login     String     @unique
   password  String
   name      String
-  resident  resident[]
+  createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now()) @updatedAt
+  deletedAt DateTime
+  resident  resident[]
 
   @@map("Condominium")
 }
