@@ -20,41 +20,42 @@ model order {
   id              String   @id @unique @default(uuid())
   url             String   @unique @default(cuid())
   code            String   @unique @default(cuid())
+  receiptDateHour DateTime @default(now())
   status          Status   @default(PENDING)
   sender          String
-  image           String?
-  doormanId       String
   addresseeId     String
-  receiptDateHour DateTime @default(now())
   deletedAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
   addressee       resident @relation(fields: [addresseeId], references: [id])
-  doorman         doorman  @relation(fields: [doormanId], references: [id])
 
-  @@index([addresseeId, doormanId])
+  @@index([addresseeId])
   @@map("Order")
 }
 
 model resident {
-  id                String   @id @unique @default(uuid())
+  id                String      @id @unique @default(uuid())
   name              String
-  buildingApartment String   @unique
+  buildingApartment String      @unique
   phoneNumber       String
-  email             String   @unique
-  createdAt         DateTime @default(now())
-  deletedAt         DateTime @default(now())
+  email             String?     @unique
+  condominiumId     String
+  createdAt         DateTime    @default(now())
+  deletedAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now()) @updatedAt
   orders            order[]
+  condominium       condominium @relation(fields: [condominiumId], references: [id])
 
   @@index([name, buildingApartment])
   @@map("Resident")
 }
 
-model doorman {
-  id        String   @id @unique @default(uuid())
+model condominium {
+  id        String     @id @unique @default(uuid())
+  login     String     @unique
+  password  String
   name      String
-  createdAt DateTime @default(now())
-  deletedAt DateTime @default(now())
-  orders    order[]
+  resident  resident[]
+  updatedAt DateTime   @default(now()) @updatedAt
 
-  @@index([name])
-  @@map("Doorman")
+  @@map("Condominium")
 }
