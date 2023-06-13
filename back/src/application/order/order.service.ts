@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepository } from './repository/order.repository';
 import { Status } from '@prisma/client';
+import { OrderNotFound } from './errors/order-not-found';
 
 @Injectable()
 export class OrderService {
   constructor(private readonly orderRepository: OrderRepository) {}
 
   async findOrderById(id: string): Promise<Order> {
-    return await this.orderRepository.findById(id);
+    const order = await this.orderRepository.findById(id);
+    if (!order) throw new OrderNotFound();
+    return order;
   }
 
   async createOrder(order: Order): Promise<Order> {

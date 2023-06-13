@@ -1,10 +1,16 @@
+import { OnApplicationShutdown } from '@nestjs/common';
 import { create, Whatsapp } from 'venom-bot';
 
-export class VenomBot {
+export class VenomBot implements OnApplicationShutdown {
   client: Whatsapp;
 
   constructor() {
     this.start();
+  }
+
+  async onApplicationShutdown(signal?: string) {
+    console.log('Closing whatsapp client');
+    await this.client.close();
   }
 
   async start() {
