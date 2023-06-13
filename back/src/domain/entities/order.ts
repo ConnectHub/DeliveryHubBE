@@ -1,9 +1,3 @@
-// export enum Status {
-//   PENDING,
-//   DELIVERED,
-//   CANCELED,
-// }
-
 import { Status } from '@prisma/client';
 
 export interface Order {
