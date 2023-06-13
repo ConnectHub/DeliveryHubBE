@@ -19,6 +19,10 @@ export class OrderController {
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
+    await this.notificationService.sendNotification(
+      `Seu produto chegou! acesse o link: https://www.localhost.com/${newOrder.url} para aceitar a entrega!`,
+      '1',
+    );
     return newOrder;
   }
 
