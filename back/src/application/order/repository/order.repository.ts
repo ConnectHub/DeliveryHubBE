@@ -9,9 +9,10 @@ export class OrderRepository implements OrderRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<Order> {
-    const order = await this.prisma.order.findUnique({
+    const order = await this.prisma.order.findFirst({
       where: {
         id,
+        deletedAt: null,
       },
     });
     return order;
@@ -21,6 +22,7 @@ export class OrderRepository implements OrderRepositoryInterface {
     const orders = await this.prisma.order.findMany({
       where: {
         status,
+        deletedAt: null,
       },
     });
     return orders;
@@ -59,9 +61,12 @@ export class OrderRepository implements OrderRepositoryInterface {
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.order.delete({
+    await this.prisma.order.update({
       where: {
         id,
+      },
+      data: {
+        deletedAt: new Date(),
       },
     });
   }

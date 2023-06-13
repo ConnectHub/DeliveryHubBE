@@ -8,10 +8,10 @@ CREATE TABLE "Order" (
     "code" TEXT NOT NULL,
     "receiptDateHour" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "Status" NOT NULL DEFAULT 'PENDING',
-    "sender" TEXT NOT NULL,
+    "sender" TEXT,
     "addresseeId" TEXT NOT NULL,
-    "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deletedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -25,8 +25,8 @@ CREATE TABLE "Resident" (
     "email" TEXT,
     "condominiumId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deletedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Resident_pkey" PRIMARY KEY ("id")
 );
@@ -37,7 +37,9 @@ CREATE TABLE "Condominium" (
     "login" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deletedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Condominium_pkey" PRIMARY KEY ("id")
 );
@@ -50,9 +52,6 @@ CREATE UNIQUE INDEX "Order_url_key" ON "Order"("url");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Order_code_key" ON "Order"("code");
-
--- CreateIndex
-CREATE INDEX "Order_addresseeId_idx" ON "Order"("addresseeId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Resident_id_key" ON "Resident"("id");
