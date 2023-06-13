@@ -42,11 +42,13 @@
 3. Prisma
 4. AWS
 
-## Ganho de experiência:
+## Métricas de sucesso:
+
+**1. Ganho de experiência:**
 
 O projeto proporcionará a oportunidade de trabalhar na construção de um software com uso real, utilizando as mais atualizadas ferramentas do mercado. O objetivo é adquirir conhecimento e experiência prática no desenvolvimento de aplicações, aprendendo a lidar com desafios reais e aplicando as melhores práticas de desenvolvimento de software.
 
-## Trabalho em equipe:
+**2. Trabalho em equipe:**
 
 O projeto oferecerá a oportunidade de trabalhar em equipe, aplicando técnicas modernas, como Scrum Master e Kanban. A colaboração em equipe permitirá a troca de conhecimento e experiências entre os membros, além de promover a comunicação eficiente, a coordenação de esforços e o trabalho em sinergia para alcançar os objetivos do projeto.
 
