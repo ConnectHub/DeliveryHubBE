@@ -2,8 +2,8 @@ import { Order, Status } from '../entities/order';
 
 export interface OrderRepositoryInterface {
   findById(id: string): Promise<Order | null>;
-  findByRecipient(recipient: string): Promise<Order[]>;
+  findByRecipient(status: Status): Promise<Order[]>;
   create(order: Order): Promise<Order>;
-  update(status: Status): Promise<Order>;
+  updateStatus(id: string, status: Status): Promise<Order>;
   delete(id: string): Promise<void>;
 }

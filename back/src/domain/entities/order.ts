@@ -10,8 +10,10 @@ export interface Order {
   code?: string;
   status?: Status;
   sender: string;
-  doormanId: string;
-  addresseeId: string;
+  // addresseeId: string;
   receiptDateHour?: Date;
   deletedAt?: Date;
+  addressee?: {
+    phoneNumber: string;
+  };
 }

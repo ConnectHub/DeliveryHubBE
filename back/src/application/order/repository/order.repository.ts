@@ -15,23 +15,40 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
     return order as Order;
   }
-  findByRecipient(recipient: string): Promise<Order[]> {
-    throw new Error('Method not implemented.');
-  }
-  async create(order: Order): Promise<Order> {
-    const { status, ...rest } = order;
-    const newOrder = await this.prisma.order.create({
-      data: {
-        ...rest,
-        status: status,
+
+  async findByRecipient(status: Status): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      where: {
+        status,
       },
+    });
+    return orders as Order[];
+  }
+
+  async create(order: Order): Promise<Order> {
+    const newOrder = await this.prisma.order.create({
+      data: order,
     });
     return newOrder as Order;
   }
-  update(status: Status): Promise<Order> {
-    throw new Error('Method not implemented.');
+
+  async updateStatus(id: string, status: Status): Promise<Order> {
+    const order = await this.prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+    return order as Order;
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.order.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

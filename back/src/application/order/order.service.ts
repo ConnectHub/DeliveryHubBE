@@ -18,7 +18,7 @@ export class OrderService {
     await this.orderRepository.delete(id);
   }
 
-  async updateOrderStatus(status: Status): Promise<Order> {
-    return await this.orderRepository.update(status);
+  async updateOrderStatus(orderId: string, status: Status): Promise<Order> {
+    return await this.orderRepository.updateStatus(orderId, status);
   }
 }

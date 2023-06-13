@@ -23,12 +23,10 @@ model order {
   receiptDateHour DateTime @default(now())
   status          Status   @default(PENDING)
   sender          String
-  addresseeId     String
   deletedAt       DateTime @default(now())
   updatedAt       DateTime @default(now()) @updatedAt
-  addressee       resident @relation(fields: [addresseeId], references: [id])
 
-  @@index([addresseeId])
+  // @@index([addresseeId])
   @@map("Order")
 }
 
@@ -42,7 +40,6 @@ model resident {
   createdAt         DateTime    @default(now())
   deletedAt         DateTime    @default(now())
   updatedAt         DateTime    @default(now()) @updatedAt
-  orders            order[]
   condominium       condominium @relation(fields: [condominiumId], references: [id])
 
   @@index([name, buildingApartment])
