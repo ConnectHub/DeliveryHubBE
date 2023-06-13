@@ -26,12 +26,21 @@ export class OrderRepository implements OrderRepositoryInterface {
     return orders;
   }
 
-  async create(order: Order): Promise<Order> {
+  async create(
+    order: Order,
+  ): Promise<Order & { addressee: { phoneNumber: string } }> {
     const { status, ...rest } = order;
     const newOrder = await this.prisma.order.create({
       data: {
         status: status,
         ...rest,
+      },
+      include: {
+        addressee: {
+          select: {
+            phoneNumber: true,
+          },
+        },
       },
     });
     return newOrder;

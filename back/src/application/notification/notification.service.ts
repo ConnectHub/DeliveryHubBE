@@ -5,7 +5,20 @@ import { VenomBot } from 'src/infra/whatsapp/venom-bot';
 export class NotificationService {
   constructor(private readonly whatsapp: VenomBot) {}
 
-  async sendNotification(message: string, resident: string): Promise<void> {
+  private async sendNotification(
+    message: string,
+    resident: string,
+  ): Promise<void> {
     await this.whatsapp.sendMessage(message, resident);
+  }
+
+  async sendOrderNotification(
+    orderId: string,
+    phoneNumber: string,
+  ): Promise<void> {
+    await this.sendNotification(
+      `order created ${orderId} \n access http://localhost.com/order/${orderId}`,
+      phoneNumber,
+    );
   }
 }
