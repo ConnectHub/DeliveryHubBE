@@ -25,6 +25,7 @@ model order {
   sender          String
   addresseeId     String
   deletedAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
   addressee       resident @relation(fields: [addresseeId], references: [id])
 
   @@index([addresseeId])
@@ -40,6 +41,7 @@ model resident {
   condominiumId     String
   createdAt         DateTime    @default(now())
   deletedAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now()) @updatedAt
   orders            order[]
   condominium       condominium @relation(fields: [condominiumId], references: [id])
 
@@ -48,11 +50,12 @@ model resident {
 }
 
 model condominium {
-  id       String     @id @unique @default(uuid())
-  login    String     @unique
-  password String
-  name     String
-  resident resident[]
+  id        String     @id @unique @default(uuid())
+  login     String     @unique
+  password  String
+  name      String
+  resident  resident[]
+  updatedAt DateTime   @default(now()) @updatedAt
 
   @@map("Condominium")
 }
