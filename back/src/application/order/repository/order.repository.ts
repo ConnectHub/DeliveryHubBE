@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Order, Status } from 'src/domain/entities/order';
+import { Status } from '@prisma/client';
+import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
 import { PrismaService } from 'src/infra/prisma/prisma.service';
 
@@ -13,25 +14,46 @@ export class OrderRepository implements OrderRepositoryInterface {
         id,
       },
     });
-    return order as Order;
+    return order;
   }
-  findByRecipient(recipient: string): Promise<Order[]> {
-    throw new Error('Method not implemented.');
+
+  async findByRecipient(status: Status): Promise<Order[]> {
+    const orders = await this.prisma.order.findMany({
+      where: {
+        status,
+      },
+    });
+    return orders;
   }
+
   async create(order: Order): Promise<Order> {
     const { status, ...rest } = order;
     const newOrder = await this.prisma.order.create({
       data: {
-        ...rest,
         status: status,
+        ...rest,
       },
     });
-    return newOrder as Order;
+    return newOrder;
   }
-  update(status: Status): Promise<Order> {
-    throw new Error('Method not implemented.');
+
+  async updateStatus(id: string, status: Status): Promise<Order> {
+    const order = await this.prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+    });
+    return order;
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.order.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

@@ -6,12 +6,12 @@ CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "code" TEXT NOT NULL,
-    "status" "Status" NOT NULL,
-    "sender" TEXT NOT NULL,
-    "doormanId" TEXT NOT NULL,
-    "addresseeId" TEXT NOT NULL,
     "receiptDateHour" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" "Status" NOT NULL DEFAULT 'PENDING',
+    "sender" TEXT NOT NULL,
+    "addresseeId" TEXT NOT NULL,
     "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
@@ -22,21 +22,24 @@ CREATE TABLE "Resident" (
     "name" TEXT NOT NULL,
     "buildingApartment" TEXT NOT NULL,
     "phoneNumber" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "email" TEXT,
+    "condominiumId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Resident_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Doorman" (
+CREATE TABLE "Condominium" (
     "id" TEXT NOT NULL,
+    "login" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deletedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Doorman_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Condominium_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -49,7 +52,7 @@ CREATE UNIQUE INDEX "Order_url_key" ON "Order"("url");
 CREATE UNIQUE INDEX "Order_code_key" ON "Order"("code");
 
 -- CreateIndex
-CREATE INDEX "Order_addresseeId_doormanId_idx" ON "Order"("addresseeId", "doormanId");
+CREATE INDEX "Order_addresseeId_idx" ON "Order"("addresseeId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Resident_id_key" ON "Resident"("id");
@@ -64,13 +67,13 @@ CREATE UNIQUE INDEX "Resident_email_key" ON "Resident"("email");
 CREATE INDEX "Resident_name_buildingApartment_idx" ON "Resident"("name", "buildingApartment");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Doorman_id_key" ON "Doorman"("id");
+CREATE UNIQUE INDEX "Condominium_id_key" ON "Condominium"("id");
 
 -- CreateIndex
-CREATE INDEX "Doorman_name_idx" ON "Doorman"("name");
+CREATE UNIQUE INDEX "Condominium_login_key" ON "Condominium"("login");
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_addresseeId_fkey" FOREIGN KEY ("addresseeId") REFERENCES "Resident"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_doormanId_fkey" FOREIGN KEY ("doormanId") REFERENCES "Doorman"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Resident" ADD CONSTRAINT "Resident_condominiumId_fkey" FOREIGN KEY ("condominiumId") REFERENCES "Condominium"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

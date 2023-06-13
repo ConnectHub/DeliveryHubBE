@@ -19,10 +19,9 @@ export class OrderController {
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
-    const userNumber = '5581989982133@c.us';
     await this.notificationService.sendNotification(
       `Seu produto chegou! acesse o link: https://www.localhost.com/${newOrder.url} para aceitar a entrega!`,
-      userNumber,
+      '1',
     );
     return newOrder;
   }
@@ -34,7 +33,7 @@ export class OrderController {
 
   @Post('update/status')
   async update(@Body() order: UpdateOrderDto) {
-    const { status } = order;
-    return await this.orderService.updateOrderStatus(status);
+    const { status, orderId } = order;
+    return await this.orderService.updateOrderStatus(orderId, status);
   }
 }
