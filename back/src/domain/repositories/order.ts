@@ -1,4 +1,5 @@
-import { Order, Status } from '../entities/order';
+import { Status } from '@prisma/client';
+import { Order } from '../entities/order';
 
 export interface OrderRepositoryInterface {
   findById(id: string): Promise<Order | null>;

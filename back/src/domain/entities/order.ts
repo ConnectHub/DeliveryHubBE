@@ -1,8 +1,10 @@
-export enum Status {
-  PENDING = 'PENDING',
-  DELIVERED = 'DELIVERED',
-  CANCELED = 'CANCELED',
-}
+// export enum Status {
+//   PENDING,
+//   DELIVERED,
+//   CANCELED,
+// }
+
+import { Status } from '@prisma/client';
 
 export interface Order {
   id?: string;
@@ -10,10 +12,7 @@ export interface Order {
   code?: string;
   status?: Status;
   sender: string;
-  // addresseeId: string;
+  addresseeId: string;
   receiptDateHour?: Date;
   deletedAt?: Date;
-  addressee?: {
-    phoneNumber: string;
-  };
 }
