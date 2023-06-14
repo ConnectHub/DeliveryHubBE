@@ -15,4 +15,8 @@ export class ResidentService {
   async listAllResidents(): Promise<Resident[]> {
     return await this.residentRepository.list();
   }
+
+  async deleteResident(id: string): Promise<void> {
+    return await this.residentRepository.delete(id);
+  }
 }
