@@ -18,11 +18,13 @@ export class CreateResidentDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(3, 20)
   phoneNumber: string;
 
   @IsString()
   @IsEmail()
   @IsOptional()
+  @Length(3, 30)
   email?: string;
 
   @IsNotEmpty()
