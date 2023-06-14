@@ -9,7 +9,6 @@ export class ResidentService {
 
   async createResident(resident: Resident): Promise<Resident> {
     resident.phoneNumber = NumberFormat.format(resident.phoneNumber);
-
     return await this.residentRepository.create(resident);
   }
 }
