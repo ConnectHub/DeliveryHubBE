@@ -17,6 +17,13 @@ export class ResidentController {
     const allResidents = await this.residentService.listAllResidents();
     return allResidents;
   }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    const allResidents = await this.residentService.findById(id);
+    return allResidents;
+  }
+
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return await this.residentService.deleteResident(id);
