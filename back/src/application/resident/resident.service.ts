@@ -12,12 +12,17 @@ export class ResidentService {
     resident.phoneNumber = NumberFormat.format(resident.phoneNumber);
     return await this.residentRepository.create(resident);
   }
+  
+  async findResident(resident: Resident) {
+    return await this.residentRepository.findResident(resident);
+  }
 
   async listAllResidents(): Promise<Resident[]> {
     return await this.residentRepository.list();
   }
 
   async deleteResident(id: string): Promise<void> {
+    await this.findById(id);
     return await this.residentRepository.delete(id);
   }
 
