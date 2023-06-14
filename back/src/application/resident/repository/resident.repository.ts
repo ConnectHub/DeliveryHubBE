@@ -15,15 +15,39 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async list(): Promise<Resident[]> {
-    throw new Error('Method not implemented.');
+    return await this.prisma.resident.findMany();
   }
 
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.prisma.resident.update({
+      data: {
+        deletedAt: new Date(),
+      },
+      where: {
+        id,
+      },
+    });
   }
+
+  async findResident(resident: Resident): Promise<Resident> {
+    const { phoneNumber, ...rest } = resident;
+    return await this.prisma.resident.findFirst({
+      where: rest,
+    });
+  }
+
   update(resident: Resident): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
+
+  async findById(id: string): Promise<Resident> {
+    return await this.prisma.resident.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   findByPhoneNumber(phoneNumber: string): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
