@@ -1,14 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ResidentService } from './resident.service';
 import { CreateResidentDto } from './dto/create-resident.dto';
 
 @Controller('resident')
 export class ResidentController {
   constructor(private readonly residentService: ResidentService) {}
-  @Get()
-  test(): string {
-    return 'Rota de resident, método GET: OK!';
-  }
 
   @Post('create')
   async create(@Body() resident: CreateResidentDto) {
@@ -20,5 +16,9 @@ export class ResidentController {
   async list() {
     const allResidents = await this.residentService.listAllResidents();
     return allResidents;
+  }
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return await this.residentService.deleteResident(id);
   }
 }
