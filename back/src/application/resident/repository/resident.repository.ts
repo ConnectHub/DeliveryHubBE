@@ -30,8 +30,9 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async findResident(resident: Resident): Promise<Resident> {
+    const { phoneNumber, ...rest } = resident;
     return await this.prisma.resident.findFirst({
-      where: resident,
+      where: rest,
     });
   }
 

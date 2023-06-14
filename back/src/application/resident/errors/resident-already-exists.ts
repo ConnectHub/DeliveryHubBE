@@ -2,6 +2,6 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ResidentAlreadyExist extends HttpException {
   constructor() {
-    super('Resident not found', HttpStatus.CONFLICT);
+    super('Resident already exist!', HttpStatus.CONFLICT);
   }
 }
