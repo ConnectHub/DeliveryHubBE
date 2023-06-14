@@ -8,15 +8,11 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(resident: Resident): Promise<Resident> {
-
     const newResident = await this.prisma.resident.create({
-      data:
-        resident
-      
-    })
+      data: resident,
+    });
     return newResident;
   }
-
 
   async list(): Promise<Resident[]> {
     throw new Error('Method not implemented.');
