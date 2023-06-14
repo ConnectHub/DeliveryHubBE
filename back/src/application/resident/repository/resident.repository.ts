@@ -19,9 +19,17 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     return allResidents;
   }
 
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await this.prisma.resident.update({
+      data: {
+        deletedAt: new Date(),
+      },
+      where: {
+        id,
+      },
+    });
   }
+
   update(resident: Resident): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
