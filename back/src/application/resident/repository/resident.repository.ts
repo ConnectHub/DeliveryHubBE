@@ -29,6 +29,12 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     });
   }
 
+  async findResident(resident: Resident): Promise<Resident> {
+    return await this.prisma.resident.findFirst({
+      where: resident,
+    });
+  }
+
   update(resident: Resident): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
