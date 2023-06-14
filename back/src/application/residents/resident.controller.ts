@@ -15,4 +15,10 @@ export class ResidentController {
     const newResident = await this.residentService.createResident(resident);
     return newResident;
   }
+
+  @Get('list')
+  async list() {
+    const allResidents = await this.residentService.listAllResidents();
+    return allResidents;
+  }
 }
