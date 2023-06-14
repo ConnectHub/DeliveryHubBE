@@ -11,4 +11,8 @@ export class ResidentService {
     resident.phoneNumber = NumberFormat.format(resident.phoneNumber);
     return await this.residentRepository.create(resident);
   }
+
+  async listAllResidents(): Promise<Resident[]> {
+    return await this.residentRepository.list();
+  }
 }
