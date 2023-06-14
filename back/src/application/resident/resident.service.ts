@@ -35,4 +35,9 @@ export class ResidentService {
     if (!resident) throw new ResidentNotFound();
     return resident;
   }
+
+  async updateResidentInfos(id: string, residentInfos: Resident): Promise<Resident> {
+    await this.findById(id);
+    return await this.residentRepository.update(id, residentInfos);
+  }
 }
