@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ResidentRepository } from './repository/resident.repository';
 import { Resident } from 'src/domain/entities/resident';
 import { NumberFormat } from './helpers/number-format';
+import { ResidentNotFound } from './errors/resident-not-found';
 
 @Injectable()
 export class ResidentService {
@@ -18,5 +19,11 @@ export class ResidentService {
 
   async deleteResident(id: string): Promise<void> {
     return await this.residentRepository.delete(id);
+  }
+
+  async findById(id: string): Promise<Resident> {
+    const resident = await this.residentRepository.findById(id);
+    if (!resident) throw new ResidentNotFound();
+    return resident;
   }
 }
