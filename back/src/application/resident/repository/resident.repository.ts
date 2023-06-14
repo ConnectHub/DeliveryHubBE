@@ -15,8 +15,7 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async list(): Promise<Resident[]> {
-    const allResidents = await this.prisma.resident.findMany();
-    return allResidents;
+    return await this.prisma.resident.findMany();
   }
 
   async delete(id: string): Promise<void> {
@@ -33,6 +32,15 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   update(resident: Resident): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
+
+  async findById(id: string): Promise<Resident> {
+    return await this.prisma.resident.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   findByPhoneNumber(phoneNumber: string): Promise<Resident> {
     throw new Error('Method not implemented.');
   }
