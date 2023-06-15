@@ -19,10 +19,15 @@ export class ResidentController {
     return allResidents;
   }
 
-  @Get(':id')
+  @Get('resident/:id')
   async findById(@Param('id') id: string) {
     const allResidents = await this.residentService.findById(id);
     return allResidents;
+  }
+
+  @Get('phone/:residentPhone')
+  async findByPhoneNumber(@Param('residentPhone') residentPhone: string) {
+    return await this.residentService.findByPhoneNumber(residentPhone);
   }
 
   @Delete(':id')
