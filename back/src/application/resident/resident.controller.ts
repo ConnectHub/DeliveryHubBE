@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ResidentService } from './resident.service';
 import { CreateResidentDto } from './dto/create-resident.dto';
+import { UpdateResidentDto } from './dto/update-resident.dto';
 
 @Controller('resident')
 export class ResidentController {
@@ -27,5 +28,10 @@ export class ResidentController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return await this.residentService.deleteResident(id);
+  }
+
+  @Post('/update/')
+  async update(@Body() residentInfos: UpdateResidentDto) {
+    return await this.residentService.updateResidentInfos(residentInfos);
   }
 }
