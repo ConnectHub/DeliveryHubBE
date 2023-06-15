@@ -2,7 +2,7 @@ import { Resident } from '../entities/resident';
 export interface ResidentRepositoryInterface {
   create(resident: Resident): Promise<Resident>;
   delete(id: string): Promise<void>;
-  update(id: string, resident: Resident): Promise<Resident>;
+  update(resident: Resident): Promise<Resident>;
   list(): Promise<Resident[]>;
   findById(id: string): Promise<Resident>;
   findByPhoneNumber(phoneNumber: string): Promise<Resident>;

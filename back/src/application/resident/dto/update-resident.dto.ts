@@ -3,10 +3,15 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
 } from 'class-validator';
 
 export class UpdateResidentDto {
+  @IsNotEmpty()
+  @IsUUID()
+  id: string;
+
   @IsNotEmpty()
   @IsString()
   @Length(3, 40)

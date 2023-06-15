@@ -2,6 +2,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsOptional,
+  IsPhoneNumber,
   IsString,
   Length,
 } from 'class-validator';
@@ -18,13 +19,12 @@ export class CreateResidentDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(3, 20)
+  @IsPhoneNumber('BR')
   phoneNumber: string;
 
   @IsString()
   @IsEmail()
   @IsOptional()
-  @Length(3, 30)
   email?: string;
 
   @IsNotEmpty()

@@ -36,12 +36,13 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     });
   }
 
-  update(id: string, resident: Resident): Promise<Resident> {
-    return this.prisma.resident.update({
+  async update(resident: Resident): Promise<Resident> {
+    const { id, ...rest } = resident;
+    return await this.prisma.resident.update({
       where: {
         id,
       },
-      data: resident,
+      data: rest,
     });
   }
 
