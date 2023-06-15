@@ -45,6 +45,13 @@ export class ResidentService {
     return await this.residentRepository.update(residentInfos);
   }
 
+  async findByPhoneNumber(residentPhone: string): Promise<Resident> {
+    residentPhone = this.formatPhoneNumber(residentPhone);
+    const prevResident = await this.residentRepository.findByPhoneNumber(residentPhone);
+    if(!prevResident)throw new ResidentNotFound() 
+    return prevResident;
+  }
+
   private formatPhoneNumber(phoneNumber: string): string {
     return NumberFormat.format(phoneNumber);
   }
