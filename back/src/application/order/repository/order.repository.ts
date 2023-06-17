@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Status } from '@prisma/client';
+import { Status, order } from '@prisma/client';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
 import { PrismaService } from 'src/infra/prisma/prisma.service';
@@ -28,21 +28,14 @@ export class OrderRepository implements OrderRepositoryInterface {
     return orders;
   }
 
-  async create(
-    order: Order,
-  ): Promise<Order & { addressee: { phoneNumber: string } }> {
-    const { status, ...rest } = order;
+  async create(order: Order): Promise<Order> {
+    const { addressee, ...rest } = order;
     const newOrder = await this.prisma.order.create({
       data: {
-        status: status,
         ...rest,
       },
       include: {
-        addressee: {
-          select: {
-            phoneNumber: true,
-          },
-        },
+        addressee: true,
       },
     });
     return newOrder;

@@ -8,7 +8,7 @@ export class VenomBot implements OnApplicationShutdown {
     this.start();
   }
 
-  async onApplicationShutdown(signal?: string) {
+  async onApplicationShutdown() {
     console.log('Closing whatsapp client');
     await this.client.close();
   }
@@ -16,6 +16,10 @@ export class VenomBot implements OnApplicationShutdown {
   async start() {
     this.client = await create({
       session: 'session',
+      headless: true,
+      puppeteerOptions: {
+        ignoreDefaultArgs: ['--disable-extensions'],
+      },
     });
   }
 

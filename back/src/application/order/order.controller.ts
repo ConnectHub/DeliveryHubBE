@@ -20,7 +20,7 @@ export class OrderController {
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
     await this.notificationService.sendOrderNotification(
-      newOrder.id,
+      newOrder.url,
       newOrder.addressee.phoneNumber,
     );
     return newOrder;

@@ -19,14 +19,14 @@ enum Status {
 model order {
   id              String    @id @unique @default(uuid())
   url             String    @unique @default(cuid())
-  code            String    @unique @default(cuid())
+  code            String
   status          Status    @default(PENDING)
   sender          String?
-  addresseeId     String
   receiptDateHour DateTime  @default(now())
   updatedAt       DateTime  @default(now()) @updatedAt
   deletedAt       DateTime?
   addressee       resident  @relation(fields: [addresseeId], references: [id])
+  addresseeId     String
 
   @@map("Order")
 }

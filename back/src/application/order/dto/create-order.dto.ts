@@ -8,4 +8,6 @@ export class CreateOrderDto {
   @IsNotEmpty()
   @IsString()
   addresseeId: string;
+
+  code: string;
 }

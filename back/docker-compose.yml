@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://username:password@postgres:5432/mydatabase
-    command: sh -c "npm install -g pnpm && apt update && apt-get install -y chromium && pnpm install && pnpx prisma generate && pnpm run start:dev"
+    command: sh -c "npm install -g pnpm && apt update && apt-get install -y chromium && pnpx prisma generate && pnpm run start:dev"
     depends_on:
       - postgres
 

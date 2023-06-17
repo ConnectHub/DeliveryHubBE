@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { VenomBot } from 'src/infra/whatsapp/venom-bot';
+import { NotificationTemplate } from './templates/notification-messsage-template';
 
 @Injectable()
 export class NotificationService {
@@ -17,7 +18,7 @@ export class NotificationService {
     phoneNumber: string,
   ): Promise<void> {
     await this.sendNotification(
-      `order created ${orderId} \n access http://localhost.com/order/${orderId}`,
+      new NotificationTemplate().orderCreated(orderId),
       phoneNumber,
     );
   }
