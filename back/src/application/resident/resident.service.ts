@@ -4,6 +4,7 @@ import { Resident } from 'src/domain/entities/resident';
 import { NumberFormat } from './helpers/number-format';
 import { ResidentNotFound } from './errors/resident-not-found';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
+import { FindByDataDto } from './dto/find-by-infos.dto';
 
 @Injectable()
 export class ResidentService {
@@ -39,17 +40,15 @@ export class ResidentService {
   async updateResidentInfos(residentInfos: Resident): Promise<Resident> {
     const { id, ...rest } = residentInfos;
     await this.findById(id);
-
     if (rest.phoneNumber)
       rest.phoneNumber = this.formatPhoneNumber(rest.phoneNumber);
     return await this.residentRepository.update(residentInfos);
   }
 
-  async findByPhoneNumber(residentPhone: string): Promise<Resident> {
-    residentPhone = this.formatPhoneNumber(residentPhone);
-    const prevResident = await this.residentRepository.findByPhoneNumber(residentPhone);
-    if(!prevResident)throw new ResidentNotFound() 
-    return prevResident;
+  async findByData(data: Resident): Promise<Resident> {
+    if (data.phoneNumber)
+      data.phoneNumber = this.formatPhoneNumber(data.phoneNumber);
+    return await this.residentRepository.findByInfos(data);
   }
 
   private formatPhoneNumber(phoneNumber: string): string {

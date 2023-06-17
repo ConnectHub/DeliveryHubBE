@@ -54,17 +54,10 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     });
   }
 
-  async findByPhoneNumber(phoneNumber: string): Promise<Resident> {
+  async findByInfos(data: Resident): Promise<Resident> {
+    console.log(data);
     return await this.prisma.resident.findFirst({
-      where: {
-        phoneNumber,
-      },
+      where: data,
     });
-  }
-  findByName(name: string): Promise<Resident> {
-    throw new Error('Method not implemented.');
-  }
-  findByBuildingApartment(name: string): Promise<Resident> {
-    throw new Error('Method not implemented.');
   }
 }
