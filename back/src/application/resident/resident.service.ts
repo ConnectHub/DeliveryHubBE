@@ -4,7 +4,6 @@ import { Resident } from 'src/domain/entities/resident';
 import { NumberFormat } from './helpers/number-format';
 import { ResidentNotFound } from './errors/resident-not-found';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
-import { FindByDataDto } from './dto/find-by-infos.dto';
 
 @Injectable()
 export class ResidentService {

@@ -55,7 +55,6 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async findByInfos(data: Resident): Promise<Resident> {
-    console.log(data);
     return await this.prisma.resident.findFirst({
       where: data,
     });
