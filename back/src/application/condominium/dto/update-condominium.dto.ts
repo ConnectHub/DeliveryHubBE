@@ -1,17 +1,26 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
-export class CreateCondominiumDto {
+export class UpdateCondominiumDto {
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @Length(3, 30)
   @IsEmail()
   login: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @Length(5)
   password: string;
 
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   @Length(3, 30)

@@ -12,13 +12,27 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
     });
     return newCondominium;
   }
-  update(condominium: Condominium): Promise<Condominium> {
-    throw new Error('Method not implemented.');
+  async update(condominium: Condominium): Promise<Condominium> {
+    const { id, ...rest } = condominium;
+    return await this.prisma.condominium.update({
+      where: {
+        id,
+      },
+      data: rest,
+    });
   }
   delete(id: string): Promise<Condominium> {
     throw new Error('Method not implemented.');
   }
   list(): Promise<Condominium[]> {
     throw new Error('Method not implemented.');
+  }
+
+  async findById(id: string): Promise<Condominium> {
+    return await this.prisma.condominium.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 }
