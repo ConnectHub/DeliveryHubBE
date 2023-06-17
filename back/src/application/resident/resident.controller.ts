@@ -44,7 +44,7 @@ export class ResidentController {
     await this.residentService.deleteResident(id);
   }
 
-  @Post('/update')
+  @Post('update')
   async update(@Body() residentInfos: UpdateResidentDto) {
     return await this.residentService.updateResidentInfos(residentInfos);
   }
