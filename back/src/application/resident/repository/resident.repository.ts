@@ -8,10 +8,9 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(resident: Resident): Promise<Resident> {
-    const newResident = await this.prisma.resident.create({
+    return await this.prisma.resident.create({
       data: resident,
     });
-    return newResident;
   }
 
   async list(): Promise<Resident[]> {
