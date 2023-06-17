@@ -39,10 +39,15 @@ export class ResidentService {
   async updateResidentInfos(residentInfos: Resident): Promise<Resident> {
     const { id, ...rest } = residentInfos;
     await this.findById(id);
-
     if (rest.phoneNumber)
       rest.phoneNumber = this.formatPhoneNumber(rest.phoneNumber);
     return await this.residentRepository.update(residentInfos);
+  }
+
+  async findByData(data: Resident): Promise<Resident> {
+    if (data.phoneNumber)
+      data.phoneNumber = this.formatPhoneNumber(data.phoneNumber);
+    return await this.residentRepository.findByInfos(data);
   }
 
   private formatPhoneNumber(phoneNumber: string): string {

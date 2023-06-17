@@ -8,10 +8,9 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(resident: Resident): Promise<Resident> {
-    const newResident = await this.prisma.resident.create({
+    return await this.prisma.resident.create({
       data: resident,
     });
-    return newResident;
   }
 
   async list(): Promise<Resident[]> {
@@ -54,13 +53,9 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     });
   }
 
-  findByPhoneNumber(phoneNumber: string): Promise<Resident> {
-    throw new Error('Method not implemented.');
-  }
-  findByName(name: string): Promise<Resident> {
-    throw new Error('Method not implemented.');
-  }
-  findByBuildingApartment(name: string): Promise<Resident> {
-    throw new Error('Method not implemented.');
+  async findByInfos(data: Resident): Promise<Resident> {
+    return await this.prisma.resident.findFirst({
+      where: data,
+    });
   }
 }
