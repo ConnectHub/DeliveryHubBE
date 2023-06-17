@@ -5,7 +5,5 @@ export interface ResidentRepositoryInterface {
   update(resident: Resident): Promise<Resident>;
   list(): Promise<Resident[]>;
   findById(id: string): Promise<Resident>;
-  findByPhoneNumber(phoneNumber: string): Promise<Resident>;
-  findByName(name: string): Promise<Resident>;
-  findByBuildingApartment(name: string): Promise<Resident>;
+  findByInfos(data: Resident): Promise<Resident>;
 }

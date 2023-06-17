@@ -11,7 +11,7 @@ export class ResidentService {
 
   async createResident(resident: Resident): Promise<Resident> {
     await this.findResident(resident);
-    resident.phoneNumber = NumberFormat.format(resident.phoneNumber);
+    resident.phoneNumber = this.formatPhoneNumber(resident.phoneNumber);
     return await this.residentRepository.create(resident);
   }
 
@@ -27,12 +27,30 @@ export class ResidentService {
 
   async deleteResident(id: string): Promise<void> {
     await this.findById(id);
-    return await this.residentRepository.delete(id);
+    await this.residentRepository.delete(id);
   }
 
   async findById(id: string): Promise<Resident> {
     const resident = await this.residentRepository.findById(id);
     if (!resident) throw new ResidentNotFound();
     return resident;
+  }
+
+  async updateResidentInfos(residentInfos: Resident): Promise<Resident> {
+    const { id, ...rest } = residentInfos;
+    await this.findById(id);
+    if (rest.phoneNumber)
+      rest.phoneNumber = this.formatPhoneNumber(rest.phoneNumber);
+    return await this.residentRepository.update(residentInfos);
+  }
+
+  async findByData(data: Resident): Promise<Resident> {
+    if (data.phoneNumber)
+      data.phoneNumber = this.formatPhoneNumber(data.phoneNumber);
+    return await this.residentRepository.findByInfos(data);
+  }
+
+  private formatPhoneNumber(phoneNumber: string): string {
+    return NumberFormat.format(phoneNumber);
   }
 }
