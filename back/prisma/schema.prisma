@@ -60,3 +60,15 @@ model condominium {
 
   @@map("Condominium")
 }
+
+model inboxMessageErrors {
+  id        String    @id @unique @default(uuid())
+  orderId   String
+  message   String
+  error     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+
+  @@map("InboxMessageErrors")
+}

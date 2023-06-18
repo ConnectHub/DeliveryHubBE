@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { VenomBot } from 'src/infra/whatsapp/venom-bot';
 import { NotificationTemplate } from './templates/notification-messsage-template';
+import { NotificationErrorRepository } from './repository/notification-errors-repository';
 
 @Injectable()
 export class NotificationService {
-  constructor(private readonly whatsapp: VenomBot) {}
+  constructor(
+    private readonly whatsapp: VenomBot,
+    private readonly notificationErrorRepository: NotificationErrorRepository,
+  ) {}
 
   private async sendNotification(
     message: string,
@@ -21,5 +25,13 @@ export class NotificationService {
       new NotificationTemplate().orderCreated(orderId),
       phoneNumber,
     );
+  }
+
+  async createNotificationError(
+    message: string,
+    orderId: string,
+    error: Error,
+  ): Promise<void> {
+    await this.notificationErrorRepository.create(message, orderId, error);
   }
 }

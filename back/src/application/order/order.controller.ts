@@ -3,10 +3,13 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { NotificationService } from '../notification/notification.service';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 @Controller('order')
 export class OrderController {
   constructor(
+    @InjectQueue('notification') private notificationQueue: Queue,
     private readonly orderService: OrderService,
     private readonly notificationService: NotificationService,
   ) {}
@@ -19,9 +22,13 @@ export class OrderController {
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
-    await this.notificationService.sendOrderNotification(
-      newOrder.url,
-      newOrder.addressee.phoneNumber,
+    await this.notificationQueue.add(
+      'order.created',
+      {
+        orderId: newOrder.url,
+        phoneNumber: newOrder.addressee.phoneNumber,
+      },
+      { delay: 5000, attempts: 3, removeOnComplete: true, removeOnFail: true },
     );
     return newOrder;
   }

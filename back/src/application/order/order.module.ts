@@ -4,9 +4,16 @@ import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
 import { OrderRepository } from './repository/order.repository';
 import { NotificationModule } from '../notification/notification.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
-  imports: [PrismaModule, NotificationModule],
+  imports: [
+    BullModule.registerQueue({
+      name: 'notification',
+    }),
+    PrismaModule,
+    NotificationModule,
+  ],
   controllers: [OrderController],
   providers: [OrderService, OrderRepository],
 })
