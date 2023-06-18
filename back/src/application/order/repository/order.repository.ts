@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Status, order } from '@prisma/client';
+import { Status } from '@prisma/client';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
 import { PrismaService } from 'src/infra/prisma/prisma.service';
@@ -60,6 +60,14 @@ export class OrderRepository implements OrderRepositoryInterface {
       },
       data: {
         deletedAt: new Date(),
+      },
+    });
+  }
+
+  async findOrders(): Promise<Order[]> {
+    return await this.prisma.order.findMany({
+      where: {
+        deletedAt: null,
       },
     });
   }

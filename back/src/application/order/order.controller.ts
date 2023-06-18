@@ -1,8 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { NotificationService } from '../notification/notification.service';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { OrderViewModel } from './view-model/order-view-model';
@@ -12,12 +19,17 @@ export class OrderController {
   constructor(
     @InjectQueue('notification') private notificationQueue: Queue,
     private readonly orderService: OrderService,
-    private readonly notificationService: NotificationService,
   ) {}
 
   @Get(':id')
-  async findById(@Param('id') id: string) {
+  async findById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.orderService.findOrderById(id);
+  }
+
+  @Get('list/recipient')
+  async findByRecipient() {
+    const orders = await this.orderService.findOrders();
+    return orders.map(OrderViewModel.toHttp);
   }
 
   @Post('create')
@@ -35,7 +47,7 @@ export class OrderController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', ParseUUIDPipe) id: string) {
     return await this.orderService.deleteOrder(id);
   }
 

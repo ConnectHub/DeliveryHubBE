@@ -31,4 +31,8 @@ export class OrderService {
     if (!order) throw new OrderNotFound();
     return await this.orderRepository.updateStatus(orderId, status);
   }
+
+  async findOrders(): Promise<Order[]> {
+    return await this.orderRepository.findOrders();
+  }
 }
