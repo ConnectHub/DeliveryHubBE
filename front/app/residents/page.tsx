@@ -7,8 +7,8 @@ async function getData(): Promise<Resident[]> {
   return residents.data;
 }
 
-export default async function DemoPage() {
-  const data = await getData()
+export default async function Resident() {
+  const data = await getData();
 
   return (
     <div className="container mx-auto py-10">
