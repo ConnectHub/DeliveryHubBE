@@ -7,7 +7,7 @@ async function getData(): Promise<Resident[]> {
   return residents.data;
 }
 
-export default async function Resident() {
+export default async function ResidentPage() {
   const data = await getData();
 
   return (
