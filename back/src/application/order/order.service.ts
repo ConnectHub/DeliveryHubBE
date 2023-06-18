@@ -3,7 +3,7 @@ import { Order } from 'src/domain/entities/order';
 import { OrderRepository } from './repository/order.repository';
 import { Status } from '@prisma/client';
 import { OrderNotFound } from './errors/order-not-found';
-import { RandomStringGenerator } from './helpers/generateRandomString';
+import { RandomStringGenerator } from './helpers/generate-random-string';
 
 @Injectable()
 export class OrderService {

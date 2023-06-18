@@ -5,6 +5,7 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { NotificationService } from '../notification/notification.service';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import { OrderViewModel } from './view-model/order-view-model';
 
 @Controller('order')
 export class OrderController {
@@ -30,7 +31,7 @@ export class OrderController {
       },
       { delay: 5000, attempts: 3, removeOnComplete: true, removeOnFail: true },
     );
-    return newOrder;
+    return OrderViewModel.toHttp(newOrder);
   }
 
   @Delete(':id')

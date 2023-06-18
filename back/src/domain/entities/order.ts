@@ -9,6 +9,7 @@ export interface Order {
   addresseeId: string;
   receiptDateHour?: Date;
   deletedAt?: Date;
+  updatedAt?: Date;
   addressee?: {
     phoneNumber: string;
   };
