@@ -11,7 +11,7 @@ export class OrderViewModel {
     return {
       id: order.id,
       phoneNumber: FormatPhoneNumber.format(
-        order?.addressee?.phoneNumber ?? '',
+        order?.addressee?.phoneNumber ?? 'nao teve',
       ),
       status: translateStatus[order.status].toUpperCase(),
       code: order.code,

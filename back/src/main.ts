@@ -9,6 +9,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.enableShutdownHooks();
-  await app.listen(3000);
+  app.enableCors({
+    origin: '*',
+  });
+  await app.listen(3002);
 }
 bootstrap();
