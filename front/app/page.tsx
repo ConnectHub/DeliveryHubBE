@@ -33,6 +33,20 @@ export default function Home() {
         >
           GitHub
         </Link>
+        <Link
+          rel="noreferrer"
+          href={"residents"}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Residents
+        </Link>
+        <Link 
+          rel="noreferrer"
+          href={"orders"}
+          className={buttonVariants({ variant: "outline" })}
+        >
+          Orders
+        </Link>
       </div>
     </section>
   )
