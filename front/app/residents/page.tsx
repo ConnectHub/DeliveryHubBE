@@ -1,9 +1,11 @@
-
 import { DataTable } from "../../components/ui/data-table"
 import { Resident, columns } from "./columns"
 
 async function getData(): Promise<Resident[]> {
-  const residents = await fetch("http://localhost:3000/api/resident/list")
+  const residents = await fetch("http://localhost:3002/api/resident/list", {
+    cache: "no-cache",
+  })
+  if (!residents.ok) throw new Error("Error fetching data")
   return await residents.json()
 }
 
