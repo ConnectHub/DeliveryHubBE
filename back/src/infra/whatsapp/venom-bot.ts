@@ -17,9 +17,6 @@ export class VenomBot implements OnApplicationShutdown {
     this.client = await create({
       session: 'session',
       headless: true,
-      puppeteerOptions: {
-        ignoreDefaultArgs: ['--disable-extensions'],
-      },
     });
   }
 
