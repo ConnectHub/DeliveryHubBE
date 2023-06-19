@@ -7,11 +7,11 @@ import { PrismaService } from 'src/infra/prisma/prisma.service';
 export class CondominiumRepository implements CondominiumRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
   async create(condominium: Condominium): Promise<Condominium> {
-    const newCondominium = await this.prisma.condominium.create({
+    return await this.prisma.condominium.create({
       data: condominium,
     });
-    return newCondominium;
   }
+
   async update(condominium: Condominium): Promise<Condominium> {
     const { id, ...rest } = condominium;
     return await this.prisma.condominium.update({
@@ -21,9 +21,11 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
       data: rest,
     });
   }
+
   delete(id: string): Promise<Condominium> {
     throw new Error('Method not implemented.');
   }
+
   list(): Promise<Condominium[]> {
     throw new Error('Method not implemented.');
   }

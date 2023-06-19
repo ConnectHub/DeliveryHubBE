@@ -9,7 +9,7 @@ export class CreateCondominiumDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(5)
+  @Length(8)
   password: string;
 
   @IsString()

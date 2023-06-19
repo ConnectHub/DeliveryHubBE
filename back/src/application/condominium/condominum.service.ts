@@ -7,8 +7,7 @@ import { Condominium } from 'src/domain/entities/condominium';
 export class CondominiumService {
   constructor(private readonly condominiumRepository: CondominiumRepository) {}
   async createCondominium(condominium: Condominium): Promise<Condominium> {
-    const newCondominium = await this.condominiumRepository.create(condominium);
-    return newCondominium;
+    return await this.condominiumRepository.create(condominium);
   }
 
   async findById(id: string): Promise<Condominium> {
@@ -18,8 +17,7 @@ export class CondominiumService {
   }
 
   async updateCondominium(condominium: Condominium): Promise<Condominium> {
-    const { id } = condominium;
-    await this.findById(id);
+    await this.findById(condominium.id);
     return await this.condominiumRepository.update(condominium);
   }
 }
