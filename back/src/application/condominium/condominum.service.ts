@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CondominiumRepository } from './repository/condominium.repository';
-import { Condominium } from 'src/domain/entities/condominium';
 import { CondominiumNotFound } from './errors/condominium-not-found';
+import { Condominium } from 'src/domain/entities/condominium';
 
 @Injectable()
 export class CondominiumService {

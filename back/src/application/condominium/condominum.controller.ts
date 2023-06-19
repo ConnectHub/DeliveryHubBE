@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CondominiumService } from './condominium.service';
 import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
+import { CondominiumService } from './condominum.service';
 
 @Controller('condominium')
 export class CondominiumController {
