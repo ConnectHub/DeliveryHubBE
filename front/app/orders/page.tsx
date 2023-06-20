@@ -34,7 +34,6 @@ export default async function OrderPage() {
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
     const { userId } = data
     const response = await createOrder(userId)
     if (!response.ok) throw new Error("Error creating order")
@@ -79,7 +78,7 @@ export default async function OrderPage() {
                   />
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Adicionar novo pedido crl</Button>
+                  <Button type="submit">Adicionar novo pedido</Button>
                 </DialogFooter>
               </div>
             </form>
