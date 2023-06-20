@@ -69,6 +69,9 @@ export class OrderRepository implements OrderRepositoryInterface {
       where: {
         deletedAt: null,
       },
+      include: {
+        addressee: true,
+      },
     });
   }
 }

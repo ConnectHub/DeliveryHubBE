@@ -34,8 +34,8 @@ export const columns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "url",
-    header: "URL",
+    accessorKey: "name",
+    header: "Residente",
   },
   {
     accessorKey: "code",

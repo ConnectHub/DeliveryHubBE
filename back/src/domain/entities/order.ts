@@ -12,5 +12,6 @@ export interface Order {
   updatedAt?: Date;
   addressee?: {
     phoneNumber: string;
+    name: string;
   };
 }

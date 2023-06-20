@@ -20,9 +20,9 @@ export class NotificationConsumer {
 
   @OnQueueFailed()
   async handler(job: Job, error: Error): Promise<void> {
-    const { message, orderId } = job.data;
+    const { phoneNumber, orderId } = job.data;
     await this.notificationService.createNotificationError(
-      message,
+      phoneNumber,
       orderId,
       error,
     );

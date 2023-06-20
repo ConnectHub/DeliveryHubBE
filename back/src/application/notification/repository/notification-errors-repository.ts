@@ -13,7 +13,7 @@ export class NotificationErrorRepository
       data: {
         message,
         orderId,
-        error: error.toString(),
+        error: JSON.stringify(error),
       },
     });
   }

@@ -3,7 +3,7 @@ import { Resident, columns } from "./columns"
 
 async function getData(): Promise<Resident[]> {
   const residents = await fetch("http://localhost:3002/api/resident/list", {
-    cache: "no-cache",
+    cache: "no-store",
   })
   if (!residents.ok) throw new Error("Error fetching data")
   return await residents.json()

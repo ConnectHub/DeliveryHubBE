@@ -16,6 +16,7 @@ export class OrderViewModel {
       status: translateStatus[order.status].toUpperCase(),
       code: order.code,
       url: order.url,
+      name: order.addressee.name,
       createdAt: FormatDate.format(order.receiptDateHour),
       updatedAt: FormatDate.format(order.updatedAt),
     };
