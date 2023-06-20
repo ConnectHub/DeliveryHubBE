@@ -9,28 +9,26 @@ export class OrderRepository implements OrderRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
   async findById(id: string): Promise<Order> {
-    const order = await this.prisma.order.findFirst({
+    return await this.prisma.order.findFirst({
       where: {
         id,
         deletedAt: null,
       },
     });
-    return order;
   }
 
   async findByRecipient(status: Status): Promise<Order[]> {
-    const orders = await this.prisma.order.findMany({
+    return await this.prisma.order.findMany({
       where: {
         status,
         deletedAt: null,
       },
     });
-    return orders;
   }
 
   async create(order: Order): Promise<Order> {
     const { addressee, ...rest } = order;
-    const newOrder = await this.prisma.order.create({
+    return await this.prisma.order.create({
       data: {
         ...rest,
       },
@@ -38,11 +36,10 @@ export class OrderRepository implements OrderRepositoryInterface {
         addressee: true,
       },
     });
-    return newOrder;
   }
 
   async updateStatus(id: string, status: Status): Promise<Order> {
-    const order = await this.prisma.order.update({
+    return await this.prisma.order.update({
       where: {
         id,
       },
@@ -50,7 +47,6 @@ export class OrderRepository implements OrderRepositoryInterface {
         status,
       },
     });
-    return order;
   }
 
   async delete(id: string): Promise<void> {

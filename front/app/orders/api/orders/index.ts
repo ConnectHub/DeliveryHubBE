@@ -15,5 +15,6 @@ export async function createOrder(userId: string) {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   })
 }

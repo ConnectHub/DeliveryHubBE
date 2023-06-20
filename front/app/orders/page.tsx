@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { useForm } from "react-hook-form"
@@ -35,9 +34,11 @@ export default async function OrderPage() {
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
     const { userId } = data
     const response = await createOrder(userId)
     if (!response.ok) throw new Error("Error creating order")
+    document.getElementById("closeDialog")?.click()
   }
 
   return (
@@ -48,7 +49,9 @@ export default async function OrderPage() {
       <Dialog>
         <DialogTrigger asChild>
           <div className="container flex items-end justify-end">
-            <Button variant="outline">Adicionar novo pedido</Button>
+            <Button type="button" variant="outline">
+              Adicionar novo pedido
+            </Button>
           </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
@@ -75,12 +78,10 @@ export default async function OrderPage() {
                     )}
                   />
                 </div>
+                <DialogFooter>
+                  <Button type="submit">Adicionar novo pedido crl</Button>
+                </DialogFooter>
               </div>
-              <DialogFooter>
-                <DialogClose asChild>
-                  <Button type="submit">Adicionar novo pedido</Button>
-                </DialogClose>
-              </DialogFooter>
             </form>
           </Form>
         </DialogContent>

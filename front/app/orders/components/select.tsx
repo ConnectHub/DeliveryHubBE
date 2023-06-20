@@ -2,7 +2,6 @@
 
 import { Select } from "@radix-ui/react-select"
 import { useQuery } from "react-query"
-import useSWR from "swr"
 
 import {
   SelectContent,
