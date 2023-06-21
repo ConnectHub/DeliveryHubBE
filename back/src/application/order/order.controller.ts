@@ -13,7 +13,9 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { OrderViewModel } from './view-model/order-view-model';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('order')
 @Controller('order')
 export class OrderController {
   constructor(
@@ -21,17 +23,20 @@ export class OrderController {
     private readonly orderService: OrderService,
   ) {}
 
+  @ApiOkResponse({ type: OrderViewModel })
   @Get(':id')
   async findById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.orderService.findOrderById(id);
   }
 
+  @ApiOkResponse({ type: [OrderViewModel] })
   @Get('list/recipient')
   async findByRecipient() {
     const orders = await this.orderService.findOrders();
     return orders.map(OrderViewModel.toHttp);
   }
 
+  @ApiCreatedResponse({ type: OrderViewModel })
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
@@ -48,9 +53,10 @@ export class OrderController {
 
   @Delete(':id')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.orderService.deleteOrder(id);
+    await this.orderService.deleteOrder(id);
   }
 
+  @ApiOkResponse({ type: OrderViewModel })
   @Post('update/status')
   async update(@Body() order: UpdateOrderDto) {
     const { status, orderId } = order;
