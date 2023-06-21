@@ -37,4 +37,12 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
       },
     });
   }
+
+  async listAllCondominium(): Promise<Condominium[]> {
+    return await this.prisma.condominium.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
+  }
 }

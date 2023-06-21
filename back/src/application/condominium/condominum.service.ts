@@ -20,4 +20,8 @@ export class CondominiumService {
     await this.findById(condominium.id);
     return await this.condominiumRepository.update(condominium);
   }
+
+  async listAllCondominium(): Promise<Condominium[]> {
+    return await this.condominiumRepository.listAllCondominium();
+  }
 }

@@ -17,7 +17,7 @@ export class UpdateCondominiumDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  @Length(5)
+  @Length(8)
   password: string;
 
   @IsOptional()

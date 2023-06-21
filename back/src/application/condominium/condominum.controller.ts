@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
 import { CondominiumService } from './condominum.service';
@@ -6,6 +6,7 @@ import { CondominiumService } from './condominum.service';
 @Controller('condominium')
 export class CondominiumController {
   constructor(private readonly condominiumService: CondominiumService) {}
+
   @Post('create')
   async create(@Body() condominium: CreateCondominiumDto) {
     return await this.condominiumService.createCondominium(condominium);
@@ -14,5 +15,10 @@ export class CondominiumController {
   @Post('update')
   async update(@Body() condominium: UpdateCondominiumDto) {
     return await this.condominiumService.updateCondominium(condominium);
+  }
+
+  @Get('list')
+  async list() {
+    return await this.condominiumService.listAllCondominium();
   }
 }
