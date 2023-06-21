@@ -21,7 +21,7 @@ import { createOrder } from "./api/orders"
 import DataTableServerSide from "./components/data-table"
 import SelectResidents from "./components/select"
 
-const FormSchema = z.object({
+export const FormSchema = z.object({
   userId: z.string({
     required_error: "Please select an email to display.",
   }),
