@@ -11,6 +11,7 @@ import { ResidentService } from './resident.service';
 import { CreateResidentDto } from './dto/create-resident.dto';
 import { UpdateResidentDto } from './dto/update-resident.dto';
 import { FindByDataDto } from './dto/find-by-infos.dto';
+import { ResidentViewModel } from './view-model/resident-view-model';
 
 @Controller('resident')
 export class ResidentController {
@@ -23,7 +24,8 @@ export class ResidentController {
 
   @Get('list')
   async list() {
-    return await this.residentService.listAllResidents();
+    const orders = await this.residentService.listAllResidents();
+    return orders.map(ResidentViewModel.toHttp);
   }
 
   @Get(':id')
