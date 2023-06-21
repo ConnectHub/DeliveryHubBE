@@ -1,7 +1,6 @@
 import { UnformatPhoneNumber } from '../helpers/unformat-phone-number';
-import { FormatDate } from '../helpers/format-date';
+import { FormatDate } from '../../../infra/utils/format-date-format';
 import { Resident } from 'src/domain/entities/resident';
-
 export class ResidentViewModel {
   static toHttp(resident: Resident) {
     return {
