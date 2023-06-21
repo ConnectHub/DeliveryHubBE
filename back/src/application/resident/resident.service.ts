@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ResidentRepository } from './repository/resident.repository';
 import { Resident } from 'src/domain/entities/resident';
-import { NumberFormat } from './helpers/number-format';
+import { FormatPhoneNumber } from './helpers/format-phone-number';
 import { ResidentNotFound } from './errors/resident-not-found';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
 
@@ -51,6 +51,6 @@ export class ResidentService {
   }
 
   private formatPhoneNumber(phoneNumber: string): string {
-    return NumberFormat.format(phoneNumber);
+    return FormatPhoneNumber.format(phoneNumber);
   }
 }
