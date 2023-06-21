@@ -1,6 +1,6 @@
 import { Order } from 'src/domain/entities/order';
 import { FormatPhoneNumber } from '../helpers/format-phone-number-to-http';
-import { FormatDate } from '../helpers/format-date-format';
+import { FormatDate } from '../../../infra/utils/format-date-format';
 
 const translateStatus = {
   PENDING: 'pendente',
