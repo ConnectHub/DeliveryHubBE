@@ -25,29 +25,22 @@ export const FormSchema = z.object({
   name: z.string({
     required_error: "COLOCA UM NOME.",
   }),
-  condominiumId: z.string({
-    required_error: "COLOCA O ID DO CONDOMINIO.",
-  }),
-  phoneNumber: z.string({
-    required_error: "COLOCA O TELEFONE.",
-  }),
-  email: z.string({
-    required_error: "COLOCA O EMAIL.",
-  }),
-  buildingApartment: z.string({
-    required_error: "COLOCA O NÚMERO DO APARTAMENTO.",
-  }),
 })
 
 export default async function ResidentPage() {
   const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(FormSchema), 
+    defaultValues: {
+      name: "",
+    },
   })
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const response = await createResident(data)
-    if (!response.ok) throw new Error("Error creating order")
-    document.getElementById("closeDialog")?.click()
+    console.log(data);
+
+    // const response = await createResident(data)
+    // if (!response.ok) throw new Error("Error creating order")
+    // document.getElementById("closeDialog")?.click()
   }
 
   return (
@@ -72,22 +65,21 @@ export default async function ResidentPage() {
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  NOME
+                </Label>
 
-                  <FormItem>
-                    <FormLabel>Nome do morador</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Nome do novo morador" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-
-                  <FormItem>
-                    <FormLabel>Email do morador</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Email" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({field}) => (
+                    <FormItem>
+                        <FormControl>
+                          <Input type="text" placeholder="nome" {...field} />
+                        </FormControl>
+                    </FormItem>
+                  )}
+                />
 
                 </div>
                 <DialogFooter>
