@@ -9,20 +9,38 @@ function ResidentsPage() {
 
   if (isLoading) return <div>loading</div>;
 
-  console.log(data?.forEach((resident) => console.log(resident.name)));
+  const residents = data?.map((resident) => ({
+    name: resident.name,
+    phoneNumber: resident.phoneNumber,
+    email: resident.email,
+    buildingApartment: resident.buildingApartment,
+    // Adicione aqui outras propriedades que você deseja incluir no objeto
+  })) ?? [];
 
   return (
     <DataTable
-      data={[
-        {
-          name: 'John Doe',
-        },
-      ]}
+      data={residents}
       columns={[
         {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
+        },
+        // Adicione aqui outras colunas que você deseja exibir na tabela
+        {
+          title: 'Phone Number',
+          dataIndex: 'phoneNumber',
+          key: 'phoneNumber',
+        },
+        {
+          title: 'Building Apartment',
+          dataIndex: 'buildingApartment',
+          key: 'buildingApartment',
+        },
+        {
+          title: 'Email',
+          dataIndex: 'email',
+          key: 'email',
         },
       ]}
     />
