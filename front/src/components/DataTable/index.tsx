@@ -1,5 +1,5 @@
-import { Table } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 
 interface DataTableProps {
   data: any[];
@@ -8,16 +8,14 @@ interface DataTableProps {
 
 function DataTable({ data, columns }: DataTableProps) {
   return (
-    <div className="flex justify-center">
-      <Table
-        bordered
-        columns={columns}
-        dataSource={data}
-        rowSelection={{
-          type: "checkbox",
-        }}
-      />
-    </div>
+    <Table
+      bordered
+      columns={columns}
+      dataSource={data}
+      rowSelection={{
+        type: 'checkbox',
+      }}
+    />
   );
 }
 

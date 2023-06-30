@@ -9,10 +9,13 @@ import {
 } from 'react-router-dom';
 import ResidentsPage from './pages/Residents/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import App from './App.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/residents" element={<ResidentsPage />} />
+    <Route path="/" element={<ResidentsPage />}>
+      <Route path="/residents" element={<ResidentsPage />} />
+    </Route>
   )
 );
 

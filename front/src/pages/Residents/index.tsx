@@ -1,9 +1,11 @@
-import { useQuery } from "react-query";
-import DataTable from "../../components/DataTable";
-import { getResidents } from "./api";
+import { useQuery } from 'react-query';
+import DataTable from '../../components/DataTable';
+import { getResidents } from './api';
+import NavBar from '../../components/SideBar';
+import { columns } from './components/columns';
 
 function ResidentsPage() {
-  const { isLoading, error, data } = useQuery("repoData", getResidents);
+  const { isLoading, error, data } = useQuery('repoData', getResidents);
 
   const residents =
     data?.map((resident) => ({
@@ -11,38 +13,14 @@ function ResidentsPage() {
       ...resident,
     })) ?? [];
 
-  console.log(residents);
   if (error) return <div>error</div>;
 
   if (isLoading) return <div>loading</div>;
 
   return (
-    <DataTable
-      data={residents}
-      columns={[
-        {
-          title: "Nome",
-          dataIndex: "name",
-          key: "name",
-        },
-        // Adicione aqui outras colunas que você deseja exibir na tabela
-        {
-          title: "Número de Telefone",
-          dataIndex: "phoneNumber",
-          key: "phoneNumber",
-        },
-        {
-          title: "Número do Apartamento",
-          dataIndex: "buildingApartment",
-          key: "buildingApartment",
-        },
-        {
-          title: "Email",
-          dataIndex: "email",
-          key: "email",
-        },
-      ]}
-    />
+    <NavBar>
+      <DataTable data={residents} columns={columns} />
+    </NavBar>
   );
 }
 
