@@ -56,3 +56,9 @@ O projeto oferecerá a oportunidade de trabalhar em equipe, aplicando técnicas 
 
 1. Criar um grupo no WhatsApp com os síndicos para receber feedback.
 2. Coletar notas dadas pelos residentes.
+
+## Api docs:
+
+localhost:3002/api#/
+
+##
