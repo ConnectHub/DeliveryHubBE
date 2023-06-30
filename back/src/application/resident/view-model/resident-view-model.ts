@@ -7,7 +7,7 @@ export class ResidentViewModel {
       id: resident.id,
       name: resident.name,
       phoneNumber: UnformatPhoneNumber.format(
-        resident?.phoneNumber ?? 'Não possui número'
+        resident?.phoneNumber ?? 'Não possui número',
       ),
       email: resident.email,
       buildingApartment: resident.buildingApartment,
@@ -15,4 +15,3 @@ export class ResidentViewModel {
     };
   }
 }
-
