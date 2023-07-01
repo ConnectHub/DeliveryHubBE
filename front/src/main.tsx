@@ -11,6 +11,7 @@ import ResidentsPage from './pages/Residents/index.tsx';
 import OrdersPage from './pages/Orders/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

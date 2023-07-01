@@ -14,7 +14,11 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async list(): Promise<Resident[]> {
-    return await this.prisma.resident.findMany();
+    return await this.prisma.resident.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
   }
 
   async delete(id: string): Promise<void> {
