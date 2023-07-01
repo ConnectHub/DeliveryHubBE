@@ -9,7 +9,6 @@ import {
 } from 'react-router-dom';
 import ResidentsPage from './pages/Residents/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import App from './App.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

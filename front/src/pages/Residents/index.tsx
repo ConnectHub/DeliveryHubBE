@@ -3,6 +3,7 @@ import DataTable from '../../components/DataTable';
 import { getResidents } from './api';
 import NavBar from '../../components/SideBar';
 import { columns } from './components/columns';
+import Modal from '../../components/Modal';
 
 function ResidentsPage() {
   const { isLoading, error, data } = useQuery('repoData', getResidents);
@@ -19,6 +20,7 @@ function ResidentsPage() {
 
   return (
     <NavBar>
+      <Modal>1</Modal>
       <DataTable data={residents} columns={columns} />
     </NavBar>
   );

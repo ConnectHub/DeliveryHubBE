@@ -25,7 +25,7 @@ function SideBar({ children }: NavBarProps) {
   const navigator = useNavigate();
 
   return (
-    <Layout>
+    <Layout className="m-0">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="mb-2">
           <img
@@ -59,16 +59,18 @@ function SideBar({ children }: NavBarProps) {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header className="p-0 bg-primary">
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            icon={
+              collapsed ? (
+                <MenuUnfoldOutlined className="text-white" />
+              ) : (
+                <MenuFoldOutlined className="text-white" />
+              )
+            }
             onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: '16px',
-              width: 64,
-              height: 64,
-            }}
+            className="text-base w-[64px] h-[64px]"
           />
         </Header>
         <Content
@@ -82,7 +84,7 @@ function SideBar({ children }: NavBarProps) {
         >
           {children}
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer className="text-center">
           Delivery Hub ©2023 Created with ❤️ by Delivery Hub
         </Footer>
       </Layout>
