@@ -9,6 +9,9 @@ import {
 } from 'react-router-dom';
 import ResidentsPage from './pages/Residents/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +26,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ToastContainer theme="colored" />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>
