@@ -1,4 +1,4 @@
-import { api } from '../../../services/api';
+import { api } from "../../../services/api";
 
 interface Resident {
   id: string;
@@ -8,5 +8,5 @@ interface Resident {
   email: string;
 }
 export async function getResidents(): Promise<Resident[]> {
-  return (await api.get('/resident/list')).data;
+  return (await api.get("/resident/list")).data;
 }
