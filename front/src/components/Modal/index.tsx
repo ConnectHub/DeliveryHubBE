@@ -1,26 +1,49 @@
 import { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Button, Form, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 interface ModalComponentProps {
   children: React.ReactNode;
+  title: string;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  onSubmit: (values: any) => void;
+  form: any;
+  width?: number;
 }
 
-function ModalComponent({ children }: ModalComponentProps) {
-  const [open, setOpen] = useState(true);
-
+function FormModalComponent({
+  title,
+  width = 1000,
+  onSubmit,
+  form,
+  open,
+  setOpen,
+  children,
+}: ModalComponentProps) {
   return (
     <>
       <Button type="primary" className="mb-2" onClick={() => setOpen(true)}>
         <PlusOutlined className="text-md font-bold" />
       </Button>
       <Modal
-        title="Modal 1000px width"
+        title={title}
         centered
         open={open}
-        onOk={() => setOpen(false)}
+        onOk={() => {
+          form
+            .validateFields()
+            .then((values: any) => {
+              onSubmit(values);
+            })
+            .catch((info: any) => {
+              console.log('Validate Failed:', info);
+            });
+        }}
         onCancel={() => setOpen(false)}
-        width={1000}
+        width={width}
+        okText="salvar"
+        cancelText="cancelar"
       >
         {children}
       </Modal>
@@ -28,4 +51,4 @@ function ModalComponent({ children }: ModalComponentProps) {
   );
 }
 
-export default ModalComponent;
+export default FormModalComponent;

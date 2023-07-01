@@ -1,4 +1,5 @@
 import { Status } from '@prisma/client';
+import { Resident } from './resident';
 
 export interface Order {
   id?: string;
@@ -10,8 +11,5 @@ export interface Order {
   receiptDateHour?: Date;
   deletedAt?: Date;
   updatedAt?: Date;
-  addressee?: {
-    phoneNumber: string;
-    name: string;
-  };
+  addressee?: Resident;
 }
