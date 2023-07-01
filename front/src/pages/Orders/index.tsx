@@ -1,12 +1,12 @@
-import { useQuery } from "react-query";
-import DataTable from "../../components/DataTable";
-import { getOrders } from "./api";
-import NavBar from "../../components/SideBar";
-import { columns } from "./components/columns";
-import Modal from "../../components/Modal";
+import { useQuery } from 'react-query';
+import DataTable from '../../components/DataTable';
+import { getOrders } from './api';
+import NavBar from '../../components/SideBar';
+import { columns } from './components/columns';
+import Modal from '../../components/Modal';
 
 function OrdersPage() {
-  const { isLoading, error, data } = useQuery("repoData", getOrders);
+  const { isLoading, error, data } = useQuery('orderData', getOrders);
 
   const orders =
     data?.map((order) => ({
@@ -19,7 +19,7 @@ function OrdersPage() {
   return (
     <NavBar>
       {isLoading && <div>loading...</div>}
-      <Modal>Teste</Modal>
+      {/* <Modal>Teste</Modal> */}
       <DataTable data={orders} columns={columns} />
     </NavBar>
   );

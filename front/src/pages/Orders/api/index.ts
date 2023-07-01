@@ -1,6 +1,5 @@
 import { api } from '../../../services/api';
 
-
 interface Order {
   id: string;
   phoneNumber: string;
@@ -14,4 +13,3 @@ interface Order {
 export async function getOrders(): Promise<Order[]> {
   return (await api.get('/order/list/recipient')).data;
 }
-
