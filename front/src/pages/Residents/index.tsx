@@ -19,7 +19,7 @@ function ResidentsPage() {
     onSuccess: () => {
       toast.success('Resident created successfully');
     },
-    onError: (error: any) => {
+    onError: (error: string) => {
       toast.error(JSON.parse(error)[0].message);
     },
   });
