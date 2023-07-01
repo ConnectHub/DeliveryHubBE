@@ -12,9 +12,7 @@ function ResidentsPage() {
   const { isLoading, error, data } = useQuery(query, getResidents);
   const { mutate } = useMutation(createResident, {
     onMutate: (resident) => {
-      if (data) {
-        queryClient.setQueryData(query, [...data, resident]);
-      }
+      if (data) queryClient.setQueryData(query, [...data, resident]);
     },
     onSuccess: () => {
       toast.success('Resident created successfully');
