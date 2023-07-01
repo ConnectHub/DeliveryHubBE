@@ -46,8 +46,6 @@ function ResidentsPage() {
 
   if (error) return <div>error</div>;
 
-  if (isLoading) return <div>loading</div>;
-
   return (
     <NavBar>
       <Modal

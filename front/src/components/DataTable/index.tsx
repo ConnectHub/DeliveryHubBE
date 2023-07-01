@@ -1,5 +1,5 @@
-import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import { Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
 
 interface DataTableProps {
   data: any[];
@@ -13,7 +13,7 @@ function DataTable({ data, columns }: DataTableProps) {
       columns={columns}
       dataSource={data}
       rowSelection={{
-        type: 'checkbox',
+        type: "checkbox",
       }}
     />
   );

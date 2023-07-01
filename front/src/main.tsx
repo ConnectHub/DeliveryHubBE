@@ -8,14 +8,16 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 import ResidentsPage from './pages/Residents/index.tsx';
+import OrdersPage from './pages/Orders/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<ResidentsPage />}>
-      <Route path="/residents" element={<ResidentsPage />} />
+    <Route>
+      <Route path="/" element={<OrdersPage />} />
+      <Route path="residents" element={<ResidentsPage />} />
+      <Route path="orders" element={<OrdersPage />} />
     </Route>
   )
 );
