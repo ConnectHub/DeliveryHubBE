@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Button, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { useState } from "react";
+import { Button, Modal } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface ModalComponentProps {
   children: React.ReactNode;
 }
 
 function ModalComponent({ children }: ModalComponentProps) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
