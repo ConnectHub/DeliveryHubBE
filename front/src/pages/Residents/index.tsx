@@ -31,23 +31,12 @@ function ResidentsPage() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { isLoading, error, data } = useQuery(query, getResidents);
-  const { mutate: createResidentMudation } = useMutation(createResident, {
+  const { mutate: createResidentMutation } = useMutation(createResident, {
     onSuccess: () => {
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries(query);
       toast.success('Resident created successfully');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
-    },
-  });
-  const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
@@ -67,6 +56,17 @@ function ResidentsPage() {
       );
     },
   });
+  const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(query);
+      toast.success('Resident deleted successfully');
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      toast.error(
+        error.response?.data?.message[0] ?? 'Error creating resident'
+      );
+    },
+  });
 
   function handleEdit(resident: Resident) {
     return () => {
@@ -78,7 +78,7 @@ function ResidentsPage() {
 
   function handleSubmit(values: Resident) {
     if (isEditing) return updateResidentMutation(values);
-    createResidentMudation(values);
+    createResidentMutation(values);
   }
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
