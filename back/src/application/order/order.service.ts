@@ -17,7 +17,7 @@ export class OrderService {
   }
 
   async createOrder(order: Order): Promise<Order> {
-    order.code = new RandomStringGenerator().generate(5);
+    order.code = new RandomStringGenerator().generate(6);
     return await this.orderRepository.create(order);
   }
 
