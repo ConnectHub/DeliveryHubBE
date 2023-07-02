@@ -31,6 +31,7 @@ function ResidentsPage() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { isLoading, error, data } = useQuery(query, getResidents);
+
   const { mutate: createResidentMutation } = useMutation(createResident, {
     onSuccess: () => {
       setOpen(false);
@@ -44,6 +45,7 @@ function ResidentsPage() {
       );
     },
   });
+
   const { mutate: updateResidentMutation } = useMutation(updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
@@ -56,6 +58,7 @@ function ResidentsPage() {
       );
     },
   });
+
   const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);

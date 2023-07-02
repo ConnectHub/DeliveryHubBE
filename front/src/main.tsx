@@ -45,6 +45,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           algorithm: theme.darkAlgorithm,
         }}
       >
+      we can use this to change the theme of antd to dark mode
+      <RouterProvider router={router} />
       </ConfigProvider> */}
       <RouterProvider router={router} />
     </QueryClientProvider>

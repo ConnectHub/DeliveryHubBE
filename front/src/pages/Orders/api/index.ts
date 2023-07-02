@@ -7,6 +7,7 @@ interface Order {
   code: string;
   url: string;
   name: string;
+  key: string;
   createdAt: string;
 }
 

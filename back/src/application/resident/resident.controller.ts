@@ -50,7 +50,6 @@ export class ResidentController {
 
   @Delete(':id')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
     await this.residentService.deleteResident(id);
   }
 
