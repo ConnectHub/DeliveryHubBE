@@ -9,16 +9,12 @@ import { FiSun } from '@react-icons/all-files/fi/FiSun';
 import { FiMoon } from '@react-icons/all-files/fi/FiMoon';
 import { Layout, Menu, Button, theme, Space, Switch } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useToggle } from '../../hooks/useToggle';
 import Logo from '../Logo';
 const { Header, Sider, Content } = Layout;
 
-interface NavBarProps {
-  children: React.ReactNode;
-}
-
-function SideBar({ children }: NavBarProps) {
+function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
   const { state: darkMode, toggle: toggleDarkMode } = useToggle();
 
@@ -80,7 +76,7 @@ function SideBar({ children }: NavBarProps) {
           </Space>
         </Header>
         <Content className={`my-6 mx-4 min-h-[280px] h-[100vh] rounded`}>
-          {children}
+          <Outlet />
         </Content>
         <Footer className="text-center">
           Delivery Hub ©2023 Created with ❤️ by Delivery Hub
@@ -90,4 +86,4 @@ function SideBar({ children }: NavBarProps) {
   );
 }
 
-export default SideBar;
+export default LayoutScreen;

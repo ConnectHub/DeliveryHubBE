@@ -86,7 +86,7 @@ function ResidentsPage() {
   if (error) return <div>error</div>;
 
   return (
-    <NavBar>
+    <>
       <Modal
         open={open}
         setOpen={setOpen}
@@ -156,7 +156,7 @@ function ResidentsPage() {
       ) : (
         <DataTable data={data ?? []} columns={residentColumns} />
       )}
-    </NavBar>
+    </>
   );
 }
 

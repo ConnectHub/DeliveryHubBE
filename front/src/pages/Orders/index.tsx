@@ -16,13 +16,7 @@ function OrdersPage() {
 
   if (error) return <div>error</div>;
 
-  return (
-    <NavBar>
-      {isLoading && <div>loading...</div>}
-      {/* <Modal>Teste</Modal> */}
-      <DataTable data={orders} columns={columns} />
-    </NavBar>
-  );
+  return <DataTable data={orders} columns={columns} />;
 }
 
 export default OrdersPage;
