@@ -37,7 +37,10 @@ function SignOrderPage() {
         queryClient.invalidateQueries(['order', { url }]);
       },
       onError: (error: AxiosError<ErrorResponse>) => {
-        toast.error(error.response?.data?.message ?? 'Error signing order');
+        toast.error(
+          errorTranslator[error.response?.data.message ?? ''] ??
+            'Error signing order'
+        );
       },
     }
   );
@@ -47,9 +50,8 @@ function SignOrderPage() {
   }, [code, signature, mutate]);
 
   useEffect(() => {
-    if (data?.originalStatus === 'DELIVERED') {
+    if (data?.originalStatus === 'DELIVERED')
       navigator('/sign-order/order-confirmed');
-    }
   }, [data, navigator]);
 
   const translatedError =
