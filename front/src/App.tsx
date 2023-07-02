@@ -1,24 +1,5 @@
-import DataTable from './components/DataTable';
-
 function App() {
-  return (
-    <div>
-      <DataTable
-        data={[
-          {
-            name: 'John Doe',
-          },
-        ]}
-        columns={[
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-          },
-        ]}
-      />
-    </div>
-  );
+  return <div>App</div>;
 }
 
 export default App;

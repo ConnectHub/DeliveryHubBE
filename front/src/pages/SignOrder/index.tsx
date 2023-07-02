@@ -65,7 +65,7 @@ function SignOrderPage() {
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col items-center">
         <Logo />
-        <h2 className="text-white font-inter text-center">
+        <h2 className="text-white text-center">
           Digite o código recebido no seu whatsapp <br /> e assine o pedido
         </h2>
         <span className="text-red-400 font-bold mb-2 text-center max-w-sm">
@@ -91,7 +91,7 @@ function SignOrderPage() {
           </div>
         </div>
         <AuthCode
-          inputClassName="uppercase color-[#494949] font-inter text-2xl p-0 mr-3 border rounded text-center w-[45px] h-[45px] bg-clip-padding shadow focus:appearance-none focus:outline-none focus:shadow-custom font-"
+          inputClassName="uppercase color-[#494949] text-2xl p-0 mr-3 border rounded text-center w-[45px] h-[45px] bg-clip-padding shadow focus:appearance-none focus:outline-none focus:shadow-custom font-"
           containerClassName="p-4"
           allowedCharacters="alphanumeric"
           onChange={setCode}

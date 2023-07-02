@@ -12,9 +12,11 @@ import ResidentsPage from './pages/Residents/index.tsx';
 import OrdersPage from './pages/Orders/index.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastContainer } from 'react-toastify';
-import OrderConfirmedPage from './pages/SignOrder/components/OrderConfirmed/index.tsx';
 
 const SignOrderPage = lazy(() => import('./pages/SignOrder/index.tsx'));
+const OrderConfirmedPage = lazy(
+  () => import('./pages/SignOrder/components/OrderConfirmed/index.tsx')
+);
 
 const router = createBrowserRouter(
   createRoutesFromElements(

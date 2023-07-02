@@ -1,4 +1,4 @@
-import { api } from '../../../services/api/api';
+import { api } from '../../../services/api';
 
 interface Order {
   id: string;
