@@ -1,5 +1,6 @@
 import { api } from '../../../services/api';
-import { ConfirmOrder, Order } from '../interfaces';
+import { Order } from '../../Orders/interfaces';
+import { ConfirmOrder } from '../interfaces';
 export async function confirmOrder(params: ConfirmOrder): Promise<Order> {
   return (await api.post('/order/accept', params)).data;
 }
