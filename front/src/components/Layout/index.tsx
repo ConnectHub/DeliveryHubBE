@@ -11,6 +11,7 @@ import { Layout, Menu, Button, theme, Space, Switch } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToggle } from '../../hooks/useToggle';
+import Logo from '../Logo';
 const { Header, Sider, Content } = Layout;
 
 interface NavBarProps {
@@ -32,11 +33,7 @@ function SideBar({ children }: NavBarProps) {
     <Layout className="m-0">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="mb-2">
-          <img
-            className="rounded p-5 max-w-full h-auto align-middle border-none"
-            src="https://m.media-amazon.com/images/G/01/DSP2022/hub/assets/AmazonHub_Logo_White-800x193.png"
-            alt="img"
-          />
+          <Logo />
         </div>
         <Menu
           theme="dark"

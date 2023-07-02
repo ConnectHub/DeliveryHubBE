@@ -1,17 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Status } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateOrderDto {
-  @ApiProperty({
-    enum: [Status],
-  })
+  @ApiProperty()
   @IsNotEmpty()
-  @IsEnum(Status)
-  status: Status;
+  @IsString()
+  code: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  orderId: string;
+  url: string;
 }

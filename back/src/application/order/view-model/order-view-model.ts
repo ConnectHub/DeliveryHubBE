@@ -2,10 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Order } from 'src/domain/entities/order';
 import { FormatPhoneNumber } from '../helpers/format-phone-number-to-http';
 import { FormatDate } from '../../../infra/utils/format-date';
-
-const translateStatus = {
-  PENDING: 'pendente',
-};
+import { translateStatus } from './order.translator';
 
 export class OrderViewModel {
   @ApiProperty()
@@ -36,12 +33,13 @@ export class OrderViewModel {
     return {
       id: order.id,
       phoneNumber: FormatPhoneNumber.format(
-        order?.addressee?.phoneNumber ?? 'nao teve',
+        order?.addressee?.phoneNumber ?? undefined,
       ),
       status: translateStatus[order.status].toUpperCase(),
+      originalStatus: order.status,
       code: order.code,
       url: order.url,
-      name: order.addressee.name,
+      name: order?.addressee?.name ?? undefined,
       createdAt: FormatDate.format(order.receiptDateHour),
       updatedAt: FormatDate.format(order.updatedAt),
     };

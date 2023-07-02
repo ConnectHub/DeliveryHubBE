@@ -6,7 +6,7 @@ import {
   deleteResident,
   updateResident,
 } from './api';
-import NavBar from '../../components/SideBar';
+import NavBar from '../../components/Layout';
 import { columns } from './components/columns';
 import Modal from '../../components/Modal';
 import { toast } from 'react-toastify';
@@ -20,7 +20,7 @@ import {
 import { Form } from 'antd';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { ErrorResponse } from '../../interfaces';
+import { ErrorResponse } from '../../services/api/interfaces';
 import { Resident } from './interfaces';
 
 const query = 'residentData';

@@ -57,9 +57,16 @@ export class OrderController {
   }
 
   @ApiOkResponse({ type: OrderViewModel })
-  @Post('update/status')
-  async update(@Body() order: UpdateOrderDto) {
-    const { status, orderId } = order;
-    return await this.orderService.updateOrderStatus(orderId, status);
+  @Post('accept')
+  async accept(@Body() order: UpdateOrderDto) {
+    const { code, url } = order;
+    const prevOrder = await this.orderService.acceptOrder(code, url);
+    return OrderViewModel.toHttp(prevOrder);
+  }
+
+  @Get('url/:url')
+  async findByUrl(@Param('url') url: string) {
+    const order = await this.orderService.findByUrl(url);
+    return OrderViewModel.toHttp(order);
   }
 }

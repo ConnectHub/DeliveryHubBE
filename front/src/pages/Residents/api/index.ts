@@ -1,4 +1,4 @@
-import { api } from '../../../services/api';
+import { api } from '../../../services/api/api';
 import { Resident } from '../interfaces';
 
 export async function getResidents(): Promise<Resident[]> {

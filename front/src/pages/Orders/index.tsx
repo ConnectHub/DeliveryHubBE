@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import DataTable from '../../components/DataTable';
 import { getOrders } from './api';
-import NavBar from '../../components/SideBar';
+import NavBar from '../../components/Layout';
 import { columns } from './components/columns';
 import Modal from '../../components/Modal';
 
