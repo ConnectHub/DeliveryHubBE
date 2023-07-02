@@ -1,9 +1,16 @@
-function Logo() {
+import LogoImg from '../../assets/logo.png';
+
+interface LogoProps {
+  width?: string;
+}
+
+function Logo({ width = 'max-w-full' }: LogoProps) {
   return (
     <img
-      className="w-[200px] h-[48px] mb-2"
-      src="https://m.media-amazon.com/images/G/01/DSP2022/hub/assets/AmazonHub_Logo_White-800x193.png"
-      alt=""
+      className={`p-5 ${width} h-auto align-middle border-none`}
+      src={LogoImg}
+      alt="logo"
+      loading="lazy"
     />
   );
 }

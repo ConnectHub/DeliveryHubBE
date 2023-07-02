@@ -64,7 +64,7 @@ function SignOrderPage() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col items-center">
-        <Logo />
+        <Logo width="w-[200px] " />
         <h2 className="text-white text-center">
           Digite o código recebido no seu whatsapp <br /> e assine o pedido
         </h2>

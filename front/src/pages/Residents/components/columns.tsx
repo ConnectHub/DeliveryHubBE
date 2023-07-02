@@ -9,11 +9,6 @@ interface ColumnsProps {
 export function columns({ deleteResidentMutation, handleEdit }: ColumnsProps) {
   return [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
       title: 'Nome',
       dataIndex: 'name',
       key: 'name',
