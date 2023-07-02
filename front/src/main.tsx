@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 import SignOrderPage from './pages/SignOrder/index.tsx';
 import OrderConfirmedPage from './pages/SignOrder/components/OrderConfirmed/index.tsx';
 import Layout from './components/Layout/index.tsx';
+import NotFoundPage from './pages/NotFound/index.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path=":url" element={<SignOrderPage />} />
         <Route path="order-confirmed" element={<OrderConfirmedPage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
 );
@@ -38,6 +40,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastContainer theme="colored" position="bottom-right" />
+      {/* <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm,
+        }}
+      >
+      </ConfigProvider> */}
       <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>

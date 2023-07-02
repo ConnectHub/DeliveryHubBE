@@ -2,7 +2,6 @@ import {
   DropboxOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { FiSun } from '@react-icons/all-files/fi/FiSun';
