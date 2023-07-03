@@ -1,7 +1,7 @@
 export class NotificationTemplate {
   domain: string;
   constructor() {
-    this.domain = 'http://localhost.5173';
+    this.domain = process.env.DOMAIN_NAME || 'http://localhost:5173';
   }
 
   createdTypeMessages() {
@@ -14,7 +14,6 @@ export class NotificationTemplate {
       `Preparado para uma nova encomenda? \nAcesse ${this.domain}/sign-order/{{orderId}} e acompanhe o processo. \n \nObrigado por confiar no Deliveryhub! ❤️`,
       `Você tem uma nova encomenda aguardando por você! \nAcesse ${this.domain}/sign-order/{{orderId}} para resgatá-la. \n \nObrigado por utilizar o Deliveryhub! ❤️`,
       `Parabéns! Você acaba de receber uma encomenda! \nAcesse ${this.domain}/sign-order/{{orderId}}  para mais informações. \n \nObrigado por escolher o Deliveryhub! ❤️`,
-      // Adicione mais mensagens aqui, se necessário
     ];
   }
 
