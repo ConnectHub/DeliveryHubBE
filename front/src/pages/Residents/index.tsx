@@ -1,29 +1,28 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import DataTable from '../../components/DataTable';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import DataTable from "../../components/DataTable";
 import {
   createResident,
   getResidents,
   deleteResident,
   updateResident,
-} from './api';
-import NavBar from '../../components/Layout';
-import { columns } from './components/columns';
-import Modal from '../../components/Modal';
-import { toast } from 'react-toastify';
-import Input from '../../components/Input';
+} from "./api";
+import { columns } from "./components/columns";
+import Modal from "../../components/Modal";
+import { toast } from "react-toastify";
+import Input from "../../components/Input";
 import {
   ApartmentOutlined,
   MailOutlined,
   PhoneOutlined,
   UserOutlined,
-} from '@ant-design/icons';
-import { Form } from 'antd';
-import { AxiosError } from 'axios';
-import { useState } from 'react';
-import { ErrorResponse } from '../../services/api/interfaces';
-import { Resident } from './interfaces';
+} from "@ant-design/icons";
+import { Form, Select } from "antd";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import { ErrorResponse } from "../../services/api/interfaces";
+import { Resident } from "./interfaces";
 
-const query = 'residentData';
+const query = "residentData";
 
 function ResidentsPage() {
   const queryClient = useQueryClient();
@@ -37,11 +36,11 @@ function ResidentsPage() {
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries(query);
-      toast.success('Resident created successfully');
+      toast.success("Resident created successfully");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
+        error.response?.data?.message[0] ?? "Error creating resident"
       );
     },
   });
@@ -49,24 +48,22 @@ function ResidentsPage() {
   const { mutate: updateResidentMutation } = useMutation(updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
+      toast.success("Resident edited successfully");
       setOpen(false);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
+      toast.error(error.response?.data?.message[0] ?? "Error editing resident");
     },
   });
 
   const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
+      toast.success("Resident deleted successfully");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
+        error.response?.data?.message[0] ?? "Error deleting resident"
       );
     },
   });
@@ -97,7 +94,7 @@ function ResidentsPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={isEditing ? 'editar residente' : 'criar residente'}
+        title={isEditing ? "Editar Residente" : "Cadastrar residente"}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item name="id" className="hidden"></Form.Item>
@@ -107,11 +104,11 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o nome do residente',
+                message: "Coloque o nome do residente",
               },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="nome" />
+            <Input prefix={<UserOutlined />} placeholder="Nome" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -119,11 +116,11 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o telefone do residente',
+                message: "Coloque o telefone do residente",
               },
             ]}
           >
-            <Input prefix={<PhoneOutlined />} placeholder="telefone" />
+            <Input prefix={<PhoneOutlined />} placeholder="Telefone" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -131,13 +128,13 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o bloco e apartamento do residente',
+                message: "Coloque o bloco e apartamento do residente",
               },
             ]}
           >
             <Input
               prefix={<ApartmentOutlined />}
-              placeholder="bloco e apartamento"
+              placeholder="Bloco e apartamento"
             />
           </Form.Item>
           <Form.Item
@@ -145,12 +142,34 @@ function ResidentsPage() {
             name="email"
             rules={[
               {
-                type: 'email',
-                message: 'Coloque um email válido',
+                type: "email",
+                message: "Coloque um email válido",
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="email" />
+            <Input prefix={<MailOutlined />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item className="col-span-full" name="condominiumId">
+            <Select
+              showSearch
+              placeholder="Selecione o condomínio"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={[
+                {
+                  value: "condominium1",
+                  label: "Listagem de condomínios",
+                },
+                {
+                  value: "condominium",
+                  label: "Aguardando API de condomínios",
+                },
+              ]}
+            />
           </Form.Item>
         </Form>
       </Modal>

@@ -13,6 +13,5 @@ export interface Order {
   receiptDateHour: string;
   originalStatus: Status;
   key: string;
-
   addresseeId: string;
 }

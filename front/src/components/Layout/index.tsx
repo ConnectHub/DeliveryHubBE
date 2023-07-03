@@ -1,21 +1,14 @@
-import {
-  DropboxOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { FiSun } from '@react-icons/all-files/fi/FiSun';
-import { FiMoon } from '@react-icons/all-files/fi/FiMoon';
-import { Layout, Menu, Button, theme, Space, Switch } from 'antd';
-import { Footer } from 'antd/es/layout/layout';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useToggle } from '../../hooks/useToggle';
-import Logo from '../Logo';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Users, Package, Building2 } from "lucide-react";
+import { Layout, Menu, Button, theme } from "antd";
+import { Footer } from "antd/es/layout/layout";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useToggle } from "../../hooks/useToggle";
+import Logo from "../Logo";
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
-  const { state: darkMode, toggle: toggleDarkMode } = useToggle();
 
   const {
     token: { colorBgContainer },
@@ -33,25 +26,31 @@ function LayoutScreen() {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={["1"]}
           selectedKeys={[location.pathname]}
           items={[
             {
-              key: '/orders',
-              icon: <DropboxOutlined />,
-              label: 'Orders',
-              onClick: () => navigator('/orders'),
+              key: "/orders",
+              icon: <Package size={18} />,
+              label: "Encomendas",
+              onClick: () => navigator("/orders"),
             },
             {
-              key: '/residents',
-              icon: <UserOutlined />,
-              label: 'Residents',
-              onClick: () => navigator('/residents'),
+              key: "/residents",
+              icon: <Users size={18} />,
+              label: "Residentes",
+              onClick: () => navigator("/residents"),
+            },
+            {
+              key: "/condominiums",
+              icon: <Building2 size={14} />,
+              label: "Condomínios",
+              onClick: () => navigator("/condominiums"),
             },
           ]}
         />
       </Sider>
-      <Layout className={`bg-${darkMode ? 'dark-primary' : colorBgContainer}`}>
+      <Layout className={colorBgContainer}>
         <Header className="flex p-0 bg-primary justify-between px-2">
           <Button
             type="text"
@@ -65,14 +64,6 @@ function LayoutScreen() {
             onClick={toggleCollapsed}
             className="text-base w-[64px] h-[64px]"
           />
-          <Space direction="vertical">
-            <Switch
-              checkedChildren={<FiSun />}
-              unCheckedChildren={<FiMoon />}
-              defaultChecked
-              onClick={toggleDarkMode}
-            />
-          </Space>
         </Header>
         <Content className={`my-6 mx-4 min-h-[280px] h-[100vh] rounded`}>
           <Outlet />

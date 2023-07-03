@@ -8,9 +8,6 @@ dependencies:
   '@ant-design/icons':
     specifier: ^5.1.4
     version: 5.1.4(react-dom@18.2.0)(react@18.2.0)
-  '@react-icons/all-files':
-    specifier: ^4.1.0
-    version: 4.1.0(react@18.2.0)
   '@types/react-signature-canvas':
     specifier: ^1.0.2
     version: 1.0.2
@@ -20,6 +17,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  lucide-react:
+    specifier: ^0.258.0
+    version: 0.258.0(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -811,14 +811,6 @@ packages:
       rc-util: 5.34.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
-
-  /@react-icons/all-files@4.1.0(react@18.2.0):
-    resolution: {integrity: sha512-hxBI2UOuVaI3O/BhQfhtb4kcGn9ft12RWAFVMUeNjqqhLsHvFtzIkFaptBJpFDANTKoDfdVoHTKZDlwKCACbMQ==}
-    peerDependencies:
-      react: '*'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /@remix-run/router@1.7.0:
@@ -1936,6 +1928,14 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /lucide-react@0.258.0(react@18.2.0):
+    resolution: {integrity: sha512-3evnpKadBrjLr2HHJ66eDZ1y0vPS6pm8NiNDaLqhddUUyJGnA+lfDPZfbVkuAFq7Xaa1TEy7Sg17sM7mHpMKrA==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /match-sorter@6.3.1:
     resolution: {integrity: sha512-mxybbo3pPNuA+ZuCUhm5bwNkXrJTbsk5VWbR5wiwz/GC6LIiegBGn2w3O08UG/jdbYLinw51fSQ5xNU1U3MgBw==}
