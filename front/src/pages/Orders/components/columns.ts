@@ -1,6 +1,6 @@
 export const columns = [
   {
-    title: 'Name',
+    title: 'Nome',
     dataIndex: 'name',
     key: 'name',
   },
@@ -15,7 +15,7 @@ export const columns = [
     key: 'status',
   },
   {
-    title: 'Code',
+    title: 'Código',
     dataIndex: 'code',
     key: 'code',
   },
@@ -25,7 +25,12 @@ export const columns = [
     key: 'url',
   },
   {
-    title: 'Created At',
+    title: 'Enviante',
+    dataIndex: 'sender',
+    key: 'sender',
+  },
+  {
+    title: 'Criado em',
     dataIndex: 'createdAt',
     key: 'createdAt',
   },

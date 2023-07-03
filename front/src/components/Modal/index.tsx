@@ -1,5 +1,5 @@
-import { Button, FormInstance, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button, FormInstance, Modal } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface ModalComponentProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface ModalComponentProps {
   setOpen: (open: boolean) => void;
   onSubmit: (values: any) => void;
   form: FormInstance<any>;
-  setIsEditing: (isEditing: boolean) => void;
+  setIsEditing?: (isEditing: boolean) => void;
   width?: number;
 }
 
@@ -25,7 +25,6 @@ function FormModalComponent({
   function handleClick() {
     form.resetFields();
     setOpen(true);
-    setIsEditing(false);
   }
 
   return (
@@ -44,7 +43,7 @@ function FormModalComponent({
               onSubmit(values);
             })
             .catch((info: any) => {
-              console.log('Validate Failed:', info);
+              console.log("Validate Failed:", info);
             });
         }}
         onCancel={() => setOpen(false)}

@@ -7,6 +7,7 @@ export class CreateOrderDto {
   })
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   sender: string;
 
   @ApiProperty()

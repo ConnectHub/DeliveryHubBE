@@ -1,29 +1,24 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import DataTable from '../../components/DataTable';
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import DataTable from "../../components/DataTable";
 import {
   createResident,
   getResidents,
   deleteResident,
   updateResident,
-} from './api';
-import NavBar from '../../components/Layout';
-import { columns } from './components/columns';
-import Modal from '../../components/Modal';
-import { toast } from 'react-toastify';
-import Input from '../../components/Input';
-import {
-  ApartmentOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Form } from 'antd';
-import { AxiosError } from 'axios';
-import { useState } from 'react';
-import { ErrorResponse } from '../../services/api/interfaces';
-import { Resident } from './interfaces';
+} from "./api";
+import { columns } from "./components/columns";
+import Modal from "../../components/Modal";
+import { toast } from "react-toastify";
+import Input from "../../components/Input";
+import { Form, Select } from "antd";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import { ErrorResponse } from "../../services/api/interfaces";
+import { Resident } from "./interfaces";
+import { Home, Mail, Phone, User } from "lucide-react";
+import { LoadingComponent } from "../../components/Loading";
 
-const query = 'residentData';
+const query = "residentData";
 
 function ResidentsPage() {
   const queryClient = useQueryClient();
@@ -37,11 +32,11 @@ function ResidentsPage() {
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries(query);
-      toast.success('Resident created successfully');
+      toast.success("Residente cadastrado com sucesso!");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
+        error.response?.data?.message[0] ?? "Error ao cadastrar o residente."
       );
     },
   });
@@ -49,24 +44,22 @@ function ResidentsPage() {
   const { mutate: updateResidentMutation } = useMutation(updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
+      toast.success("Resident editado com sucesso!");
       setOpen(false);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
+      toast.error(error.response?.data?.message[0] ?? "Error ao editar o residente.");
     },
   });
 
   const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
+      toast.success("Resident deletado com sucesso!");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
+        error.response?.data?.message[0] ?? "Error ao deletar o residente."
       );
     },
   });
@@ -76,6 +69,7 @@ function ResidentsPage() {
       form.setFieldsValue({ ...resident, id: resident.id });
       setOpen(true);
       setIsEditing(true);
+      console.log(resident);
     };
   }
 
@@ -97,7 +91,7 @@ function ResidentsPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={isEditing ? 'editar residente' : 'criar residente'}
+        title={isEditing ? "Editar Residente" : "Cadastrar residente"}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item name="id" className="hidden"></Form.Item>
@@ -107,11 +101,11 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o nome do residente',
+                message: "Coloque o nome do residente",
               },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="nome" />
+            <Input prefix={<User size={16}/>} placeholder="Nome" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -119,11 +113,11 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o telefone do residente',
+                message: "Coloque o telefone do residente",
               },
             ]}
           >
-            <Input prefix={<PhoneOutlined />} placeholder="telefone" />
+            <Input prefix={<Phone size={16}/>} placeholder="Telefone" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -131,13 +125,13 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: 'Coloque o bloco e apartamento do residente',
+                message: "Coloque o bloco e apartamento do residente",
               },
             ]}
           >
             <Input
-              prefix={<ApartmentOutlined />}
-              placeholder="bloco e apartamento"
+              prefix={<Home size={16} />}
+              placeholder="Bloco e apartamento"
             />
           </Form.Item>
           <Form.Item
@@ -145,20 +139,42 @@ function ResidentsPage() {
             name="email"
             rules={[
               {
-                type: 'email',
-                message: 'Coloque um email válido',
+                type: "email",
+                message: "Coloque um email válido",
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="email" />
+            <Input prefix={<Mail size={16} />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item className="col-span-full" name="condominiumId">
+            <Select
+              showSearch
+              placeholder="Selecione o condomínio"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={[
+                {
+                  value: "1",
+                  label: "Listagem de condomínios",
+                },
+                {
+                  value: "1",
+                  label: "Aguardando API de condomínios",
+                },
+              ]}
+            />
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
+      {isLoading ? 
+        <LoadingComponent/>
+       : 
         <DataTable data={data ?? []} columns={residentColumns} />
-      )}
+      }
     </>
   );
 }

@@ -13,6 +13,11 @@ export interface Order {
   receiptDateHour: string;
   originalStatus: Status;
   key: string;
-
   addresseeId: string;
+  sender?: string;
+}
+
+export interface CreateOrder {
+  addresseeId: string;
+  sender?: string;
 }
