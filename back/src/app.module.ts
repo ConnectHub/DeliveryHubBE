@@ -5,6 +5,7 @@ import { ResidentModule } from './application/resident/resident.module';
 import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bull';
 import { CondominiumModule } from './application/condominium/condominum.module';
+import { AuthModule } from './application/auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CondominiumModule } from './application/condominium/condominum.module';
     OrderModule,
     ResidentModule,
     CondominiumModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

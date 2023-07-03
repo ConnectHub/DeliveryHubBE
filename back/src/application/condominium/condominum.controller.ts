@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
 import { CondominiumService } from './condominum.service';
+import { CondominiumViewModel } from './view-model/condominium-view-model';
 
 @Controller('condominium')
 export class CondominiumController {
@@ -19,7 +20,7 @@ export class CondominiumController {
   @Get('list')
   async list() {
     const orders = await this.condominiumService.listAllCondominiums();
-    return orders.map(CondominiumViewModel.toHttp)
+    return orders.map(CondominiumViewModel.toHttp);
   }
 
   @Get(':id')
