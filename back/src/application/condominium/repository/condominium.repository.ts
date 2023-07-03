@@ -24,22 +24,22 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
 
   async delete(id: string): Promise<void> {
     await this.prisma.condominium.update({
-     where: {
-       id,
-     },
-     data: {
-       deletedAt: new Date(),
-     }
-   });
- }
+      where: {
+        id,
+      },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+  }
 
- async list(): Promise<Condominium[]> {
-   return await this.prisma.condominium.findMany({
-    where: {
-      deletedAt: null,
-    }
-   });
- }
+  async list(): Promise<Condominium[]> {
+    return await this.prisma.condominium.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
+  }
 
   async findById(id: string): Promise<Condominium> {
     return await this.prisma.condominium.findFirst({

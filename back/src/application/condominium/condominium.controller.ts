@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
-import { CondominiumService } from './condominum.service';
+import { CondominiumService } from './condominium.service';
 import { CondominiumViewModel } from './view-model/condominium-view-model';
 
 @Controller('condominium')

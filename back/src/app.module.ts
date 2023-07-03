@@ -4,7 +4,7 @@ import { NotificationModule } from './application/notification/notification.modu
 import { ResidentModule } from './application/resident/resident.module';
 import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bull';
-import { CondominiumModule } from './application/condominium/condominum.module';
+import { CondominiumModule } from './application/condominium/condominium.module';
 import { AuthModule } from './application/auth/auth.module';
 
 @Module({
