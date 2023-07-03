@@ -22,18 +22,30 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
     });
   }
 
-  delete(id: string): Promise<Condominium> {
-    throw new Error('Method not implemented.');
-  }
+  async delete(id: string): Promise<void> {
+    await this.prisma.condominium.update({
+     where: {
+       id,
+     },
+     data: {
+       deletedAt: new Date(),
+     }
+   });
+ }
 
-  list(): Promise<Condominium[]> {
-    throw new Error('Method not implemented.');
-  }
+ async list(): Promise<Condominium[]> {
+   return await this.prisma.condominium.findMany({
+    where: {
+      deletedAt: null,
+    }
+   });
+ }
 
   async findById(id: string): Promise<Condominium> {
-    return await this.prisma.condominium.findUnique({
+    return await this.prisma.condominium.findFirst({
       where: {
         id,
+        deletedAt: null,
       },
     });
   }
