@@ -26,6 +26,10 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Api docs:
+
+localhost:3002/api#/
+
 ## Installation
 
 ```bash
