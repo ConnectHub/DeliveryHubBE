@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { PrismaModule } from 'src/infra/prisma/prisma.module';
 import { CondominiumRepository } from './repository/condominium.repository';
-import { CondominiumController } from './condominum.controller';
-import { CondominiumService } from './condominum.service';
+import { CondominiumController } from './condominium.controller';
+import { CondominiumService } from './condominium.service';
 
 @Module({
   imports: [PrismaModule],
