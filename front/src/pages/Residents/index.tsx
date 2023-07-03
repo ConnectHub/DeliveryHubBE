@@ -158,11 +158,11 @@ function ResidentsPage() {
               }
               options={[
                 {
-                  value: "condominium1",
+                  value: "1",
                   label: "Listagem de condomínios",
                 },
                 {
-                  value: "condominium",
+                  value: "1",
                   label: "Aguardando API de condomínios",
                 },
               ]}

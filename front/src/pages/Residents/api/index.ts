@@ -9,7 +9,7 @@ export async function createResident(resident: Resident): Promise<Resident> {
   return (
     await api.post('/resident/create', {
       ...resident,
-      condominiumId: '511c3cff-49ca-40f6-ac5d-335a2ce81cff',
+      condominiumId: '1',
     })
   ).data;
 }

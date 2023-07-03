@@ -30,7 +30,7 @@ function OrdersPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Erro ao cadastrar o resident"
+        error.response?.data?.message[0] ?? "Erro ao cadastrar a encomenda"
       );
     },
   });
