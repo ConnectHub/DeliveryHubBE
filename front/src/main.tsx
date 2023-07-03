@@ -16,19 +16,44 @@ import SignOrderPage from './pages/SignOrder/index.tsx';
 import OrderConfirmedPage from './pages/SignOrder/components/OrderConfirmed/index.tsx';
 import Layout from './components/Layout/index.tsx';
 import NotFoundPage from './pages/NotFound/index.tsx';
+import LoginPage from './pages/Login/index.tsx';
+import UserContext from './context/UserContext.tsx';
+import ProtectedRouter from './components/ProtectedRoute/index.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route element={<Layout />}>
-        <Route path="/" element={<OrdersPage />} />
-        <Route path="/residents" element={<ResidentsPage />} />
-        <Route path="/orders" element={<OrdersPage />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRouter>
+              <OrdersPage />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/residents"
+          element={
+            <ProtectedRouter>
+              <ResidentsPage />
+            </ProtectedRouter>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRouter>
+              <OrdersPage />
+            </ProtectedRouter>
+          }
+        />
       </Route>
       <Route path="/sign-order">
         <Route path=":url" element={<SignOrderPage />} />
         <Route path="order-confirmed" element={<OrderConfirmedPage />} />
       </Route>
+      <Route path="/login" element={<LoginPage />}></Route>
       <Route path="*" element={<NotFoundPage />} />
     </Route>
   )
@@ -40,7 +65,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastContainer theme="colored" position="bottom-right" />
-      {/* <ConfigProvider
+      <UserContext>
+        {/* <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
         }}
@@ -48,7 +74,8 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       we can use this to change the theme of antd to dark mode
       <RouterProvider router={router} />
       </ConfigProvider> */}
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
+      </UserContext>
     </QueryClientProvider>
   </React.StrictMode>
 );

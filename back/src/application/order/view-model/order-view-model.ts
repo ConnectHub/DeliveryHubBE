@@ -32,6 +32,7 @@ export class OrderViewModel {
   static toHttp(order: Order) {
     return {
       id: order.id,
+      key: order.id,
       phoneNumber: FormatPhoneNumber.format(
         order?.addressee?.phoneNumber ?? undefined,
       ),
