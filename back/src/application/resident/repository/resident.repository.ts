@@ -14,7 +14,11 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async list(): Promise<Resident[]> {
-    return await this.prisma.resident.findMany();
+    return await this.prisma.resident.findMany({
+      where: {
+        deletedAt: null,
+      },
+    });
   }
 
   async delete(id: string): Promise<void> {
@@ -31,7 +35,10 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   async findResident(resident: Resident): Promise<Resident> {
     const { phoneNumber, ...rest } = resident;
     return await this.prisma.resident.findFirst({
-      where: rest,
+      where: {
+        ...rest,
+        deletedAt: null,
+      },
     });
   }
 
@@ -46,16 +53,20 @@ export class ResidentRepository implements ResidentRepositoryInterface {
   }
 
   async findById(id: string): Promise<Resident> {
-    return await this.prisma.resident.findUnique({
+    return await this.prisma.resident.findFirst({
       where: {
         id,
+        deletedAt: null,
       },
     });
   }
 
   async findByInfos(data: Resident): Promise<Resident> {
     return await this.prisma.resident.findFirst({
-      where: data,
+      where: {
+        ...data,
+        deletedAt: null,
+      },
     });
   }
 }

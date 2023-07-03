@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd';
+import { Button, FormInstance, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 interface ModalComponentProps {
@@ -7,7 +7,8 @@ interface ModalComponentProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   onSubmit: (values: any) => void;
-  form: any;
+  form: FormInstance<any>;
+  setIsEditing: (isEditing: boolean) => void;
   width?: number;
 }
 
@@ -17,12 +18,19 @@ function FormModalComponent({
   onSubmit,
   form,
   open,
+  setIsEditing,
   setOpen,
   children,
 }: ModalComponentProps) {
+  function handleClick() {
+    form.resetFields();
+    setOpen(true);
+    setIsEditing(false);
+  }
+
   return (
     <>
-      <Button type="primary" className="mb-2" onClick={() => setOpen(true)}>
+      <Button type="primary" className="mb-2" onClick={handleClick}>
         <PlusOutlined className="text-md font-bold" />
       </Button>
       <Modal

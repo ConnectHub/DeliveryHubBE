@@ -1,7 +1,7 @@
-import { Table } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import { Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 
-interface DataTableProps {
+interface DataTableProps extends React.HTMLAttributes<HTMLDivElement> {
   data: any[];
   columns: ColumnsType<any>;
 }
@@ -13,7 +13,7 @@ function DataTable({ data, columns }: DataTableProps) {
       columns={columns}
       dataSource={data}
       rowSelection={{
-        type: "checkbox",
+        type: 'checkbox',
       }}
     />
   );

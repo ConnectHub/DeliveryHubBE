@@ -4,6 +4,7 @@ import { OrderRepository } from './repository/order.repository';
 import { Status } from '@prisma/client';
 import { OrderNotFound } from './errors/order-not-found';
 import { RandomStringGenerator } from './helpers/generate-random-string';
+import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
 
 @Injectable()
 export class OrderService {
@@ -16,7 +17,7 @@ export class OrderService {
   }
 
   async createOrder(order: Order): Promise<Order> {
-    order.code = new RandomStringGenerator().generate(5);
+    order.code = new RandomStringGenerator().generate(6);
     return await this.orderRepository.create(order);
   }
 
@@ -26,13 +27,22 @@ export class OrderService {
     await this.orderRepository.delete(id);
   }
 
-  async updateOrderStatus(orderId: string, status: Status): Promise<Order> {
-    const order = await this.orderRepository.findById(orderId);
+  async acceptOrder(code: string, url: string): Promise<Order> {
+    const order = await this.orderRepository.findByUrl(url);
     if (!order) throw new OrderNotFound();
-    return await this.orderRepository.updateStatus(orderId, status);
+    if (order.status === Status.DELIVERED)
+      throw new OrderAlreadyBeenDelivered();
+    if (order.code !== code) throw new OrderNotFound();
+    return await this.orderRepository.updateStatus(url);
   }
 
   async findOrders(): Promise<Order[]> {
     return await this.orderRepository.findOrders();
+  }
+
+  async findByUrl(url: string): Promise<Order> {
+    const order = await this.orderRepository.findByUrl(url);
+    if (!order) throw new OrderNotFound();
+    return order;
   }
 }

@@ -34,7 +34,7 @@ model order {
 model resident {
   id                String      @id @unique @default(uuid())
   name              String
-  buildingApartment String      @unique
+  buildingApartment String
   phoneNumber       String
   email             String?     @unique
   condominiumId     String

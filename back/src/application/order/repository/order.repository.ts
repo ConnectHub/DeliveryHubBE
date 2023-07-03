@@ -17,6 +17,15 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
+  async findByUrl(url: string): Promise<Order> {
+    return await this.prisma.order.findFirst({
+      where: {
+        url,
+        deletedAt: null,
+      },
+    });
+  }
+
   async findByRecipient(status: Status): Promise<Order[]> {
     return await this.prisma.order.findMany({
       where: {
@@ -38,13 +47,13 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async updateStatus(id: string, status: Status): Promise<Order> {
+  async updateStatus(url: string): Promise<Order> {
     return await this.prisma.order.update({
       where: {
-        id,
+        url,
       },
       data: {
-        status,
+        status: Status.DELIVERED,
       },
     });
   }

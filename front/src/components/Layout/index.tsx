@@ -2,22 +2,18 @@ import {
   DropboxOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UploadOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { FiSun } from '@react-icons/all-files/fi/FiSun';
 import { FiMoon } from '@react-icons/all-files/fi/FiMoon';
 import { Layout, Menu, Button, theme, Space, Switch } from 'antd';
 import { Footer } from 'antd/es/layout/layout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useToggle } from '../../hooks/useToggle';
+import Logo from '../Logo';
 const { Header, Sider, Content } = Layout;
 
-interface NavBarProps {
-  children: React.ReactNode;
-}
-
-function SideBar({ children }: NavBarProps) {
+function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
   const { state: darkMode, toggle: toggleDarkMode } = useToggle();
 
@@ -32,11 +28,7 @@ function SideBar({ children }: NavBarProps) {
     <Layout className="m-0">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="mb-2">
-          <img
-            className="rounded p-5 max-w-full h-auto align-middle border-none"
-            src="https://m.media-amazon.com/images/G/01/DSP2022/hub/assets/AmazonHub_Logo_White-800x193.png"
-            alt="img"
-          />
+          <Logo />
         </div>
         <Menu
           theme="dark"
@@ -83,7 +75,7 @@ function SideBar({ children }: NavBarProps) {
           </Space>
         </Header>
         <Content className={`my-6 mx-4 min-h-[280px] h-[100vh] rounded`}>
-          {children}
+          <Outlet />
         </Content>
         <Footer className="text-center">
           Delivery Hub ©2023 Created with ❤️ by Delivery Hub
@@ -93,4 +85,4 @@ function SideBar({ children }: NavBarProps) {
   );
 }
 
-export default SideBar;
+export default LayoutScreen;

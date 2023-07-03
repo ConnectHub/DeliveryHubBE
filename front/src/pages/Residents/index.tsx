@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import DataTable from '../../components/DataTable';
-import { createResident, getResidents } from './api';
-import NavBar from '../../components/SideBar';
+import {
+  createResident,
+  getResidents,
+  deleteResident,
+  updateResident,
+} from './api';
+import NavBar from '../../components/Layout';
 import { columns } from './components/columns';
 import Modal from '../../components/Modal';
 import { toast } from 'react-toastify';
@@ -15,19 +20,23 @@ import {
 import { Form } from 'antd';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { ErrorResponse } from '../../interfaces';
+import { ErrorResponse } from '../../services/api/interfaces';
+import { Resident } from './interfaces';
 
 const query = 'residentData';
 
 function ResidentsPage() {
+  const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const { isLoading, error, data } = useQuery(query, getResidents);
-  const { mutate } = useMutation(createResident, {
+
+  const { mutate: createResidentMutation } = useMutation(createResident, {
     onSuccess: () => {
-      queryClient.invalidateQueries(query);
       setOpen(false);
       form.resetFields();
+      queryClient.invalidateQueries(query);
       toast.success('Resident created successfully');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
@@ -36,27 +45,62 @@ function ResidentsPage() {
       );
     },
   });
-  const queryClient = useQueryClient();
 
-  const residents =
-    data?.map((resident) => ({
-      key: resident.id,
-      ...resident,
-    })) ?? [];
+  const { mutate: updateResidentMutation } = useMutation(updateResident, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(query);
+      toast.success('Resident deleted successfully');
+      setOpen(false);
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      toast.error(
+        error.response?.data?.message[0] ?? 'Error creating resident'
+      );
+    },
+  });
+
+  const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(query);
+      toast.success('Resident deleted successfully');
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      toast.error(
+        error.response?.data?.message[0] ?? 'Error creating resident'
+      );
+    },
+  });
+
+  function handleEdit(resident: Resident) {
+    return () => {
+      form.setFieldsValue({ ...resident, id: resident.id });
+      setOpen(true);
+      setIsEditing(true);
+    };
+  }
+
+  function handleSubmit(values: Resident) {
+    if (isEditing) return updateResidentMutation(values);
+    createResidentMutation(values);
+  }
+
+  const residentColumns = columns({ deleteResidentMutation, handleEdit });
 
   if (error) return <div>error</div>;
 
   return (
-    <NavBar>
+    <>
       <Modal
         open={open}
         setOpen={setOpen}
-        onSubmit={mutate}
+        setIsEditing={setIsEditing}
+        onSubmit={handleSubmit}
         form={form}
         width={500}
-        title="cadastrar novo residente"
+        title={isEditing ? 'editar residente' : 'criar residente'}
       >
         <Form form={form} className="grid grid-cols-12">
+          <Form.Item name="id" className="hidden"></Form.Item>
           <Form.Item
             className="col-span-full"
             name="name"
@@ -110,8 +154,12 @@ function ResidentsPage() {
           </Form.Item>
         </Form>
       </Modal>
-      <DataTable data={residents} columns={columns} />
-    </NavBar>
+      {isLoading ? (
+        <div>loading...</div>
+      ) : (
+        <DataTable data={data ?? []} columns={residentColumns} />
+      )}
+    </>
   );
 }
 
