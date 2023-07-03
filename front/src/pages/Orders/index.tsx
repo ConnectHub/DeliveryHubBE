@@ -12,6 +12,7 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { CreateOrder } from "./interfaces";
+import { LoadingComponent } from "../../components/Loading";
 
 function OrdersPage() {
   const queryClient = useQueryClient();
@@ -29,7 +30,7 @@ function OrdersPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error creating resident"
+        error.response?.data?.message[0] ?? "Erro ao cadastrar o resident"
       );
     },
   });
@@ -82,12 +83,16 @@ function OrdersPage() {
                   value: resident.id,
                   label: resident.name,
                 })) ?? []
-            }
+              }
             />
           </Form.Item>
         </Form>
       </Modal>
-      <DataTable data={data ?? []} columns={columns} />
+      {isLoading ? 
+        <LoadingComponent/>
+       : 
+        <DataTable data={data ?? []} columns={columns} />
+      }
     </>
   );
 }

@@ -16,6 +16,7 @@ import { useState } from "react";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { Resident } from "./interfaces";
 import { Home, Mail, Phone, User } from "lucide-react";
+import { LoadingComponent } from "../../components/Loading";
 
 const query = "residentData";
 
@@ -31,11 +32,11 @@ function ResidentsPage() {
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries(query);
-      toast.success("Resident created successfully");
+      toast.success("Residente cadastrado com sucesso!");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error creating resident"
+        error.response?.data?.message[0] ?? "Error ao cadastrar o residente."
       );
     },
   });
@@ -43,22 +44,22 @@ function ResidentsPage() {
   const { mutate: updateResidentMutation } = useMutation(updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success("Resident edited successfully");
+      toast.success("Resident editado com sucesso!");
       setOpen(false);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(error.response?.data?.message[0] ?? "Error editing resident");
+      toast.error(error.response?.data?.message[0] ?? "Error ao editar o residente.");
     },
   });
 
   const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success("Resident deleted successfully");
+      toast.success("Resident deletado com sucesso!");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error deleting resident"
+        error.response?.data?.message[0] ?? "Error ao deletar o residente."
       );
     },
   });
@@ -169,11 +170,11 @@ function ResidentsPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
+      {isLoading ? 
+        <LoadingComponent/>
+       : 
         <DataTable data={data ?? []} columns={residentColumns} />
-      )}
+      }
     </>
   );
 }
