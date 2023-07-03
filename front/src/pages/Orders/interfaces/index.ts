@@ -14,4 +14,10 @@ export interface Order {
   originalStatus: Status;
   key: string;
   addresseeId: string;
+  sender?: string;
+}
+
+export interface CreateOrder {
+  addresseeId: string;
+  sender?: string;
 }
