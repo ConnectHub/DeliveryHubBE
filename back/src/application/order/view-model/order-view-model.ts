@@ -35,7 +35,7 @@ export class OrderViewModel {
       phoneNumber: FormatPhoneNumber.format(
         order?.addressee?.phoneNumber ?? undefined,
       ),
-      sender: order.sender,
+      sender: order.sender ?? '-----',
       status: translateStatus[order.status].toUpperCase(),
       originalStatus: order.status,
       code: order.code,
