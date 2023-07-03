@@ -31,17 +31,21 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
        deletedAt: new Date(),
      }
    });
-   // throw new Error('Method not implemented.');
  }
 
  async list(): Promise<Condominium[]> {
-   return await this.prisma.condominium.findMany();
+   return await this.prisma.condominium.findMany({
+    where: {
+      deletedAt: null,
+    }
+   });
  }
 
   async findById(id: string): Promise<Condominium> {
-    return await this.prisma.condominium.findUnique({
+    return await this.prisma.condominium.findFirst({
       where: {
         id,
+        deletedAt: null,
       },
     });
   }
