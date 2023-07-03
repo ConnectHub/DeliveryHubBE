@@ -10,17 +10,12 @@ import { columns } from "./components/columns";
 import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
 import Input from "../../components/Input";
-import {
-  ApartmentOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 import { Form, Select } from "antd";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { Resident } from "./interfaces";
+import { Home, Mail, Phone, User } from "lucide-react";
 
 const query = "residentData";
 
@@ -73,6 +68,7 @@ function ResidentsPage() {
       form.setFieldsValue({ ...resident, id: resident.id });
       setOpen(true);
       setIsEditing(true);
+      console.log(resident);
     };
   }
 
@@ -108,7 +104,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Nome" />
+            <Input prefix={<User size={16}/>} placeholder="Nome" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -120,7 +116,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<PhoneOutlined />} placeholder="Telefone" />
+            <Input prefix={<Phone size={16}/>} placeholder="Telefone" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -133,7 +129,7 @@ function ResidentsPage() {
             ]}
           >
             <Input
-              prefix={<ApartmentOutlined />}
+              prefix={<Home size={16} />}
               placeholder="Bloco e apartamento"
             />
           </Form.Item>
@@ -147,7 +143,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="Email" />
+            <Input prefix={<Mail size={16} />} placeholder="Email" />
           </Form.Item>
           <Form.Item className="col-span-full" name="condominiumId">
             <Select
