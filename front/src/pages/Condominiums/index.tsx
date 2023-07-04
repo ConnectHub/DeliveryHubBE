@@ -11,6 +11,7 @@ import { ErrorResponse } from "../../services/api/interfaces";
 import { toast } from "react-toastify";
 import { Building2, FormInput, KeyRound } from "lucide-react";
 import { Condominium } from "./interfaces";
+import { errorTranslator } from "./translator";
 
 function CondominiumsPage() {
   const queryClient = useQueryClient();
@@ -30,9 +31,7 @@ function CondominiumsPage() {
       toast.success("Condomínio cadastrado com sucesso");
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? "Erro ao cadastrar o condomínio"
-      );
+      toast.error(errorTranslator[error.response?.data.message ?? ""]);
     },
   });
 
@@ -43,7 +42,7 @@ function CondominiumsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error ao deletar o Condomínio."
+        error.response?.data?.message ?? "Error ao deletar o Condomínio."
       );
     },
   });
