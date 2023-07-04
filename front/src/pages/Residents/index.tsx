@@ -17,6 +17,7 @@ import { ErrorResponse } from "../../services/api/interfaces";
 import { Resident } from "./interfaces";
 import { Home, Mail, Phone, User } from "lucide-react";
 import { LoadingComponent } from "../../components/Loading";
+import { getCondominiums } from "../Condominiums/api";
 
 const query = "residentData";
 
@@ -26,6 +27,7 @@ function ResidentsPage() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { isLoading, error, data } = useQuery(query, getResidents);
+  const { data: condominiums } = useQuery("condominiumsList", getCondominiums);
 
   const { mutate: createResidentMutation } = useMutation(createResident, {
     onSuccess: () => {
@@ -48,7 +50,9 @@ function ResidentsPage() {
       setOpen(false);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(error.response?.data?.message[0] ?? "Error ao editar o residente.");
+      toast.error(
+        error.response?.data?.message[0] ?? "Error ao editar o residente."
+      );
     },
   });
 
@@ -105,7 +109,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<User size={16}/>} placeholder="Nome" />
+            <Input prefix={<User size={16} />} placeholder="Nome" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -117,7 +121,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<Phone size={16}/>} placeholder="Telefone" />
+            <Input prefix={<Phone size={16} />} placeholder="Telefone" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -156,25 +160,16 @@ function ResidentsPage() {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              options={[
-                {
-                  value: "1",
-                  label: "Listagem de condomínios",
-                },
-                {
-                  value: "1",
-                  label: "Aguardando API de condomínios",
-                },
-              ]}
+              options={condominiums ?? []}
             />
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? 
-        <LoadingComponent/>
-       : 
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
         <DataTable data={data ?? []} columns={residentColumns} />
-      }
+      )}
     </>
   );
 }

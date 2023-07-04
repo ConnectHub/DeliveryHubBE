@@ -4,4 +4,6 @@ export interface Resident {
   buildingApartment: string;
   phoneNumber: string;
   email: string;
+  label: string;
+  value: string;
 }

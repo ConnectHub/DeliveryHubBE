@@ -24,7 +24,6 @@ export class ResidentViewModel {
   static toHttp(resident: Resident) {
     return {
       id: resident.id,
-      key: resident.id,
       name: resident.name,
       phoneNumber: UnformatPhoneNumber.format(
         resident?.phoneNumber ?? 'Não possui número',
@@ -32,6 +31,9 @@ export class ResidentViewModel {
       email: resident.email,
       buildingApartment: resident.buildingApartment,
       createdAt: FormatDate.format(resident.createAt),
+      key: resident.id,
+      value: resident.id,
+      label: resident.name,
     };
   }
 }
