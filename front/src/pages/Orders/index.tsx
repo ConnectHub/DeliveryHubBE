@@ -7,7 +7,6 @@ import { useState } from "react";
 import { Form, Input, Select } from "antd";
 import { Truck } from "lucide-react";
 import { getResidents } from "../Residents/api";
-import { Resident } from "../Residents/interfaces";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ErrorResponse } from "../../services/api/interfaces";
@@ -35,8 +34,8 @@ function OrdersPage() {
     },
   });
 
-  function handleSubmit(values: CreateOrder){
-    createOrderMutation(values)
+  function handleSubmit(values: CreateOrder) {
+    createOrderMutation(values);
   }
 
   if (error) return <div>error</div>;
@@ -52,21 +51,18 @@ function OrdersPage() {
         title={"Cadastrar encomenda"}
       >
         <Form form={form} className="grid grid-cols-12">
-          <Form.Item
-            className="col-span-full"
-            name="sender"
-          >
-            <Input prefix={<Truck />} placeholder="Enviante" />
+          <Form.Item className="col-span-full" name="sender">
+            <Input prefix={<Truck size={16} />} placeholder="Enviante" />
           </Form.Item>
-          
+
           <Form.Item
             className="col-span-full"
             name="addresseeId"
             rules={[
-              {   
+              {
                 required: true,
-                message: 'Selecione o residente!',
-              }
+                message: "Selecione o residente!",
+              },
             ]}
           >
             <Select
@@ -78,21 +74,16 @@ function OrdersPage() {
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
-              options={
-                residents?.map((resident: Resident) => ({
-                  value: resident.id,
-                  label: resident.name,
-                })) ?? []
-              }
+              options={residents ?? []}
             />
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? 
-        <LoadingComponent/>
-       : 
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
         <DataTable data={data ?? []} columns={columns} />
-      }
+      )}
     </>
   );
 }

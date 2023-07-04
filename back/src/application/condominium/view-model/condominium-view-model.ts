@@ -4,11 +4,15 @@ export class CondominiumViewModel {
   static toHttp(condominium: Condominium) {
     return {
       id: condominium.id,
+      name: condominium.name,
       login: condominium.login,
       password: condominium.password,
       createdAt: FormatDate.format(condominium.createdAt),
       updateAt: FormatDate.format(condominium.updatedAt),
       deletedAt: FormatDate.format(condominium.deletedAt),
+      key: condominium.id,
+      value: condominium.id,
+      label: condominium.name,
     };
   }
 }

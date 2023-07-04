@@ -1,24 +1,25 @@
-import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import "react-toastify/dist/ReactToastify.css";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-} from 'react-router-dom';
-import ResidentsPage from './pages/Residents/index.tsx';
-import OrdersPage from './pages/Orders/index.tsx';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { ToastContainer } from 'react-toastify';
-import SignOrderPage from './pages/SignOrder/index.tsx';
-import OrderConfirmedPage from './pages/SignOrder/components/OrderConfirmed/index.tsx';
-import Layout from './components/Layout/index.tsx';
-import NotFoundPage from './pages/NotFound/index.tsx';
-import LoginPage from './pages/Login/index.tsx';
-import UserContext from './context/UserContext.tsx';
-import ProtectedRouter from './components/ProtectedRoute/index.tsx';
+} from "react-router-dom";
+import ResidentsPage from "./pages/Residents/index.tsx";
+import OrdersPage from "./pages/Orders/index.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
+import SignOrderPage from "./pages/SignOrder/index.tsx";
+import OrderConfirmedPage from "./pages/SignOrder/components/OrderConfirmed/index.tsx";
+import Layout from "./components/Layout/index.tsx";
+import NotFoundPage from "./pages/NotFound/index.tsx";
+import LoginPage from "./pages/Login/index.tsx";
+import UserContext from "./context/UserContext.tsx";
+import ProtectedRouter from "./components/ProtectedRoute/index.tsx";
+import CondominiumsPage from "./pages/Condominiums/index.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +49,14 @@ const router = createBrowserRouter(
             </ProtectedRouter>
           }
         />
+        <Route
+          path="/condominiums"
+          element={
+            <ProtectedRouter>
+              <CondominiumsPage />
+            </ProtectedRouter>
+          }
+        />
       </Route>
       <Route path="/sign-order">
         <Route path=":url" element={<SignOrderPage />} />
@@ -61,7 +70,7 @@ const router = createBrowserRouter(
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ToastContainer theme="colored" position="bottom-right" />
