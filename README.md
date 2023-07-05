@@ -53,5 +53,5 @@ Antes de executar o aplicativo, você pode precisar configurar algumas variávei
 1. Para executar os testes automatizados, utilize o seguinte comando:
 
    ```shell
-   pnpm run start:dev
+   pnpm run test
    ```
