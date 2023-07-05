@@ -18,6 +18,7 @@ import { Resident } from "./interfaces";
 import { Home, Mail, Phone, User } from "lucide-react";
 import { LoadingComponent } from "../../components/Loading";
 import { getCondominiums } from "../Condominiums/api";
+import GlitchError from "../../components/Error";
 
 const query = "residentData";
 
@@ -84,7 +85,7 @@ function ResidentsPage() {
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
 
-  if (error) return <div>error</div>;
+  if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
     <>

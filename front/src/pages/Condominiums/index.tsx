@@ -11,6 +11,7 @@ import { ErrorResponse } from "../../services/api/interfaces";
 import { toast } from "react-toastify";
 import { Building2, FormInput, KeyRound } from "lucide-react";
 import { Condominium } from "./interfaces";
+import GlitchError from "../../components/Error";
 
 function CondominiumsPage() {
   const queryClient = useQueryClient();
@@ -58,6 +59,8 @@ function CondominiumsPage() {
   }
 
   const condominiumColumns = columns({ deleteCondominiumMutation, handleEdit });
+
+  if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
     <>

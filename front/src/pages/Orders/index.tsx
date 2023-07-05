@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { CreateOrder } from "./interfaces";
 import { LoadingComponent } from "../../components/Loading";
+import GlitchError from "../../components/Error";
 
 function OrdersPage() {
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ function OrdersPage() {
     createOrderMutation(values);
   }
 
-  if (error) return <div>error</div>;
+  if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
     <>
