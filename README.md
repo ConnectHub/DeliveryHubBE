@@ -1,6 +1,6 @@
 # DeliveryHub
 
-![Logo do Meu Aplicativo](front/src/logo.png)
+![Logo do Meu Aplicativo](front/src/assets/logo.png)
 
 ## Pré-requisitos BACK-END
 
