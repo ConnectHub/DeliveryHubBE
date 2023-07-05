@@ -20,6 +20,7 @@ import LoginPage from "./pages/Login/index.tsx";
 import UserContext from "./context/UserContext.tsx";
 import ProtectedRouter from "./components/ProtectedRoute/index.tsx";
 import CondominiumsPage from "./pages/Condominiums/index.tsx";
+import DashboardPage from "./pages/Dashboard/index.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,7 @@ const router = createBrowserRouter(
           path="/"
           element={
             <ProtectedRouter>
-              <OrdersPage />
+              <DashboardPage />
             </ProtectedRouter>
           }
         />
