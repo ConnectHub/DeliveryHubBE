@@ -1,21 +1,5 @@
 version: '3'
 services:
-  # app:
-  #   image: node:18.16.0
-  #   working_dir: /app
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - '3000:3000'
-  #   restart: always
-  #   environment:
-  #     - DATABASE_URL=postgresql://username:password@postgres:5432/mydatabase
-  #     - DOMAIN_NAME=http://localhost.com
-  #   command: sh -c "npm install -g pnpm && apt update && apt-get install -y chromium && pnpx prisma generate && pnpm run start:dev"
-  #   depends_on:
-  #     - postgres
-  #     - redis
-
   postgres:
     image: postgres
     restart: always
