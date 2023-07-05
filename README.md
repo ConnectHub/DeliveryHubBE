@@ -22,6 +22,7 @@ Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
    ```shell
    git clone https://github.com/mathmartins2/DeliveryHub.git
    cd DeliveryHub
+   cd back
    ```
    
 2. Instale as dependências do projeto:
