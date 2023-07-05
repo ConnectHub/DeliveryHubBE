@@ -13,4 +13,8 @@ updates:
     directory: "/front"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "docker"
+    directory: "/back"
+    schedule:
+      interval: "weekly"
 
