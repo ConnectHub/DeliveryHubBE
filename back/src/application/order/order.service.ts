@@ -7,6 +7,7 @@ import { RandomStringGenerator } from './helpers/generate-random-string';
 import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
 import { S3 } from 'aws-sdk';
 import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class OrderService {
@@ -29,11 +30,7 @@ export class OrderService {
     await this.orderRepository.delete(id);
   }
 
-  async acceptOrder(
-    code: string,
-    url: string,
-    file: Express.Multer.File,
-  ): Promise<Order> {
+  async acceptOrder(code: string, url: string, file: string): Promise<Order> {
     const order = await this.orderRepository.findByUrl(url);
     if (!order) throw new OrderNotFound();
     if (order.status === Status.DELIVERED)
@@ -56,13 +53,15 @@ export class OrderService {
     return order;
   }
 
-  private fileName(file: Express.Multer.File): string {
-    const [name, extension] = file.originalname.split('.');
-    const now = Date.now();
-    return `${name}-${now}.${extension}`;
+  private imgToBuffer(file: string): Buffer {
+    return Buffer.from(file.replace(/^data:image\/\w+;base64,/, ''), 'base64');
   }
 
-  async uploadSign(file: Express.Multer.File) {
+  private generateFileName(): string {
+    return randomUUID() + '.png';
+  }
+
+  async uploadSign(file: string) {
     const s3 = new S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -70,8 +69,10 @@ export class OrderService {
     await s3
       .upload({
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: this.fileName(file),
-        Body: file.buffer,
+        Key: this.generateFileName(),
+        Body: this.imgToBuffer(file),
+        ContentEncoding: 'base64',
+        ContentType: 'image/png',
       })
       .promise();
   }

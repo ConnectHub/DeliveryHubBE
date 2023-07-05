@@ -11,4 +11,6 @@ export class UpdateOrderDto {
   @IsNotEmpty()
   @IsString()
   url: string;
+
+  signature: string;
 }

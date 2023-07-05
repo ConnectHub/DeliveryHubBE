@@ -1,14 +1,24 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { GlobalExceptionFilter } from './infra/filters/http-exception.filter';
+import { GlobalExceptionFilter } from './infra/filters/global-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { createLogger, transports, format } from 'winston';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new GlobalExceptionFilter());
+  const logger = createLogger({
+    transports: [new transports.File({ filename: 'logs/logs.log' })],
+    format: format.combine(
+      format.timestamp(),
+      format.errors({ stack: true }),
+      format.splat(),
+      format.json(),
+    ),
+  });
+  app.useGlobalFilters(new GlobalExceptionFilter(logger));
   app.enableShutdownHooks();
   app.enableCors({
     origin: '*',
