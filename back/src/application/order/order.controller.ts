@@ -71,7 +71,6 @@ export class OrderController {
     @Body() order: UpdateOrderDto,
     @UploadedFile(
       new ParseFilePipe({
-        fileIsRequired: true,
         validators: [
           new MaxFileSizeValidator({ maxSize: 5000 }),
           new FileTypeValidator({ fileType: 'image/png' }),

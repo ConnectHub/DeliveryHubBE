@@ -6,6 +6,7 @@ import { OrderNotFound } from './errors/order-not-found';
 import { RandomStringGenerator } from './helpers/generate-random-string';
 import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
 import { S3 } from 'aws-sdk';
+import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
 
 @Injectable()
 export class OrderService {
@@ -37,7 +38,7 @@ export class OrderService {
     if (!order) throw new OrderNotFound();
     if (order.status === Status.DELIVERED)
       throw new OrderAlreadyBeenDelivered();
-    if (order.code !== code) throw new OrderNotFound();
+    if (order.code !== code) throw new OrderCodesAreDifferent();
     const [signOrder] = await Promise.all([
       this.orderRepository.updateStatus(url),
       this.uploadSign(file),

@@ -49,4 +49,13 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
       },
     });
   }
+
+  async findByLogin(login: string): Promise<Condominium> {
+    return await this.prisma.condominium.findFirst({
+      where: {
+        login,
+        deletedAt: null,
+      },
+    });
+  }
 }

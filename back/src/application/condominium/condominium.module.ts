@@ -8,5 +8,6 @@ import { CondominiumService } from './condominium.service';
   imports: [PrismaModule],
   controllers: [CondominiumController],
   providers: [CondominiumService, CondominiumRepository],
+  exports: [CondominiumService],
 })
 export class CondominiumModule {}

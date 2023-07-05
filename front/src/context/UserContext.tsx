@@ -11,6 +11,7 @@ export const AuthContext = createContext({
   signIn: (values: FormValues) => {
     return;
   },
+  isError: false,
 });
 
 interface UserContextProps {
@@ -25,7 +26,7 @@ function ContextUserContext({ children }: UserContextProps) {
   const [user, setUser] = useState<User>({
     authToken: '',
   });
-  const { mutateAsync } = useMutation('login', login);
+  const { mutateAsync, isError } = useMutation('login', login);
   const [token, setToken] = useLocalStorage('token', '');
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function ContextUserContext({ children }: UserContextProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, isError }}>
       {children}
     </AuthContext.Provider>
   );
