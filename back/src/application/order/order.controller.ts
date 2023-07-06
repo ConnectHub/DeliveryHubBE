@@ -6,6 +6,7 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Request,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -15,6 +16,7 @@ import { Queue } from 'bull';
 import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
+import { RequestI } from '../interfaces';
 
 @ApiTags('order')
 @Controller('order')
@@ -32,8 +34,8 @@ export class OrderController {
 
   @ApiOkResponse({ type: [OrderViewModel] })
   @Get('list/recipient')
-  async findByRecipient() {
-    const orders = await this.orderService.findOrders();
+  async findByRecipient(@Request() req: RequestI) {
+    const orders = await this.orderService.findOrders(req.sub);
     return orders.map(OrderViewModel.toHttp);
   }
 

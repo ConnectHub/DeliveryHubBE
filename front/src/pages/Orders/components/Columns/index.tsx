@@ -1,6 +1,6 @@
-import { Button, Tag } from 'antd';
+import { Tag } from 'antd';
 import { Order } from '../../interfaces';
-import { CloudDownloadOutlined, DownloadOutlined } from '@ant-design/icons';
+import { CloudDownloadOutlined } from '@ant-design/icons';
 
 export const columns = [
   {

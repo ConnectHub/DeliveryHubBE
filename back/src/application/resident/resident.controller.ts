@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Post,
   Query,
+  Request,
 } from '@nestjs/common';
 import { ResidentService } from './resident.service';
 import { CreateResidentDto } from './dto/create-resident.dto';
@@ -14,6 +15,7 @@ import { UpdateResidentDto } from './dto/update-resident.dto';
 import { FindByDataDto } from './dto/find-by-infos.dto';
 import { ResidentViewModel } from './view-model/resident-view-model';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { RequestI } from '../interfaces';
 
 @ApiTags('resident')
 @Controller('resident')
@@ -28,8 +30,8 @@ export class ResidentController {
 
   @ApiOkResponse({ type: [ResidentViewModel] })
   @Get('list')
-  async list() {
-    const orders = await this.residentService.listAllResidents();
+  async list(@Request() req: RequestI) {
+    const orders = await this.residentService.listAllResidents(req.sub);
     return orders.map(ResidentViewModel.toHttp);
   }
 

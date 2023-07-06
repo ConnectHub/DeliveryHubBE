@@ -1,5 +1,4 @@
 import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
 
 interface DataTableProps extends React.HTMLAttributes<HTMLDivElement> {
   data: any[];

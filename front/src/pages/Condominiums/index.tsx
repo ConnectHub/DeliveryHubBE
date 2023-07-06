@@ -1,23 +1,20 @@
-import { useState } from "react";
-import { useQueryClient, useQuery, useMutation } from "react-query";
-import { Form, Input } from "antd";
-import Modal from "../../components/Modal";
-import DataTable from "../../components/DataTable";
-import { LoadingComponent } from "../../components/Loading";
-import { createCondominium, deleteCondominium, getCondominiums } from "./api";
-import { columns } from "./components/columns";
-import { AxiosError } from "axios";
-import { ErrorResponse } from "../../services/api/interfaces";
-import { toast } from "react-toastify";
-import { Building2, FormInput, KeyRound } from "lucide-react";
-import { Condominium } from "./interfaces";
+import { useState } from 'react';
+import { useQueryClient, useQuery, useMutation } from 'react-query';
+import { Form, Input } from 'antd';
+import Modal from '../../components/Modal';
+import DataTable from '../../components/DataTable';
+import { LoadingComponent } from '../../components/Loading';
+import { createCondominium, deleteCondominium, getCondominiums } from './api';
+import { columns } from './components/columns';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '../../services/api/interfaces';
+import { toast } from 'react-toastify';
+import { Building2, FormInput, KeyRound } from 'lucide-react';
+import { Condominium } from './interfaces';
 
 function CondominiumsPage() {
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery(
-    "condominiumData",
-    getCondominiums
-  );
+  const { isLoading, data } = useQuery('condominiumData', getCondominiums);
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -26,24 +23,24 @@ function CondominiumsPage() {
     onSuccess: () => {
       setOpen(false);
       form.resetFields();
-      queryClient.invalidateQueries("condominiumData");
-      toast.success("Condomínio cadastrado com sucesso");
+      queryClient.invalidateQueries('condominiumData');
+      toast.success('Condomínio cadastrado com sucesso');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Erro ao cadastrar o condomínio"
+        error.response?.data?.message[0] ?? 'Erro ao cadastrar o condomínio'
       );
     },
   });
 
   const { mutate: deleteCondominiumMutation } = useMutation(deleteCondominium, {
     onSuccess: () => {
-      queryClient.invalidateQueries("condominiumData");
-      toast.success("Condomínio deletado com sucesso!");
+      queryClient.invalidateQueries('condominiumData');
+      toast.success('Condomínio deletado com sucesso!');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error ao deletar o Condomínio."
+        error.response?.data?.message[0] ?? 'Error ao deletar o Condomínio.'
       );
     },
   });
@@ -53,7 +50,6 @@ function CondominiumsPage() {
       form.setFieldsValue({ ...resident, id: resident.id });
       setOpen(true);
       setIsEditing(true);
-      console.log(resident);
     };
   }
 
@@ -67,7 +63,7 @@ function CondominiumsPage() {
         onSubmit={createCondominiumMutation}
         form={form}
         width={500}
-        title={isEditing ? "Editar condomínio" : "Cadastrar condomínio"}
+        title={isEditing ? 'Editar condomínio' : 'Cadastrar condomínio'}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item
@@ -76,7 +72,7 @@ function CondominiumsPage() {
             rules={[
               {
                 required: true,
-                message: "Informe o email do condomínio!",
+                message: 'Informe o email do condomínio!',
               },
             ]}
           >
@@ -89,7 +85,7 @@ function CondominiumsPage() {
             rules={[
               {
                 required: true,
-                message: "Informe a senha do condomínio!",
+                message: 'Informe a senha do condomínio!',
               },
             ]}
           >
@@ -105,7 +101,7 @@ function CondominiumsPage() {
             rules={[
               {
                 required: true,
-                message: "Informe o nome do condomínio!",
+                message: 'Informe o nome do condomínio!',
               },
             ]}
           >

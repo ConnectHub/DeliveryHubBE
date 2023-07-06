@@ -40,8 +40,8 @@ export class OrderService {
     return await this.orderRepository.updateStatus(url, uploadedFile);
   }
 
-  async findOrders(): Promise<Order[]> {
-    return await this.orderRepository.findOrders();
+  async findOrders(condominiumId: string): Promise<Order[]> {
+    return await this.orderRepository.findOrders(condominiumId);
   }
 
   async findByUrl(url: string): Promise<Order> {

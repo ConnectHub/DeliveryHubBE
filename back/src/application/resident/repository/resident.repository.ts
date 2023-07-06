@@ -13,10 +13,11 @@ export class ResidentRepository implements ResidentRepositoryInterface {
     });
   }
 
-  async list(): Promise<Resident[]> {
+  async list(condominiumId: string): Promise<Resident[]> {
     return await this.prisma.resident.findMany({
       where: {
         deletedAt: null,
+        condominiumId,
       },
     });
   }

@@ -70,10 +70,13 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async findOrders(): Promise<Order[]> {
+  async findOrders(condominiumId: string): Promise<Order[]> {
     return await this.prisma.order.findMany({
       where: {
         deletedAt: null,
+        addressee: {
+          condominiumId,
+        },
       },
       include: {
         addressee: true,

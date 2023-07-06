@@ -21,8 +21,8 @@ export class ResidentService {
     return prevResident;
   }
 
-  async listAllResidents(): Promise<Resident[]> {
-    return await this.residentRepository.list();
+  async listAllResidents(condominiumId: string): Promise<Resident[]> {
+    return await this.residentRepository.list(condominiumId);
   }
 
   async deleteResident(id: string): Promise<void> {
