@@ -37,9 +37,4 @@ export class NotificationConsumer {
   onCompleted(job: Job): void {
     console.log(`Completed job ${job.id} of type ${job.name}`);
   }
-
-  @OnQueueCompleted()
-  onQueueCompleted(job: Job): void {
-    console.log(`Completed job ${job.id} of type ${job.name}`);
-  }
 }

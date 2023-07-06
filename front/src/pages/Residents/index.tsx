@@ -1,25 +1,25 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import DataTable from "../../components/DataTable";
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import DataTable from '../../components/DataTable';
 import {
   createResident,
   getResidents,
   deleteResident,
   updateResident,
-} from "./api";
-import { columns } from "./components/columns";
-import Modal from "../../components/Modal";
-import { toast } from "react-toastify";
-import Input from "../../components/Input";
-import { Form, Select } from "antd";
-import { AxiosError } from "axios";
-import { useState } from "react";
-import { ErrorResponse } from "../../services/api/interfaces";
-import { Resident } from "./interfaces";
-import { Home, Mail, Phone, User } from "lucide-react";
-import { LoadingComponent } from "../../components/Loading";
-import { getCondominiums } from "../Condominiums/api";
+} from './api';
+import { columns } from './components/Columns';
+import Modal from '../../components/Modal';
+import { toast } from 'react-toastify';
+import Input from '../../components/Input';
+import { Form, Select } from 'antd';
+import { AxiosError } from 'axios';
+import { useState } from 'react';
+import { ErrorResponse } from '../../services/api/interfaces';
+import { Resident } from './interfaces';
+import { Home, Mail, Phone, User } from 'lucide-react';
+import { LoadingComponent } from '../../components/Loading';
+import { getCondominiums } from '../Condominiums/api';
 
-const query = "residentData";
+const query = 'residentData';
 
 function ResidentsPage() {
   const queryClient = useQueryClient();
@@ -27,18 +27,18 @@ function ResidentsPage() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { isLoading, error, data } = useQuery(query, getResidents);
-  const { data: condominiums } = useQuery("condominiumsList", getCondominiums);
+  const { data: condominiums } = useQuery('condominiumsList', getCondominiums);
 
   const { mutate: createResidentMutation } = useMutation(createResident, {
     onSuccess: () => {
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries(query);
-      toast.success("Residente cadastrado com sucesso!");
+      toast.success('Residente cadastrado com sucesso!');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error ao cadastrar o residente."
+        error.response?.data?.message[0] ?? 'Error ao cadastrar o residente.'
       );
     },
   });
@@ -46,12 +46,12 @@ function ResidentsPage() {
   const { mutate: updateResidentMutation } = useMutation(updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success("Resident editado com sucesso!");
+      toast.success('Resident editado com sucesso!');
       setOpen(false);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error ao editar o residente."
+        error.response?.data?.message[0] ?? 'Error ao editar o residente.'
       );
     },
   });
@@ -59,11 +59,11 @@ function ResidentsPage() {
   const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(query);
-      toast.success("Resident deletado com sucesso!");
+      toast.success('Resident deletado com sucesso!');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Error ao deletar o residente."
+        error.response?.data?.message[0] ?? 'Error ao deletar o residente.'
       );
     },
   });
@@ -95,7 +95,7 @@ function ResidentsPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={isEditing ? "Editar Residente" : "Cadastrar residente"}
+        title={isEditing ? 'Editar Residente' : 'Cadastrar residente'}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item name="id" className="hidden"></Form.Item>
@@ -105,7 +105,7 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: "Coloque o nome do residente",
+                message: 'Coloque o nome do residente',
               },
             ]}
           >
@@ -117,7 +117,7 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: "Coloque o telefone do residente",
+                message: 'Coloque o telefone do residente',
               },
             ]}
           >
@@ -129,7 +129,7 @@ function ResidentsPage() {
             rules={[
               {
                 required: true,
-                message: "Coloque o bloco e apartamento do residente",
+                message: 'Coloque o bloco e apartamento do residente',
               },
             ]}
           >
@@ -143,8 +143,8 @@ function ResidentsPage() {
             name="email"
             rules={[
               {
-                type: "email",
-                message: "Coloque um email válido",
+                type: 'email',
+                message: 'Coloque um email válido',
               },
             ]}
           >
@@ -156,7 +156,7 @@ function ResidentsPage() {
               placeholder="Selecione o condomínio"
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option?.label ?? "")
+                (option?.label ?? '')
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }

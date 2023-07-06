@@ -41,6 +41,7 @@ export class OrderViewModel {
       originalStatus: order.status,
       code: order.code,
       url: order.url,
+      sign: order.sign,
       name: order?.addressee?.name ?? undefined,
       createdAt: FormatDate.format(order.receiptDateHour),
       updatedAt: FormatDate.format(order.updatedAt),

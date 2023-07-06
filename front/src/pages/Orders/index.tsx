@@ -1,22 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import DataTable from "../../components/DataTable";
-import { createOrder, getOrders } from "./api";
-import { columns } from "./components/columns";
-import Modal from "../../components/Modal";
-import { useState } from "react";
-import { Form, Input, Select } from "antd";
-import { Truck } from "lucide-react";
-import { getResidents } from "../Residents/api";
-import { AxiosError } from "axios";
-import { toast } from "react-toastify";
-import { ErrorResponse } from "../../services/api/interfaces";
-import { CreateOrder } from "./interfaces";
-import { LoadingComponent } from "../../components/Loading";
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import DataTable from '../../components/DataTable';
+import { createOrder, getOrders } from './api';
+import { columns } from './components/Columns/index';
+import Modal from '../../components/Modal';
+import { useState } from 'react';
+import { Form, Input, Select } from 'antd';
+import { Truck } from 'lucide-react';
+import { getResidents } from '../Residents/api';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import { ErrorResponse } from '../../services/api/interfaces';
+import { CreateOrder } from './interfaces';
+import { LoadingComponent } from '../../components/Loading';
 
 function OrdersPage() {
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery("orderData", getOrders);
-  const { data: residents } = useQuery("residentsList", getResidents);
+  const { isLoading, error, data } = useQuery('orderData', getOrders);
+  const { data: residents } = useQuery('residentsList', getResidents);
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
 
@@ -24,12 +24,12 @@ function OrdersPage() {
     onSuccess: () => {
       setOpen(false);
       form.resetFields();
-      queryClient.invalidateQueries("orderData");
-      toast.success("Encomenda cadastrada com sucesso");
+      queryClient.invalidateQueries('orderData');
+      toast.success('Encomenda cadastrada com sucesso');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Erro ao cadastrar a encomenda"
+        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda'
       );
     },
   });
@@ -48,11 +48,11 @@ function OrdersPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={"Cadastrar encomenda"}
+        title={'Cadastrar encomenda'}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item className="col-span-full" name="sender">
-            <Input prefix={<Truck size={16} />} placeholder="Enviante" />
+            <Input prefix={<Truck size={16} />} placeholder="Remetente" />
           </Form.Item>
 
           <Form.Item
@@ -61,7 +61,7 @@ function OrdersPage() {
             rules={[
               {
                 required: true,
-                message: "Selecione o residente!",
+                message: 'Selecione o residente!',
               },
             ]}
           >
@@ -70,7 +70,7 @@ function OrdersPage() {
               placeholder="Selecione o residente"
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option?.label ?? "")
+                (option?.label ?? '')
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }

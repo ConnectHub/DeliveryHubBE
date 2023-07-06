@@ -8,6 +8,7 @@ export interface Order {
   status?: Status;
   sender: string;
   addresseeId: string;
+  sign?: string;
   receiptDateHour?: Date;
   deletedAt?: Date;
   updatedAt?: Date;
