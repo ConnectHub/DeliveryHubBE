@@ -2,6 +2,8 @@
    <img  src="front/src/assets/logo.png" alt="Logo do Meu Aplicativo" width="700">
 </p>
 
+# Sistema de gestão de entregas em condominios feito com ❤️
+
 # Pré-requisitos 
 ### BACK-END em NEST
 <p align="center">
@@ -55,4 +57,33 @@ Antes de executar o aplicativo, você pode precisar configurar algumas variávei
 
    ```shell
    pnpm run test
+   ```
+
+### FRONT-END em REACT
+
+<p align="center">
+   <img  src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="Logo do Meu Aplicativo" width="180">
+</p>
+
+Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+
+- Node.js (versão LTS)
+- pnpm (você pode rodar ```npm install -g pnpm``` para obter o pnpm)
+
+## Instalação
+
+   ```shell
+   pnpm install
+   ```
+
+## Configuração
+
+Antes de executar o aplicativo, você pode precisar configurar algumas variáveis de ambiente ou ajustar outras configurações. Verifique o arquivo .env ou outras configurações relevantes no projeto.
+
+## Execução
+
+Inicie o aplicativo:
+
+   ```shell
+   pnpm run dev
    ```
