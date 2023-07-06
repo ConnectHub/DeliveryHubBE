@@ -29,16 +29,6 @@ export const columns = [
     },
   },
   {
-    title: 'Código',
-    dataIndex: 'code',
-    key: 'code',
-  },
-  {
-    title: 'URL',
-    dataIndex: 'url',
-    key: 'url',
-  },
-  {
     title: 'Remetente',
     dataIndex: 'sender',
     key: 'sender',

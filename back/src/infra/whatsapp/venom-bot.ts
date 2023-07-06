@@ -16,7 +16,7 @@ export class VenomBot implements OnApplicationShutdown {
   async start() {
     this.client = await create({
       session: 'session',
-      headless: true,
+      headless: 'new',
     });
   }
 
