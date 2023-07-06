@@ -36,15 +36,12 @@ export class OrderService {
     if (order.status === Status.DELIVERED)
       throw new OrderAlreadyBeenDelivered();
     if (order.code !== code) throw new OrderCodesAreDifferent();
-    const [signOrder] = await Promise.all([
-      this.orderRepository.updateStatus(url),
-      this.uploadSign(file),
-    ]);
-    return signOrder;
+    const uploadedFile = await this.uploadSign(file);
+    return await this.orderRepository.updateStatus(url, uploadedFile);
   }
 
-  async findOrders(): Promise<Order[]> {
-    return await this.orderRepository.findOrders();
+  async findOrders(condominiumId: string): Promise<Order[]> {
+    return await this.orderRepository.findOrders(condominiumId);
   }
 
   async findByUrl(url: string): Promise<Order> {
@@ -61,12 +58,13 @@ export class OrderService {
     return randomUUID() + '.png';
   }
 
-  async uploadSign(file: string) {
+  async uploadSign(file: string): Promise<string> {
     const s3 = new S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      correctClockSkew: true,
     });
-    await s3
+    const uploadedFile = await s3
       .upload({
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: this.generateFileName(),
@@ -75,5 +73,6 @@ export class OrderService {
         ContentType: 'image/png',
       })
       .promise();
+    return uploadedFile.Location;
   }
 }

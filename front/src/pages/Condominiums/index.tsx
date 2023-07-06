@@ -54,7 +54,6 @@ function CondominiumsPage() {
       form.setFieldsValue({ ...resident, id: resident.id });
       setOpen(true);
       setIsEditing(true);
-      console.log(resident);
     };
   }
 

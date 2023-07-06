@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import DataTable from "../../components/DataTable";
 import { createOrder, getOrders } from "./api";
-import { columns } from "./components/columns";
+import { columns } from "./components/Columns";
 import Modal from "../../components/Modal";
 import { useState } from "react";
 import { Form, Input, Select } from "antd";
@@ -53,7 +53,7 @@ function OrdersPage() {
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item className="col-span-full" name="sender">
-            <Input prefix={<Truck size={16} />} placeholder="Enviante" />
+            <Input prefix={<Truck size={16} />} placeholder="Remetente" />
           </Form.Item>
 
           <Form.Item

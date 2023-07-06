@@ -6,7 +6,7 @@ import {
   deleteResident,
   updateResident,
 } from "./api";
-import { columns } from "./components/columns";
+import { columns } from "./components/Columns";
 import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
 import Input from "../../components/Input";

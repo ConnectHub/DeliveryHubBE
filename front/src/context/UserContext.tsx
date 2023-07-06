@@ -9,7 +9,7 @@ export const AuthContext = createContext({
     authToken: '',
   },
   signIn: (values: FormValues) => {
-    return;
+    return new Promise<string>((resolve) => resolve(values.email));
   },
   isError: false,
 });

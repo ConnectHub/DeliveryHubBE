@@ -1,5 +1,5 @@
-import { Button, FormInstance, Modal } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Button, FormInstance, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 interface ModalComponentProps {
   children: React.ReactNode;
@@ -18,7 +18,6 @@ function FormModalComponent({
   onSubmit,
   form,
   open,
-  setIsEditing,
   setOpen,
   children,
 }: ModalComponentProps) {
@@ -43,7 +42,7 @@ function FormModalComponent({
               onSubmit(values);
             })
             .catch((info: any) => {
-              console.log("Validate Failed:", info);
+              console.log('Validate Failed:', info);
             });
         }}
         onCancel={() => setOpen(false)}

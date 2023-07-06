@@ -14,6 +14,7 @@ export interface Order {
   originalStatus: Status;
   key: string;
   addresseeId: string;
+  sign?: string;
   sender?: string;
 }
 

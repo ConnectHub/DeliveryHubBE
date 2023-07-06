@@ -47,13 +47,14 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async updateStatus(url: string): Promise<Order> {
+  async updateStatus(url: string, sign: string): Promise<Order> {
     return await this.prisma.order.update({
       where: {
         url,
       },
       data: {
         status: Status.DELIVERED,
+        sign,
       },
     });
   }
@@ -69,10 +70,13 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async findOrders(): Promise<Order[]> {
+  async findOrders(condominiumId: string): Promise<Order[]> {
     return await this.prisma.order.findMany({
       where: {
         deletedAt: null,
+        addressee: {
+          condominiumId,
+        },
       },
       include: {
         addressee: true,
