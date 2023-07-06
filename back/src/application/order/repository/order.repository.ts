@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Status } from '@prisma/client';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class OrderRepository implements OrderRepositoryInterface {
