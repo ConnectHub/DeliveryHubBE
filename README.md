@@ -2,6 +2,8 @@
    <img  src="front/src/assets/logo.png" alt="Logo do Meu Aplicativo" width="700">
 </p>
 
+# Sistema de gestão de entregas em condominios feito com ❤️
+
 # Pré-requisitos 
 ### BACK-END em NEST
 <p align="center">
