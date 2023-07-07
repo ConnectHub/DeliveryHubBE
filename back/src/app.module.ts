@@ -6,10 +6,16 @@ import { ConfigModule } from '@nestjs/config';
 import { BullModule } from '@nestjs/bull';
 import { CondominiumModule } from './application/condominium/condominium.module';
 import { AuthModule } from './application/auth/auth.module';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 5,
+    }),
     BullModule.forRoot({
       redis: {
         host: process.env.REDIS_HOST,
@@ -21,6 +27,12 @@ import { AuthModule } from './application/auth/auth.module';
     ResidentModule,
     CondominiumModule,
     AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
   ],
 })
 export class AppModule {}

@@ -39,11 +39,10 @@ export class ResidentService {
   async updateResidentInfos(residentInfos: Resident): Promise<Resident> {
     const { id } = residentInfos;
     await this.findById(id);
-    if (residentInfos.phoneNumber) {
+    if (residentInfos.phoneNumber)
       residentInfos.phoneNumber = this.formatPhoneNumber(
         residentInfos.phoneNumber,
       );
-    }
     return await this.residentRepository.update(residentInfos);
   }
 

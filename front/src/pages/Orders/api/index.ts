@@ -12,3 +12,7 @@ export async function createOrder(newOrder: CreateOrder): Promise<Order>{
   })
   ).data;
 }
+
+export async function reSendNotification(id: string): Promise<void> {
+  await api.post(`/order/sendNotification/${id}`);
+}

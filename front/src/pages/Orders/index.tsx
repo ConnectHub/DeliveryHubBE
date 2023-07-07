@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import DataTable from "../../components/DataTable";
-import { createOrder, getOrders } from "./api";
+import { createOrder, getOrders, reSendNotification } from "./api";
 import { columns } from "./components/Columns";
 import Modal from "../../components/Modal";
 import { useState } from "react";
@@ -13,6 +13,8 @@ import { ErrorResponse } from "../../services/api/interfaces";
 import { CreateOrder } from "./interfaces";
 import { LoadingComponent } from "../../components/Loading";
 import GlitchError from "../../components/Error";
+
+
 
 function OrdersPage() {
   const queryClient = useQueryClient();
@@ -35,10 +37,24 @@ function OrdersPage() {
     },
   });
 
+  const { mutate: reSendNotificationMutation } = useMutation(
+    reSendNotification,
+    {
+      onSuccess: () => {
+        toast.success('Notificação enviada com sucesso');
+      },
+      onError: () => {
+        toast.error('Erro ao enviar a notificação');
+      },
+    }
+  );
+
   function handleSubmit(values: CreateOrder) {
     createOrderMutation(values);
   }
 
+
+  const orderColumns = columns({ reSendNotificationMutation });
   if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
@@ -55,7 +71,6 @@ function OrdersPage() {
           <Form.Item className="col-span-full" name="sender">
             <Input prefix={<Truck size={16} />} placeholder="Remetente" />
           </Form.Item>
-
           <Form.Item
             className="col-span-full"
             name="addresseeId"
@@ -83,7 +98,7 @@ function OrdersPage() {
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <DataTable data={data ?? []} columns={columns} />
+        <DataTable data={data ?? []} columns={orderColumns} />
       )}
     </>
   );

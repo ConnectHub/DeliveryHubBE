@@ -15,7 +15,7 @@ import { UpdateResidentDto } from './dto/update-resident.dto';
 import { FindByDataDto } from './dto/find-by-infos.dto';
 import { ResidentViewModel } from './view-model/resident-view-model';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { RequestI } from '../interfaces';
+import { RequestI } from '../auth/interfaces';
 
 @ApiTags('resident')
 @Controller('resident')

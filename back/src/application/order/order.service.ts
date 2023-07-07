@@ -5,13 +5,15 @@ import { Status } from '@prisma/client';
 import { OrderNotFound } from './errors/order-not-found';
 import { RandomStringGenerator } from './helpers/generate-random-string';
 import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
-import { S3 } from 'aws-sdk';
 import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
-import { randomUUID } from 'crypto';
+import { UploadService } from '../upload/upload.service';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly orderRepository: OrderRepository) {}
+  constructor(
+    private readonly uploadService: UploadService,
+    private readonly orderRepository: OrderRepository,
+  ) {}
 
   async findOrderById(id: string): Promise<Order> {
     const order = await this.orderRepository.findById(id);
@@ -40,7 +42,7 @@ export class OrderService {
     if (order.status === Status.DELIVERED)
       throw new OrderAlreadyBeenDelivered();
     if (order.code !== code) throw new OrderCodesAreDifferent();
-    const uploadedFile = await this.uploadSign(file);
+    const uploadedFile = await this.uploadService.uploadSign(file);
     return await this.orderRepository.updateStatus(url, uploadedFile);
   }
 
@@ -52,31 +54,5 @@ export class OrderService {
     const order = await this.orderRepository.findByUrl(url);
     if (!order) throw new OrderNotFound();
     return order;
-  }
-
-  private imgToBuffer(file: string): Buffer {
-    return Buffer.from(file.replace(/^data:image\/\w+;base64,/, ''), 'base64');
-  }
-
-  private generateFileName(): string {
-    return randomUUID() + '.png';
-  }
-
-  async uploadSign(file: string): Promise<string> {
-    const s3 = new S3({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-      correctClockSkew: true,
-    });
-    const uploadedFile = await s3
-      .upload({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: this.generateFileName(),
-        Body: this.imgToBuffer(file),
-        ContentEncoding: 'base64',
-        ContentType: 'image/png',
-      })
-      .promise();
-    return uploadedFile.Location;
   }
 }
