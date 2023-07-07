@@ -15,11 +15,15 @@ import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
 import { RequestI } from '../auth/interfaces';
+import { NotificationService } from '../notification/notification.service';
 
 @ApiTags('order')
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly notificationService: NotificationService,
+  ) {}
 
   @ApiOkResponse({ type: OrderViewModel })
   @Get(':id')
@@ -38,14 +42,14 @@ export class OrderController {
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
-    await this.orderService.addNotificationQueue(newOrder);
+    await this.notificationService.addNotificationQueue(newOrder);
     return OrderViewModel.toHttp(newOrder);
   }
 
   @Post('sendNotification/:id')
   async sendNotification(@Param('id', ParseUUIDPipe) orderId: string) {
     const newOrder = await this.orderService.findOrderById(orderId);
-    await this.orderService.addNotificationQueue(newOrder);
+    await this.notificationService.addNotificationQueue(newOrder);
   }
 
   @Delete(':id')

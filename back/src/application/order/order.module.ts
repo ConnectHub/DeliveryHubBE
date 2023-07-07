@@ -3,15 +3,11 @@ import { PrismaModule } from '../../infra/prisma/prisma.module';
 import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
 import { OrderRepository } from './repository/order.repository';
-import { BullModule } from '@nestjs/bull';
+import { UploadModule } from '../upload/upload.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
-  imports: [
-    BullModule.registerQueue({
-      name: 'notification',
-    }),
-    PrismaModule,
-  ],
+  imports: [PrismaModule, UploadModule, NotificationModule],
   controllers: [OrderController],
   providers: [OrderService, OrderRepository],
 })

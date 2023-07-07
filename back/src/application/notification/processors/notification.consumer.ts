@@ -15,7 +15,6 @@ export class NotificationConsumer {
   @Process('order.created')
   async sendNotification(job: Job): Promise<void> {
     const { orderId, phoneNumber } = job.data;
-    console.log(phoneNumber);
     await this.notificationService.sendOrderNotification(orderId, phoneNumber);
   }
 
