@@ -11,13 +11,10 @@ import {
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { InjectQueue } from '@nestjs/bull';
-import { Queue } from 'bull';
 import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
 import { RequestI } from '../auth/interfaces';
-import { SendNotificationDto } from './dto/send-notification.dto';
 
 @ApiTags('order')
 @Controller('order')
