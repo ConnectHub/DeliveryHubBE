@@ -8,10 +8,16 @@ import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered
 import { S3 } from 'aws-sdk';
 import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
 import { randomUUID } from 'crypto';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { PhoneNumberNotProvided } from './errors/phone-number-not-provided';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly orderRepository: OrderRepository) {}
+  constructor(
+    @InjectQueue('notification') private readonly notificationQueue: Queue,
+    private readonly orderRepository: OrderRepository,
+  ) {}
 
   async findOrderById(id: string): Promise<Order> {
     const order = await this.orderRepository.findById(id);
@@ -48,6 +54,23 @@ export class OrderService {
     const order = await this.orderRepository.findByUrl(url);
     if (!order) throw new OrderNotFound();
     return order;
+  }
+
+  async addNotificationQueue(order: Order): Promise<void> {
+    if (!order.addressee.phoneNumber) throw new PhoneNumberNotProvided();
+    await this.notificationQueue.add(
+      'order.created',
+      {
+        orderId: order.url,
+        phoneNumber: order.addressee.phoneNumber,
+      },
+      {
+        delay: 5000,
+        attempts: 3,
+        removeOnComplete: true,
+        removeOnFail: true,
+      },
+    );
   }
 
   private imgToBuffer(file: string): Buffer {

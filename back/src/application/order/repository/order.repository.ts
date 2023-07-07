@@ -14,6 +14,9 @@ export class OrderRepository implements OrderRepositoryInterface {
         id,
         deletedAt: null,
       },
+      include: {
+        addressee: true,
+      },
     });
   }
 

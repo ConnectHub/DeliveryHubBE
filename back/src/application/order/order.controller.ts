@@ -16,15 +16,13 @@ import { Queue } from 'bull';
 import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
-import { RequestI } from '../interfaces';
+import { RequestI } from '../auth/interfaces';
+import { SendNotificationDto } from './dto/send-notification.dto';
 
 @ApiTags('order')
 @Controller('order')
 export class OrderController {
-  constructor(
-    @InjectQueue('notification') private notificationQueue: Queue,
-    private readonly orderService: OrderService,
-  ) {}
+  constructor(private readonly orderService: OrderService) {}
 
   @ApiOkResponse({ type: OrderViewModel })
   @Get(':id')
@@ -43,15 +41,14 @@ export class OrderController {
   @Post('create')
   async create(@Body() order: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(order);
-    await this.notificationQueue.add(
-      'order.created',
-      {
-        orderId: newOrder.url,
-        phoneNumber: newOrder.addressee.phoneNumber,
-      },
-      { delay: 5000, attempts: 3, removeOnComplete: true, removeOnFail: true },
-    );
+    await this.orderService.addNotificationQueue(newOrder);
     return OrderViewModel.toHttp(newOrder);
+  }
+
+  @Post('sendNotification/:id')
+  async sendNotification(@Param('id', ParseUUIDPipe) orderId: string) {
+    const newOrder = await this.orderService.findOrderById(orderId);
+    await this.orderService.addNotificationQueue(newOrder);
   }
 
   @Delete(':id')

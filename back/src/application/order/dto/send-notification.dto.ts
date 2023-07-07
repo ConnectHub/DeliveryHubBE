@@ -1,0 +1,10 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+
+export class SendNotificationDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @IsUUID()
+  id: string;
+}
