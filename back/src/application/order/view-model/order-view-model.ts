@@ -29,6 +29,9 @@ export class OrderViewModel {
   @ApiProperty()
   updatedAt: string;
 
+  @ApiProperty()
+  _count: string;
+
   static toHttp(order: Order) {
     return {
       id: order.id,
@@ -45,6 +48,13 @@ export class OrderViewModel {
       name: order?.addressee?.name ?? undefined,
       createdAt: FormatDate.format(order.receiptDateHour),
       updatedAt: FormatDate.format(order.updatedAt),
+    };
+  }
+
+  static countByStatus(order: OrderViewModel) {
+    return {
+      total: order._count,
+      status: order.status,
     };
   }
 }

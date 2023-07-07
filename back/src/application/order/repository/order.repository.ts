@@ -17,6 +17,16 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
+  async getTotalByStatus(id: string): Promise<any> {
+    return await this.prisma.order.groupBy({
+      by: ['status'],
+      _count: true,
+      where: {
+        id,
+      },
+    });
+  }
+
   async findByUrl(url: string): Promise<Order> {
     return await this.prisma.order.findFirst({
       where: {
