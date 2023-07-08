@@ -11,7 +11,7 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { CreateOrder } from "./interfaces";
-import { LoadingComponent } from "../../components/Loading";
+import  LoadingComponent  from "../../components/Loading";
 import GlitchError from "../../components/Error";
 
 
@@ -53,9 +53,7 @@ function OrdersPage() {
     createOrderMutation(values);
   }
 
-
   const orderColumns = columns({ reSendNotificationMutation });
-  if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
     <>
@@ -95,11 +93,11 @@ function OrdersPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <LoadingComponent />
-      ) : (
-        <DataTable data={data ?? []} columns={orderColumns} />
-      )}
+
+      {isLoading && <LoadingComponent/>}
+      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {data && <DataTable data={data ?? []} columns={orderColumns} />}
+
     </>
   );
 }

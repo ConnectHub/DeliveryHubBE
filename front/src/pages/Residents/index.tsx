@@ -17,7 +17,7 @@ import { useState } from "react";
 import { ErrorResponse } from "../../services/api/interfaces";
 import { Resident } from "./interfaces";
 import { Home, Mail, Phone, User } from "lucide-react";
-import { LoadingComponent } from "../../components/Loading";
+import LoadingComponent  from "../../components/Loading";
 import { getCondominiums } from "../Condominiums/api";
 
 const query = "residentData";
@@ -85,7 +85,6 @@ function ResidentsPage() {
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
 
-  if (error) return <GlitchError text="ERRO NA BUSCA DE DADOS" />;
 
   return (
     <>
@@ -166,11 +165,11 @@ function ResidentsPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <LoadingComponent />
-      ) : (
-        <DataTable data={data ?? []} columns={residentColumns} />
-      )}
+
+      {isLoading && <LoadingComponent/>}
+      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {data && <DataTable data={data ?? []} columns={residentColumns} />}
+
     </>
   );
 }
