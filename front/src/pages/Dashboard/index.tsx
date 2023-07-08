@@ -1,11 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import {getTotalByStatus} from "./api"
-function DashboardPage() {
-  const { isLoading, error, data } = useQuery("queryData", getTotalByStatus);
+import { getTotalByStatus } from "./api"
+import PieChart from "../../components/PieChart";
 
-  return(
+function DashboardPage() {
+  return(  
     <>
-     <h1>Dashboard {data}</h1>
+      <h1 className="text-6xl text-center">Dashboard</h1>
+  
+      <div className="grid grid-cols-2">
+        {<PieChart title="Total de entregas por status" queryFunction={getTotalByStatus} />}
+        {<PieChart title="Aqui tá só de exemplo" queryFunction={getTotalByStatus} />}
+      </div>
      
     </>
   );
