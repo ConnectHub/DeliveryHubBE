@@ -4,7 +4,7 @@ import LoadingComponent from '../Loading';
 import GlitchError from '../Error';
 
 interface PieChartData {
-  queryFunction: () => Promise<[]>,
+  queryFunction(): Promise<[]>,
   title: string
 }
 
