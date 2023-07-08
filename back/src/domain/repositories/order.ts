@@ -7,4 +7,5 @@ export interface OrderRepositoryInterface {
   create(order: Order): Promise<Order>;
   updateStatus(id: string, status: Status): Promise<Order>;
   delete(id: string): Promise<void>;
+  getTotalByStatus(id: string): Promise<any>;
 }
