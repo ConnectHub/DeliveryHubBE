@@ -54,7 +54,7 @@ export class OrderViewModel {
   static countByStatus(order: OrderViewModel) {
     return {
       total: order._count,
-      status: order.status,
+      status: translateStatus[order.status].toUpperCase() + 'S',
     };
   }
 }
