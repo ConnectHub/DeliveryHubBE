@@ -14,8 +14,6 @@ import { CreateOrder } from "./interfaces";
 import  LoadingComponent  from "../../components/Loading";
 import GlitchError from "../../components/Error";
 
-
-
 function OrdersPage() {
   const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery("orderData", getOrders);
@@ -63,7 +61,7 @@ function OrdersPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={"Cadastrar encomenda"}
+        title="Cadastrar encomenda"
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item className="col-span-full" name="sender">
@@ -93,11 +91,9 @@ function OrdersPage() {
           </Form.Item>
         </Form>
       </Modal>
-
       {isLoading && <LoadingComponent/>}
       {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
       {data && <DataTable data={data ?? []} columns={orderColumns} />}
-
     </>
   );
 }
