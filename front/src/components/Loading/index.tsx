@@ -1,7 +1,7 @@
 import { Spin } from "antd";
 
 function LoadingComponent() {
-  return(
+  return (
     <div className="my-20">
         <Spin tip="Carregando..." size="large">
           <div className="content" />
@@ -10,4 +10,4 @@ function LoadingComponent() {
   );
 }
 
-export default LoadingComponent
+export default LoadingComponent;
