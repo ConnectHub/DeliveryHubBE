@@ -5,11 +5,13 @@ export async function getCondominiums(): Promise<Condominium[]> {
   return (await api.get('/condominium/list')).data;
 }
 
-export async function createCondominium(newCondominium: Condominium): Promise<Condominium>{
+export async function createCondominium(
+  newCondominium: Condominium,
+): Promise<Condominium> {
   return (
     await api.post('/condominium/create', {
-    ...newCondominium,
-  })
+      ...newCondominium,
+    })
   ).data;
 }
 
@@ -17,6 +19,8 @@ export async function deleteCondominium(id: string): Promise<void> {
   await api.delete(`/condominium/${id}`);
 }
 
-export async function updateCondominium(resident: Condominium): Promise<Condominium> {
+export async function updateCondominium(
+  resident: Condominium,
+): Promise<Condominium> {
   return (await api.post('/condominium/update', resident)).data;
 }

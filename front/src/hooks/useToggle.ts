@@ -1,15 +1,14 @@
-
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react';
 
 interface ToggleState {
-  state: boolean
-  toggle: () => void
+  state: boolean;
+  toggle: () => void;
 }
 
 export const useToggle = (initialState = false): ToggleState => {
-  const [state, setState] = useState(initialState)
+  const [state, setState] = useState(initialState);
 
-  const toggle = useCallback(() => setState((state) => !state), [])
+  const toggle = useCallback(() => setState((state) => !state), []);
 
-  return { state, toggle }
-}
+  return { state, toggle };
+};

@@ -1,5 +1,5 @@
-import { Button, Popconfirm } from "antd";
-import { Condominium } from "../interfaces";
+import { Button, Popconfirm } from 'antd';
+import { Condominium } from '../interfaces';
 
 interface ColumnsProps {
   deleteCondominiumMutation: (id: string) => void;
@@ -12,19 +12,19 @@ export function columns({
 }: ColumnsProps) {
   return [
     {
-      title: "Nome",
-      dataIndex: "name",
-      key: "name",
+      title: 'Nome',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: "Email",
-      dataIndex: "login",
-      key: "email",
+      title: 'Email',
+      dataIndex: 'login',
+      key: 'email',
       editable: true,
     },
     {
-      title: "Ações",
-      key: "action",
+      title: 'Ações',
+      key: 'action',
       render: (_: any, record: Condominium) => (
         <>
           <Button type="link" onClick={handleEdit(record)}>

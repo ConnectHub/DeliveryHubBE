@@ -29,7 +29,7 @@ function OrdersPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda'
+        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda',
       );
     },
   });
@@ -43,7 +43,7 @@ function OrdersPage() {
       onError: () => {
         toast.error('Erro ao enviar a notificação');
       },
-    }
+    },
   );
 
   function handleSubmit(values: CreateOrder) {

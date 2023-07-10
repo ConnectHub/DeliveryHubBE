@@ -38,7 +38,7 @@ function ResidentsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error ao cadastrar o residente.'
+        error.response?.data?.message[0] ?? 'Error ao cadastrar o residente.',
       );
     },
   });
@@ -51,7 +51,7 @@ function ResidentsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error ao editar o residente.'
+        error.response?.data?.message[0] ?? 'Error ao editar o residente.',
       );
     },
   });
@@ -63,7 +63,7 @@ function ResidentsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error ao deletar o residente.'
+        error.response?.data?.message[0] ?? 'Error ao deletar o residente.',
       );
     },
   });

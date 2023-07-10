@@ -28,7 +28,7 @@ function CondominiumsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar o condomínio'
+        error.response?.data?.message[0] ?? 'Erro ao cadastrar o condomínio',
       );
     },
   });
@@ -40,7 +40,7 @@ function CondominiumsPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Error ao deletar o Condomínio.'
+        error.response?.data?.message[0] ?? 'Error ao deletar o Condomínio.',
       );
     },
   });

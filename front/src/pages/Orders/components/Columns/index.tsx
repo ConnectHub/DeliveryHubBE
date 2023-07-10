@@ -61,7 +61,10 @@ export function columns({ reSendNotificationMutation }: ColumnsProps) {
                 baixar assinatura
               </div>
             </a>
-            <a onClick={() => reSendNotificationMutation(record.id)} className="m-3">
+            <a
+              onClick={() => reSendNotificationMutation(record.id)}
+              className="m-3"
+            >
               <SendOutlined className="text-2xl" />
               <div className="flex justify-center text-center">
                 reenviar notificação
