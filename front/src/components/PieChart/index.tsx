@@ -9,11 +9,8 @@ interface PieChartData {
 }
 
 function PieChart({ queryFunction, title }: PieChartData){
-
   const { isLoading, error, data } = useQuery<[], Error>("queryData", queryFunction);
-
   const config = {
-    
     appendPadding: 10,
     data: data ?? [],
     angleField: 'total',
@@ -41,10 +38,7 @@ function PieChart({ queryFunction, title }: PieChartData){
       {error && <GlitchError text='ERROR AO GERAR O GRÁFICO'/>}
       {data && <Pie {...config} />}
     </div>
-
-  )
-  
-  
+  );
 }
 
-export default PieChart
+export default PieChart;
