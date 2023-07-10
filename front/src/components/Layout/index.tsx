@@ -65,7 +65,7 @@ function LayoutScreen() {
             className="text-base w-[64px] h-[64px]"
           />
         </Header>
-        <Content className={`my-6 mx-4 min-h-[100vh] rounded`}>
+        <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />
         </Content>
         <Footer className="text-center">
