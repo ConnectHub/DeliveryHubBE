@@ -13,4 +13,8 @@ export interface Order {
   deletedAt?: Date;
   updatedAt?: Date;
   addressee?: Resident;
+  img?: string;
+  description?: string;
+  trackingCode?: string;
+  signDateHour?: Date;
 }

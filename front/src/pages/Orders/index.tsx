@@ -3,8 +3,8 @@ import DataTable from '../../components/DataTable';
 import { createOrder, getOrders, reSendNotification } from './api';
 import { columns } from './components/Columns/index';
 import Modal from '../../components/Modal';
-import { useState } from 'react';
-import { Form, Input, Select } from 'antd';
+import { useCallback, useRef, useState } from 'react';
+import { Button, Form, Input, Select } from 'antd';
 import { Truck } from 'lucide-react';
 import { getResidents } from '../Residents/api';
 import { AxiosError } from 'axios';
@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import { ErrorResponse } from '../../services/api/interfaces';
 import { CreateOrder } from './interfaces';
 import { LoadingComponent } from '../../components/Loading';
+import Webcam from 'react-webcam';
+import { videoConstraints } from './constraints';
+import { BarcodeOutlined } from '@ant-design/icons';
 
 function OrdersPage() {
   const queryClient = useQueryClient();
@@ -19,6 +22,14 @@ function OrdersPage() {
   const { data: residents } = useQuery('residentsList', getResidents);
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
+  const webcamRef = useRef<Webcam>(null);
+
+  const capture = useCallback(() => {
+    if (imgSrc) return setImgSrc(null);
+    const imageSrc = webcamRef.current?.getScreenshot() ?? null;
+    setImgSrc(imageSrc);
+  }, [webcamRef, imgSrc]);
 
   const { mutate: createOrderMutation } = useMutation(createOrder, {
     onSuccess: () => {
@@ -29,7 +40,7 @@ function OrdersPage() {
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda',
+        error.response?.data?.message ?? 'Erro ao cadastrar a encomenda',
       );
     },
   });
@@ -47,7 +58,11 @@ function OrdersPage() {
   );
 
   function handleSubmit(values: CreateOrder) {
-    createOrderMutation(values);
+    createOrderMutation({
+      ...values,
+      imgSrc,
+    });
+    setImgSrc(null);
   }
 
   const orderColumns = columns({ reSendNotificationMutation });
@@ -70,6 +85,24 @@ function OrdersPage() {
           </Form.Item>
           <Form.Item
             className="col-span-full"
+            name="trackingCode"
+            rules={[
+              {
+                min: 13,
+                message: 'O código deve ter no mínimo 13 caracteres',
+              },
+            ]}
+          >
+            <Input
+              prefix={<BarcodeOutlined size={16} />}
+              placeholder="código de rastreamento"
+            />
+          </Form.Item>
+          <Form.Item className="col-span-full" name="description">
+            <Input.TextArea placeholder="Descrição" />
+          </Form.Item>
+          <Form.Item
+            className="col-span-full"
             name="addresseeId"
             rules={[
               {
@@ -89,6 +122,30 @@ function OrdersPage() {
               }
               options={residents ?? []}
             />
+          </Form.Item>
+          <Form.Item name="img" className="col-span-full">
+            {imgSrc ? (
+              <img
+                className="flex justify-center items-center rounded-md shadow-md"
+                src={imgSrc}
+                alt="Imagem capturada"
+              />
+            ) : (
+              <>
+                <Webcam
+                  className="flex justify-center items-center rounded-md shadow-md"
+                  audio={false}
+                  ref={webcamRef}
+                  width={450}
+                  screenshotFormat="image/jpeg"
+                  videoConstraints={videoConstraints}
+                  mirrored
+                />
+              </>
+            )}
+            <Button className="mt-3" onClick={capture}>
+              {imgSrc ? 'Recapturar' : 'Capturar'}
+            </Button>
           </Form.Item>
         </Form>
       </Modal>

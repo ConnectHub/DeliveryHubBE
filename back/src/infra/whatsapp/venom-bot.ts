@@ -10,13 +10,14 @@ export class VenomBot implements OnApplicationShutdown {
 
   async onApplicationShutdown() {
     console.log('Closing whatsapp client');
+    if (!this.client) return;
     await this.client.close();
   }
 
   async start() {
     this.client = await create({
       session: 'session',
-      headless: true,
+      headless: 'new',
     });
   }
 

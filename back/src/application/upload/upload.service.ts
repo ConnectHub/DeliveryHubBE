@@ -4,24 +4,44 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UploadService {
-  private imgToBuffer(file: string): Buffer {
-    return Buffer.from(file.replace(/^data:image\/\w+;base64,/, ''), 'base64');
-  }
+  private s3: S3;
 
-  private generateFileName(): string {
-    return randomUUID() + '.png';
-  }
-
-  async uploadSign(file: string): Promise<string> {
-    const s3 = new S3({
+  constructor() {
+    this.s3 = new S3({
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       correctClockSkew: true,
     });
-    const uploadedFile = await s3
+  }
+
+  private imgToBuffer(file: string): Buffer {
+    return Buffer.from(file.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+  }
+
+  private generateFileName(extension: string): string {
+    return randomUUID() + extension;
+  }
+
+  async uploadFile(file: string): Promise<string> {
+    const fileName = this.generateFileName('.jpeg');
+    const uploadedFile = await this.s3
       .upload({
         Bucket: process.env.AWS_BUCKET_NAME,
-        Key: this.generateFileName(),
+        Key: fileName,
+        Body: this.imgToBuffer(file),
+        ContentEncoding: 'base64',
+        ContentType: 'image/jpeg',
+      })
+      .promise();
+    return uploadedFile.Location;
+  }
+
+  async uploadSign(file: string): Promise<string> {
+    const fileName = this.generateFileName('.png');
+    const uploadedFile = await this.s3
+      .upload({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: fileName,
         Body: this.imgToBuffer(file),
         ContentEncoding: 'base64',
         ContentType: 'image/png',

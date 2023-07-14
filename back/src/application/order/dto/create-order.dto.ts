@@ -15,5 +15,20 @@ export class CreateOrderDto {
   @IsString()
   addresseeId: string;
 
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  imgSrc: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  description: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  trackingCode: string;
+
   code: string;
 }
