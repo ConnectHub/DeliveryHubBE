@@ -39,10 +39,10 @@ function SignOrderPage() {
       onError: (error: AxiosError<ErrorResponse>) => {
         toast.error(
           errorTranslator[error.response?.data.message ?? ''] ??
-            'Error signing order'
+            'Error signing order',
         );
       },
-    }
+    },
   );
 
   useEffect(() => {
@@ -80,7 +80,7 @@ function SignOrderPage() {
             minDistance={10}
             onEnd={() =>
               setSignature(
-                signCanvaRef.current?.getTrimmedCanvas().toDataURL('image/png')
+                signCanvaRef.current?.getTrimmedCanvas().toDataURL('image/png'),
               )
             }
           />

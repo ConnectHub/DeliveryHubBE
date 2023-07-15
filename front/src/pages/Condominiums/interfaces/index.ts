@@ -4,5 +4,5 @@ export interface Condominium {
   password: string;
   remember?: boolean;
   label: string;
-  value: string
+  value: string;
 }

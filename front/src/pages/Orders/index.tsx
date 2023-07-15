@@ -44,7 +44,7 @@ function OrdersPage() {
       onError: () => {
         toast.error('Erro ao enviar a notificação');
       },
-    }
+    },
   );
 
   function handleSubmit(values: CreateOrder) {

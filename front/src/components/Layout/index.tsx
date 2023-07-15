@@ -1,10 +1,10 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Users, Package, Building2 } from "lucide-react";
-import { Layout, Menu, Button, theme } from "antd";
-import { Footer } from "antd/es/layout/layout";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useToggle } from "../../hooks/useToggle";
-import Logo from "../Logo";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Users, Package, Building2 } from 'lucide-react';
+import { Layout, Menu, Button, theme } from 'antd';
+import { Footer } from 'antd/es/layout/layout';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useToggle } from '../../hooks/useToggle';
+import Logo from '../Logo';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
@@ -26,26 +26,26 @@ function LayoutScreen() {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={['1']}
           selectedKeys={[location.pathname]}
           items={[
             {
-              key: "/orders",
+              key: '/orders',
               icon: <Package size={18} />,
-              label: "Encomendas",
-              onClick: () => navigator("/orders"),
+              label: 'Encomendas',
+              onClick: () => navigator('/orders'),
             },
             {
-              key: "/residents",
+              key: '/residents',
               icon: <Users size={18} />,
-              label: "Residentes",
-              onClick: () => navigator("/residents"),
+              label: 'Residentes',
+              onClick: () => navigator('/residents'),
             },
             {
-              key: "/condominiums",
+              key: '/condominiums',
               icon: <Building2 size={14} />,
-              label: "Condomínios",
-              onClick: () => navigator("/condominiums"),
+              label: 'Condomínios',
+              onClick: () => navigator('/condominiums'),
             },
           ]}
         />
