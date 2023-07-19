@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UploadService {
+  private readonly logger = new Logger('UploadService');
   private s3: S3;
 
   constructor() {
@@ -23,6 +24,7 @@ export class UploadService {
   }
 
   async uploadFile(file: string): Promise<string> {
+    this.logger.log('Uploading file');
     const fileName = this.generateFileName('.jpeg');
     const uploadedFile = await this.s3
       .upload({
@@ -37,6 +39,7 @@ export class UploadService {
   }
 
   async uploadSign(file: string): Promise<string> {
+    this.logger.log('Uploading sign');
     const fileName = this.generateFileName('.png');
     const uploadedFile = await this.s3
       .upload({
