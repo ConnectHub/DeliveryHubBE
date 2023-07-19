@@ -7,6 +7,7 @@ import { RandomStringGenerator } from './helpers/generate-random-string';
 import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
 import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
 import { UploadService } from '../upload/upload.service';
+import { ChartDataDTO } from './dto/chart-data-order.dto';
 
 @Injectable()
 export class OrderService {
@@ -21,7 +22,7 @@ export class OrderService {
     return order;
   }
 
-  async getTotalByStatus(condominiumId: string): Promise<[]> {
+  async getTotalByStatus(condominiumId: string): Promise<ChartDataDTO[]> {
     return await this.orderRepository.getTotalByStatus(condominiumId);
   }
 
