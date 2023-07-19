@@ -68,6 +68,7 @@ export class OrderRepository implements OrderRepositoryInterface {
       data: {
         status: Status.DELIVERED,
         sign,
+        signDateHour: new Date(),
       },
     });
   }
@@ -93,6 +94,9 @@ export class OrderRepository implements OrderRepositoryInterface {
       },
       include: {
         addressee: true,
+      },
+      orderBy: {
+        receiptDateHour: 'desc',
       },
     });
   }

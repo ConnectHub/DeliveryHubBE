@@ -8,6 +8,8 @@ import { Order } from '../../domain/entities/order';
 import { Status } from '@prisma/client';
 import { PrismaService } from '../..//infra/prisma/prisma.service';
 import { RandomStringGenerator } from './helpers/generate-random-string';
+import { NotificationModule } from '../notification/notification.module';
+import { UploadModule } from '../upload/upload.module';
 
 describe('OrderService', () => {
   let orderService: OrderService;
@@ -16,6 +18,7 @@ describe('OrderService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [OrderService, OrderRepository, PrismaService],
+      imports: [NotificationModule, UploadModule],
     }).compile();
 
     orderService = module.get<OrderService>(OrderService);

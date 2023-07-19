@@ -4,11 +4,13 @@ import {
   ArgumentsHost,
   HttpException,
   LoggerService,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
+  private readonly intLogger = new Logger('GlobalExceptionFilter');
   constructor(private readonly logger: LoggerService) {}
 
   async catch(exception: unknown, host: ArgumentsHost) {
@@ -16,7 +18,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    console.log(exception);
+    this.intLogger.error(exception);
     this.logger.error(exception);
 
     if (exception instanceof HttpException) {

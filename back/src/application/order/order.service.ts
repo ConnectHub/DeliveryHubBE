@@ -27,6 +27,7 @@ export class OrderService {
 
   async createOrder(order: Order): Promise<Order> {
     order.code = new RandomStringGenerator().generate(6);
+    if (order.img) order.img = await this.uploadService.uploadFile(order.img);
     return await this.orderRepository.create(order);
   }
 

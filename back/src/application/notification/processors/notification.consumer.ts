@@ -7,15 +7,22 @@ import {
 } from '@nestjs/bull';
 import { Job } from 'bull';
 import { NotificationService } from '../notification.service';
+import { Logger } from '@nestjs/common';
 
 @Processor('notification')
 export class NotificationConsumer {
+  private readonly logger = new Logger('NotificationConsumer');
   constructor(private readonly notificationService: NotificationService) {}
 
   @Process('order.created')
   async sendNotification(job: Job): Promise<void> {
-    const { orderId, phoneNumber } = job.data;
-    await this.notificationService.sendOrderNotification(orderId, phoneNumber);
+    this.logger.log(`Processing job ${job.id} of type ${job.name}`);
+    const { orderId, phoneNumber, orderImg } = job.data;
+    await this.notificationService.sendOrderNotification(
+      orderId,
+      phoneNumber,
+      orderImg,
+    );
   }
 
   @OnQueueFailed()
@@ -30,11 +37,11 @@ export class NotificationConsumer {
 
   @OnQueueActive()
   onActive(job: Job): void {
-    console.log(`Processing job ${job.id} of type ${job.name}`);
+    this.logger.log(`Processing job ${job.id} of type ${job.name}`);
   }
 
   @OnQueueCompleted()
   onCompleted(job: Job): void {
-    console.log(`Completed job ${job.id} of type ${job.name}`);
+    this.logger.log(`Completed job ${job.id} of type ${job.name}`);
   }
 }

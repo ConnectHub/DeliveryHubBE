@@ -1,6 +1,10 @@
 import { Tag } from 'antd';
 import { Order } from '../../interfaces';
-import { CloudDownloadOutlined, SendOutlined } from '@ant-design/icons';
+import {
+  CloudDownloadOutlined,
+  FileImageOutlined,
+  SendOutlined,
+} from '@ant-design/icons';
 
 interface ColumnsProps {
   reSendNotificationMutation: (id: string) => void;
@@ -9,7 +13,7 @@ interface ColumnsProps {
 export function columns({ reSendNotificationMutation }: ColumnsProps) {
   return [
     {
-      title: 'Nome',
+      title: 'Destinatário',
       dataIndex: 'name',
       key: 'name',
     },
@@ -44,34 +48,41 @@ export function columns({ reSendNotificationMutation }: ColumnsProps) {
       key: 'sender',
     },
     {
-      title: 'Criado em',
+      title: 'Data de recebimento',
       dataIndex: 'createdAt',
       key: 'createdAt',
+    },
+    {
+      title: 'Data da assinatura',
+      dataIndex: 'signDateHour',
+      key: 'signDateHour',
     },
     {
       title: 'Ações',
       key: 'action',
       align: 'center',
       render: (record: Order) => (
-        <>
-          <div className="flex justify-center text-center items-center">
-            <a target="_blank" href={record.sign}>
+        <div className="flex justify-center text-center items-center">
+          {record.sign && (
+            <a target="_blank" href={record.sign} className="mr-3">
               <CloudDownloadOutlined className="text-2xl" />
-              <div className="flex justify-center text-center">
-                baixar assinatura
-              </div>
+              <div className="flex justify-center text-center">assinatura</div>
             </a>
-            <a
-              onClick={() => reSendNotificationMutation(record.id)}
-              className="m-3"
-            >
-              <SendOutlined className="text-2xl" />
-              <div className="flex justify-center text-center">
-                reenviar notificação
-              </div>
+          )}
+          {record.img && (
+            <a target="_blank" href={record.img}>
+              <FileImageOutlined className="text-2xl" />
+              <div className="flex justify-center text-center">imagem</div>
             </a>
-          </div>
-        </>
+          )}
+          <a
+            onClick={() => reSendNotificationMutation(record.id)}
+            className="m-3"
+          >
+            <SendOutlined className="text-2xl" />
+            <div className="flex justify-center text-center">notificação</div>
+          </a>
+        </div>
       ),
     },
   ];

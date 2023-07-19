@@ -16,9 +16,14 @@ export interface Order {
   addresseeId: string;
   sign?: string;
   sender?: string;
+  img?: string;
+  description?: string;
+  trackingCode?: string;
+  signDateHour?: string;
 }
 
 export interface CreateOrder {
   addresseeId: string;
   sender?: string;
+  imgSrc: string | null;
 }

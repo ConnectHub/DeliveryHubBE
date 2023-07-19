@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { VenomBot } from 'src/infra/whatsapp/venom-bot';
+import { VenomBot } from '../..//infra/whatsapp/venom-bot';
 import { NotificationTemplate } from './templates/notification-messsage-template';
 import { NotificationErrorRepository } from './repository/notification-errors-repository';
 import { PhoneNumberNotProvided } from '../order/errors/phone-number-not-provided';
-import { Order } from 'src/domain/entities/order';
+import { Order } from '../../domain/entities/order';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import { OrderCreatedTemplate } from './interfaces';
 
 @Injectable()
 export class NotificationService {
@@ -16,19 +17,24 @@ export class NotificationService {
   ) {}
 
   private async sendNotification(
-    message: string,
+    orderMessage: OrderCreatedTemplate,
     resident: string,
+    orderImg: string,
   ): Promise<void> {
-    await this.whatsapp.sendMessage(message, resident);
+    if (orderImg)
+      await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
+    await this.whatsapp.sendMessage(orderMessage.message, resident);
   }
 
   async sendOrderNotification(
     orderId: string,
     phoneNumber: string,
+    orderImg?: string,
   ): Promise<void> {
     await this.sendNotification(
       new NotificationTemplate().orderCreated(orderId),
       phoneNumber,
+      orderImg,
     );
   }
 
@@ -47,6 +53,7 @@ export class NotificationService {
       {
         orderId: order.url,
         phoneNumber: order.addressee.phoneNumber,
+        orderImg: order?.img,
       },
       {
         attempts: 3,

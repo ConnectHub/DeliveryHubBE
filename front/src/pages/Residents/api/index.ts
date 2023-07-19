@@ -9,7 +9,6 @@ export async function createResident(resident: Resident): Promise<Resident> {
   return (
     await api.post('/resident/create', {
       ...resident,
-      condominiumId: '1',
     })
   ).data;
 }

@@ -5,6 +5,7 @@ import { Footer } from 'antd/es/layout/layout';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useToggle } from '../../hooks/useToggle';
 import Logo from '../Logo';
+import LogoutButton from './components/LogoutButton';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
@@ -64,6 +65,7 @@ function LayoutScreen() {
             onClick={toggleCollapsed}
             className="text-base w-[64px] h-[64px]"
           />
+          <LogoutButton />
         </Header>
         <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />

@@ -1,19 +1,22 @@
-import { OnApplicationShutdown } from '@nestjs/common';
+import { Logger, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { create, Whatsapp } from 'venom-bot';
 
-export class VenomBot implements OnApplicationShutdown {
-  client: Whatsapp;
-
-  constructor() {
-    this.start();
-  }
+export class VenomBot implements OnApplicationShutdown, OnModuleInit {
+  private readonly logger = new Logger('VenomBot');
+  private client: Whatsapp;
 
   async onApplicationShutdown() {
-    console.log('Closing whatsapp client');
+    this.logger.log('Closing whatsapp client');
+    if (!this.client) return;
     await this.client.close();
   }
 
-  async start() {
+  async onModuleInit() {
+    this.logger.log('Starting whatsapp client');
+    await this.start();
+  }
+
+  private async start() {
     this.client = await create({
       session: 'session',
       headless: false,
@@ -21,12 +24,18 @@ export class VenomBot implements OnApplicationShutdown {
   }
 
   async sendMessage(message: string, recipient: string) {
-    console.log('Sending message:', message, 'to', recipient);
-    await this.client.sendText(recipient, message);
+    this.logger.log('Sending message:', message, 'to', recipient);
+    await this.client.sendText(recipient, message).catch((err) => {
+      this.logger.error(err);
+    });
   }
 
-  async sendFile(file: string, recipient: string) {
-    console.log('Sending file:', file, 'to', recipient);
-    await this.client.sendFile(recipient, file);
+  async sendImage(file: string, recipient: string, caption: string) {
+    this.logger.log('Sending file:', file, 'to', recipient);
+    await this.client
+      .sendImage(recipient, file, caption, caption)
+      .catch((err) => {
+        this.logger.error(err);
+      });
   }
 }

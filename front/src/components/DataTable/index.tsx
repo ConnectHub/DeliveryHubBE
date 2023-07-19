@@ -14,6 +14,9 @@ function DataTable({ data, columns }: DataTableProps) {
       rowSelection={{
         type: 'checkbox',
       }}
+      pagination={{
+        pageSize: 7,
+      }}
     />
   );
 }
