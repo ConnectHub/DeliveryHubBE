@@ -13,7 +13,9 @@ export class VenomBot implements OnApplicationShutdown, OnModuleInit {
 
   async onModuleInit() {
     this.logger.log('Starting whatsapp client');
-    await this.start();
+    await this.start().catch((err) => {
+      this.logger.error(err);
+    });
   }
 
   private async start() {

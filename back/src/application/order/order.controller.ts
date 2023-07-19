@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Post,
   Request,
+  UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -16,6 +17,9 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
 import { RequestI } from '../auth/interfaces';
 import { NotificationService } from '../notification/notification.service';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '@prisma/client';
+import { RolesGuard } from '../roles/guard/role.guard';
 
 @ApiTags('order')
 @Controller('order')
@@ -63,6 +67,8 @@ export class OrderController {
     await this.notificationService.addNotificationQueue(newOrder);
   }
 
+  @UseGuards(RolesGuard)
+  @Roles(Role.USER)
   @Delete(':id')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
     await this.orderService.deleteOrder(id);

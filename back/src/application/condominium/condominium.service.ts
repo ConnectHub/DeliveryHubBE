@@ -8,11 +8,13 @@ import { hash, genSalt } from 'bcrypt';
 export class CondominiumService {
   constructor(private readonly condominiumRepository: CondominiumRepository) {}
 
-  async createCondominium(condominium: Condominium): Promise<Condominium> {
+  private async hashPassword(password: string): Promise<string> {
     const saltOrRounds = 10;
     const salt = await genSalt(saltOrRounds);
-    const passHash = await hash(condominium.password, salt);
-    condominium.password = passHash;
+    return await hash(password, salt);
+  }
+  async createCondominium(condominium: Condominium): Promise<Condominium> {
+    condominium.password = await this.hashPassword(condominium.password);
     return await this.condominiumRepository.create(condominium);
   }
 

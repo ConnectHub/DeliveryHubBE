@@ -16,6 +16,11 @@ enum Status {
   CANCELED
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model order {
   id              String    @id @unique @default(uuid())
   url             String    @unique @default(cuid())
@@ -58,6 +63,7 @@ model condominium {
   login     String     @unique
   password  String
   name      String
+  roles     Role[]     @default([USER])
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now()) @updatedAt
   deletedAt DateTime?

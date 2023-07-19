@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client';
 import {
   IsEmail,
   IsNotEmpty,
@@ -25,4 +26,6 @@ export class UpdateCondominiumDto {
   @IsNotEmpty()
   @Length(3, 30)
   name: string;
+
+  roles: Role[];
 }

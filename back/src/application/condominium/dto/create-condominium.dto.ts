@@ -1,4 +1,12 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import { Role } from '@prisma/client';
+import {
+  IsArray,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateCondominiumDto {
   @IsString()
@@ -16,4 +24,9 @@ export class CreateCondominiumDto {
   @IsNotEmpty()
   @Length(3, 30)
   name: string;
+
+  @IsArray()
+  @IsEnum(Role)
+  @IsNotEmpty()
+  roles: Role[];
 }
