@@ -1,17 +1,17 @@
-import { OnApplicationShutdown } from '@nestjs/common';
+import { OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { create, Whatsapp } from 'venom-bot';
 
-export class VenomBot implements OnApplicationShutdown {
+export class VenomBot implements OnApplicationShutdown, OnModuleInit {
   client: Whatsapp;
-
-  constructor() {
-    this.start();
-  }
 
   async onApplicationShutdown() {
     console.log('Closing whatsapp client');
     if (!this.client) return;
     await this.client.close();
+  }
+
+  async onModuleInit() {
+    await this.start();
   }
 
   async start() {
