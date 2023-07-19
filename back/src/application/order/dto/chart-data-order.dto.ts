@@ -1,4 +1,4 @@
 export class ChartDataDTO {
-  total: number;
-  description: string;
+  _count: number;
+  status: string;
 }
