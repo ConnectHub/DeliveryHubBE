@@ -1,11 +1,12 @@
-import { OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import { Logger, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { create, Whatsapp } from 'venom-bot';
 
 export class VenomBot implements OnApplicationShutdown, OnModuleInit {
-  client: Whatsapp;
+  private readonly logger = new Logger(VenomBot.name);
+  private client: Whatsapp;
 
   async onApplicationShutdown() {
-    console.log('Closing whatsapp client');
+    this.logger.log('Closing whatsapp client');
     if (!this.client) return;
     await this.client.close();
   }
@@ -14,7 +15,7 @@ export class VenomBot implements OnApplicationShutdown, OnModuleInit {
     await this.start();
   }
 
-  async start() {
+  private async start() {
     this.client = await create({
       session: 'session',
       headless: 'new',
@@ -22,12 +23,12 @@ export class VenomBot implements OnApplicationShutdown, OnModuleInit {
   }
 
   async sendMessage(message: string, recipient: string) {
-    console.log('Sending message:', message, 'to', recipient);
+    this.logger.log('Sending message:', message, 'to', recipient);
     await this.client.sendText(recipient, message);
   }
 
   async sendFile(file: string, recipient: string) {
-    console.log('Sending file:', file, 'to', recipient);
+    this.logger.log('Sending file:', file, 'to', recipient);
     await this.client.sendFile(recipient, file);
   }
 }
