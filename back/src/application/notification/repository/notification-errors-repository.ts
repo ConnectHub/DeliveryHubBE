@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { InboxMessageErrorsInterface } from 'src/domain/repositories/inbox-message-errors';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { InboxMessageErrorsInterface } from '../../../domain/repositories/inbox-message-errors';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class NotificationErrorRepository
