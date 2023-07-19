@@ -18,17 +18,21 @@ export class NotificationService {
   private async sendNotification(
     message: string,
     resident: string,
+    orderImg: string,
   ): Promise<void> {
     await this.whatsapp.sendMessage(message, resident);
+    if (orderImg) await this.whatsapp.sendFile(orderImg, resident);
   }
 
   async sendOrderNotification(
     orderId: string,
     phoneNumber: string,
+    orderImg?: string,
   ): Promise<void> {
     await this.sendNotification(
       new NotificationTemplate().orderCreated(orderId),
       phoneNumber,
+      orderImg,
     );
   }
 
@@ -47,6 +51,7 @@ export class NotificationService {
       {
         orderId: order.url,
         phoneNumber: order.addressee.phoneNumber,
+        orderImg: order?.img,
       },
       {
         attempts: 3,
