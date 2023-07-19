@@ -11,16 +11,16 @@ import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from '../../services/api/interfaces';
 import { CreateOrder } from './interfaces';
-import  LoadingComponent  from '../../components/Loading';
-import GlitchError from "../../components/Error";
+import LoadingComponent from '../../components/Loading';
+import GlitchError from '../../components/Error';
 import Webcam from 'react-webcam';
 import { videoConstraints } from './constraints';
 import { BarcodeOutlined } from '@ant-design/icons';
 
 function OrdersPage() {
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery("orderData", getOrders);
-  const { data: residents } = useQuery("residentsList", getResidents);
+  const { isLoading, error, data } = useQuery('orderData', getOrders);
+  const { data: residents } = useQuery('residentsList', getResidents);
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
@@ -36,12 +36,12 @@ function OrdersPage() {
     onSuccess: () => {
       setOpen(false);
       form.resetFields();
-      queryClient.invalidateQueries("orderData");
-      toast.success("Encomenda cadastrada com sucesso");
+      queryClient.invalidateQueries('orderData');
+      toast.success('Encomenda cadastrada com sucesso');
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(
-        error.response?.data?.message[0] ?? "Erro ao cadastrar a encomenda"
+        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda',
       );
     },
   });
@@ -106,7 +106,7 @@ function OrdersPage() {
             rules={[
               {
                 required: true,
-                message: "Selecione o residente!",
+                message: 'Selecione o residente!',
               },
             ]}
           >
@@ -115,7 +115,7 @@ function OrdersPage() {
               placeholder="Selecione o residente"
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option?.label ?? "")
+                (option?.label ?? '')
                   .toLowerCase()
                   .includes(input.toLowerCase())
               }
@@ -148,7 +148,7 @@ function OrdersPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading && <LoadingComponent/>}
+      {isLoading && <LoadingComponent />}
       {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
       {data && <DataTable data={data ?? []} columns={orderColumns} />}
     </>
