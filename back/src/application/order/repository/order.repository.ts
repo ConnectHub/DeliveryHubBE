@@ -3,6 +3,7 @@ import { Status } from '@prisma/client';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
+import { ChartDataDTO } from '../dto/chart-data-order.dto';
 
 @Injectable()
 export class OrderRepository implements OrderRepositoryInterface {
@@ -20,14 +21,15 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async getTotalByStatus(id: string): Promise<any> {
-    return await this.prisma.order.groupBy({
+  async getTotalByStatus(id: string): Promise<ChartDataDTO[]> {
+    const data = await this.prisma.order.groupBy({
       by: ['status'],
       _count: true,
       where: {
         id,
       },
     });
+    return data;
   }
 
   async findByUrl(url: string): Promise<Order> {
