@@ -9,6 +9,7 @@ interface ModalComponentProps {
   onSubmit: (values: any) => void;
   form: FormInstance<any>;
   setIsEditing?: (isEditing: boolean) => void;
+  onCancel?: () => void;
   width?: number;
 }
 
@@ -19,11 +20,17 @@ function FormModalComponent({
   form,
   open,
   setOpen,
+  onCancel,
   children,
 }: ModalComponentProps) {
   function handleClick() {
     form.resetFields();
     setOpen(true);
+  }
+
+  function handleCancel() {
+    setOpen(false);
+    onCancel?.();
   }
 
   return (
@@ -45,7 +52,7 @@ function FormModalComponent({
               console.log('Validate Failed:', info);
             });
         }}
-        onCancel={() => setOpen(false)}
+        onCancel={handleCancel}
         width={width}
         okText="salvar"
         cancelText="cancelar"

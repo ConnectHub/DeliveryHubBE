@@ -26,10 +26,9 @@ function OrdersPage() {
   const webcamRef = useRef<Webcam>(null);
 
   const capture = useCallback(() => {
-    if (imgSrc) return setImgSrc(null);
     const imageSrc = webcamRef.current?.getScreenshot() ?? null;
     setImgSrc(imageSrc);
-  }, [webcamRef, imgSrc]);
+  }, [webcamRef]);
 
   const { mutate: createOrderMutation } = useMutation(createOrder, {
     onSuccess: () => {
@@ -62,7 +61,11 @@ function OrdersPage() {
       ...values,
       imgSrc,
     });
-    setImgSrc(null);
+  }
+
+  function handleCancel() {
+    const stream = webcamRef?.current?.stream;
+    stream?.getTracks().forEach((track) => track.stop());
   }
 
   const orderColumns = columns({ reSendNotificationMutation });
@@ -77,6 +80,7 @@ function OrdersPage() {
         onSubmit={handleSubmit}
         form={form}
         width={500}
+        onCancel={handleCancel}
         title={'Cadastrar encomenda'}
       >
         <Form form={form} className="grid grid-cols-12">
@@ -131,17 +135,15 @@ function OrdersPage() {
                 alt="Imagem capturada"
               />
             ) : (
-              <>
-                <Webcam
-                  className="flex justify-center items-center rounded-md shadow-md"
-                  audio={false}
-                  ref={webcamRef}
-                  width={450}
-                  screenshotFormat="image/jpeg"
-                  videoConstraints={videoConstraints}
-                  mirrored
-                />
-              </>
+              <Webcam
+                className="flex justify-center items-center rounded-md shadow-md"
+                audio={false}
+                ref={webcamRef}
+                width={450}
+                screenshotFormat="image/jpeg"
+                videoConstraints={videoConstraints}
+                mirrored
+              />
             )}
             <Button className="mt-3" onClick={capture}>
               {imgSrc ? 'Recapturar' : 'Capturar'}
