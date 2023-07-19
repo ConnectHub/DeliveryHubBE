@@ -1,10 +1,12 @@
+import { OrderCreatedTemplate } from '../interfaces';
+
 export class NotificationTemplate {
-  domain: string;
+  private domain: string;
   constructor() {
     this.domain = process.env.DOMAIN_NAME || 'http://localhost:5173';
   }
 
-  createdTypeMessages() {
+  createdTypeMessages(): string[] {
     return [
       `Olá meu consagrado, você tem uma nova encomenda para receber!\nClique no link para confirmar o recebimento: ${this.domain}/sign-order/{{orderId}} \n \nObrigado por usar o Deliveryhub! ❤️`,
       `Ei, uma nova encomenda foi criada para você!\nnClique no link para assinar: ${this.domain}/sign-order/{{orderId}} \n \nAgradecemos por utilizar o Deliveryhub! ❤️`,
@@ -17,13 +19,16 @@ export class NotificationTemplate {
     ];
   }
 
-  selectMessage() {
+  selectMessage(): string {
     const message = this.createdTypeMessages();
     const index = Math.floor(Math.random() * message.length);
     return message[index];
   }
 
-  orderCreated(orderId) {
-    return this.selectMessage().replace('{{orderId}}', orderId);
+  orderCreated(orderId: string): OrderCreatedTemplate {
+    return {
+      message: this.selectMessage().replace('{{orderId}}', orderId),
+      caption: 'Encomenda chegando!',
+    };
   }
 }

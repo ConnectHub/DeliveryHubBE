@@ -6,6 +6,7 @@ import { PhoneNumberNotProvided } from '../order/errors/phone-number-not-provide
 import { Order } from '../../domain/entities/order';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import { OrderCreatedTemplate } from './interfaces';
 
 @Injectable()
 export class NotificationService {
@@ -16,12 +17,13 @@ export class NotificationService {
   ) {}
 
   private async sendNotification(
-    message: string,
+    orderMessage: OrderCreatedTemplate,
     resident: string,
     orderImg: string,
   ): Promise<void> {
-    await this.whatsapp.sendMessage(message, resident);
-    if (orderImg) await this.whatsapp.sendFile(orderImg, resident);
+    if (orderImg)
+      await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
+    await this.whatsapp.sendMessage(orderMessage.message, resident);
   }
 
   async sendOrderNotification(
