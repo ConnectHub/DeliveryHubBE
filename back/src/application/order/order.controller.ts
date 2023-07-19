@@ -11,7 +11,6 @@ import {
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { ChartDataDTO } from './dto/chart-data-order.dto';
 import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
@@ -28,7 +27,7 @@ export class OrderController {
 
   @ApiOkResponse({ type: OrderViewModel })
   @Get('/totalByStatus')
-  async getTotalByStatus(@Request() req: RequestI): Promise<ChartDataDTO[]> {
+  async getTotalByStatus(@Request() req: RequestI) {
     const orders = await this.orderService.getTotalByStatus(req.sub);
     return orders.map(OrderViewModel.countByStatus);
   }
