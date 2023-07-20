@@ -1,5 +1,5 @@
-import { LogoutOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import { LogOutIcon } from 'lucide-react';
 
 function LogoutButton() {
   function handleLogout() {
@@ -9,8 +9,13 @@ function LogoutButton() {
 
   return (
     <div>
-      <Button icon onClick={handleLogout} className="text-white" type="link">
-        <LogoutOutlined />
+      <Button
+        icon
+        onClick={handleLogout}
+        className="text-white flex gap-3"
+        type="link"
+      >
+        <LogOutIcon />
         Sair
       </Button>
     </div>

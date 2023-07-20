@@ -52,7 +52,7 @@ function LayoutScreen() {
         />
       </Sider>
       <Layout className={colorBgContainer}>
-        <Header className="flex p-0 bg-primary justify-between px-2">
+        <Header className="flex p-0 bg-primary justify-between px-2 items-center">
           <Button
             type="text"
             icon={
