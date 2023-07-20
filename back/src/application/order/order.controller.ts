@@ -68,7 +68,7 @@ export class OrderController {
   }
 
   @UseGuards(RolesGuard)
-  @Roles(Role.USER)
+  @Roles(Role.ADMIN)
   @Delete(':id')
   async delete(@Param('id', ParseUUIDPipe) id: string) {
     await this.orderService.deleteOrder(id);
