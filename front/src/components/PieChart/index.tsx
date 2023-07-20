@@ -19,14 +19,16 @@ function PieChart({ queryFunction, title }: PieChartData) {
   const config = createConfig(data ?? []);
 
   return (
-    <div className="flex flex-col items-center border-solid">
-      <h2 className="text-3xl font-semibold mb-2">{title}</h2>
-      {isLoading && <LoadingComponent />}
-      {error && <GlitchError text="ERROR AO GERAR O GRÁFICO" />}
-      {data && data?.length == 0 && (
-        <GlitchError text="Não há dados para mostrar!" />
-      )}
-      {data && data?.length > 0 && <Pie {...config} />}
+    <div className="flex flex-col bg-primary p-5 rounded hover:scale-105 w-[600px]">
+      <div className="bg-slate-50 rounded">
+        <h2 className="text-3xl font-semibold mb-2">{title}</h2>
+        {isLoading && <LoadingComponent />}
+        {error && <GlitchError text="ERROR AO GERAR O GRÁFICO" />}
+        {data && data?.length == 0 && (
+          <GlitchError text="Não há dados para mostrar!" />
+        )}
+        {data && data?.length > 0 && <Pie {...config} />}
+      </div>
     </div>
   );
 }
