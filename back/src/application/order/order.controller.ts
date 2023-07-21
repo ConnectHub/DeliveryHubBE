@@ -15,7 +15,7 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderViewModel } from './view-model/order-view-model';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../decorators/public.decorator';
-import { RequestI } from '../auth/interfaces';
+import { RequestInterface } from '../auth/interfaces';
 import { NotificationService } from '../notification/notification.service';
 import { Roles } from '../decorators/roles.decorator';
 import { Role } from '@prisma/client';
@@ -31,8 +31,8 @@ export class OrderController {
 
   @ApiOkResponse({ type: OrderViewModel })
   @Get('/totalByStatus')
-  async getTotalByStatus(@Request() req: RequestI) {
-    const orders = await this.orderService.getTotalByStatus(req.sub);
+  async getTotalByStatus(@Request() req: RequestInterface) {
+    const orders = await this.orderService.getTotalByStatus(req.user.sub);
     return orders.map(OrderViewModel.countByStatus);
   }
 
@@ -44,8 +44,8 @@ export class OrderController {
 
   @ApiOkResponse({ type: [OrderViewModel] })
   @Get('list/recipient')
-  async findByRecipient(@Request() req: RequestI) {
-    const orders = await this.orderService.findOrders(req.sub);
+  async findByRecipient(@Request() req: RequestInterface) {
+    const orders = await this.orderService.findOrders(req.user.sub);
     return orders.map(OrderViewModel.toHttp);
   }
 

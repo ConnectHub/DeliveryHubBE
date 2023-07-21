@@ -3,13 +3,15 @@ import { useMutation } from 'react-query';
 import { login } from '../pages/Login/api';
 import useLocalStorage from 'use-local-storage';
 import { FormValues } from '../pages/Login/interfaces';
+import { User } from './interfaces';
 
 export const AuthContext = createContext({
   user: {
     authToken: '',
+    rate: false,
   },
   signIn: (values: FormValues) => {
-    return new Promise<string>((resolve) => resolve(values.email));
+    return Promise.resolve(values.email);
   },
   isError: false,
 });
@@ -18,31 +20,32 @@ interface UserContextProps {
   children: React.ReactNode;
 }
 
-interface User {
-  authToken: string;
-}
-
 function ContextUserContext({ children }: UserContextProps) {
   const [user, setUser] = useState<User>({
     authToken: '',
+    rate: false,
   });
   const { mutateAsync, isError } = useMutation('login', login);
   const [token, setToken] = useLocalStorage('token', '');
+  const [rate, setRate] = useLocalStorage<boolean>('rate', false);
 
   useEffect(() => {
     if (token) {
       setUser({
         authToken: token,
+        rate,
       });
     }
-  }, [token]);
+  }, [token, rate]);
 
   async function signIn(values: FormValues) {
-    const { authToken } = await mutateAsync(values);
+    const { authToken, rate } = await mutateAsync(values);
     setUser({
       authToken,
+      rate,
     });
     setToken(authToken);
+    setRate(rate);
     return authToken;
   }
 

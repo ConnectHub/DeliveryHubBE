@@ -16,6 +16,7 @@ export class AuthService {
     password: string,
   ): Promise<{
     authToken: string;
+    rate: boolean;
   }> {
     const user = await this.condominiumService.findCondominiumByLogin(login);
     if (!user) throw new UserUnauthorized();
@@ -24,6 +25,7 @@ export class AuthService {
     const payload = { login: user.login, sub: user.id, roles: user.roles };
     return {
       authToken: await this.jwtService.signAsync(payload),
+      rate: !!user.rateId,
     };
   }
 }

@@ -8,6 +8,7 @@ import { CondominiumModule } from './application/condominium/condominium.module'
 import { AuthModule } from './application/auth/auth.module';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { RateModule } from './application/rate/rate.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     ResidentModule,
     CondominiumModule,
     AuthModule,
+    RateModule,
   ],
   providers: [
     {

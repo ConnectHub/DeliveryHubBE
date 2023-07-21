@@ -41,4 +41,8 @@ export class CondominiumService {
   async findCondominiumByLogin(login: string): Promise<Condominium> {
     return await this.condominiumRepository.findByLogin(login);
   }
+
+  async updateRate(rateId: string, id: string) {
+    await this.condominiumRepository.updateRate(rateId, id);
+  }
 }

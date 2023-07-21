@@ -16,6 +16,7 @@ import GlitchError from '../../components/Error';
 import Webcam from 'react-webcam';
 import { videoConstraints } from './constraints';
 import { BarcodeOutlined } from '@ant-design/icons';
+import RateComponent from '../../components/Rate';
 
 function OrdersPage() {
   const queryClient = useQueryClient();
@@ -150,6 +151,7 @@ function OrdersPage() {
           </Form.Item>
         </Form>
       </Modal>
+      <RateComponent />
       {isLoading && <LoadingComponent />}
       {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
       {data && <DataTable data={data ?? []} columns={orderColumns} />}

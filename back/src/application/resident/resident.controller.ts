@@ -15,7 +15,7 @@ import { UpdateResidentDto } from './dto/update-resident.dto';
 import { FindByDataDto } from './dto/find-by-infos.dto';
 import { ResidentViewModel } from './view-model/resident-view-model';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { RequestI } from '../auth/interfaces';
+import { RequestInterface } from '../auth/interfaces';
 
 @ApiTags('resident')
 @Controller('resident')
@@ -30,8 +30,8 @@ export class ResidentController {
 
   @ApiOkResponse({ type: [ResidentViewModel] })
   @Get('list')
-  async list(@Request() req: RequestI) {
-    const orders = await this.residentService.listAllResidents(req.sub);
+  async list(@Request() req: RequestInterface) {
+    const orders = await this.residentService.listAllResidents(req.user.sub);
     return orders.map(ResidentViewModel.toHttp);
   }
 

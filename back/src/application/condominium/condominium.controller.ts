@@ -3,6 +3,7 @@ import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
 import { CondominiumService } from './condominium.service';
 import { CondominiumViewModel } from './view-model/condominium-view-model';
+import { Public } from '../decorators/public.decorator';
 
 @Controller('condominium')
 export class CondominiumController {

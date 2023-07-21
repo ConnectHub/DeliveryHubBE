@@ -56,6 +56,20 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
         login,
         deletedAt: null,
       },
+      include: {
+        rate: true,
+      },
+    });
+  }
+
+  async updateRate(rateId: string, id: string): Promise<void> {
+    await this.prisma.condominium.update({
+      where: {
+        id,
+      },
+      data: {
+        rateId,
+      },
     });
   }
 }

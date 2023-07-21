@@ -1,4 +1,6 @@
-export interface RequestI {
-  login: string;
-  sub: string;
+export interface RequestInterface {
+  user: {
+    login: string;
+    sub: string;
+  };
 }
