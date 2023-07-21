@@ -13,7 +13,7 @@ function LoginPage() {
   const [token] = useLocalStorage('token', user.authToken);
 
   useEffect(() => {
-    if (token) navigator('/orders');
+    if (token) navigator('/');
   }, [token, navigator]);
 
   useEffect(() => {

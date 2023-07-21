@@ -7,16 +7,17 @@ import {
   updateResident,
 } from './api';
 import { columns } from './components/Columns';
-import Modal from '../../components/Modal';
 import { toast } from 'react-toastify';
+import Modal from '../../components/Modal';
 import Input from '../../components/Input';
+import GlitchError from '../../components/Error';
 import { Form, Select } from 'antd';
 import { AxiosError } from 'axios';
 import { useState } from 'react';
 import { ErrorResponse } from '../../services/api/interfaces';
 import { Resident } from './interfaces';
 import { Home, Mail, Phone, User } from 'lucide-react';
-import { LoadingComponent } from '../../components/Loading';
+import LoadingComponent from '../../components/Loading';
 import { getCondominiums } from '../Condominiums/api';
 
 const query = 'residentData';
@@ -83,8 +84,6 @@ function ResidentsPage() {
   }
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
-
-  if (error) return <div>error</div>;
 
   return (
     <>
@@ -165,11 +164,10 @@ function ResidentsPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <LoadingComponent />
-      ) : (
-        <DataTable data={data ?? []} columns={residentColumns} />
-      )}
+
+      {isLoading && <LoadingComponent />}
+      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {data && <DataTable data={data ?? []} columns={residentColumns} />}
     </>
   );
 }

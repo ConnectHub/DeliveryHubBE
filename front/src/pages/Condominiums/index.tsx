@@ -3,7 +3,7 @@ import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { Form, Input } from 'antd';
 import Modal from '../../components/Modal';
 import DataTable from '../../components/DataTable';
-import { LoadingComponent } from '../../components/Loading';
+import LoadingComponent from '../../components/Loading';
 import { createCondominium, deleteCondominium, getCondominiums } from './api';
 import { columns } from './components/columns';
 import { AxiosError } from 'axios';
@@ -11,10 +11,14 @@ import { ErrorResponse } from '../../services/api/interfaces';
 import { toast } from 'react-toastify';
 import { Building2, FormInput, KeyRound } from 'lucide-react';
 import { Condominium } from './interfaces';
+import GlitchError from '../../components/Error';
 
 function CondominiumsPage() {
   const queryClient = useQueryClient();
-  const { isLoading, data } = useQuery('condominiumData', getCondominiums);
+  const { isLoading, error, data } = useQuery(
+    'condominiumData',
+    getCondominiums,
+  );
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -112,11 +116,10 @@ function CondominiumsPage() {
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <LoadingComponent />
-      ) : (
-        <DataTable data={data ?? []} columns={condominiumColumns} />
-      )}
+
+      {isLoading && <LoadingComponent />}
+      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {data && <DataTable data={data ?? []} columns={condominiumColumns} />}
     </>
   );
 }

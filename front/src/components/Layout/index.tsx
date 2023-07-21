@@ -52,7 +52,7 @@ function LayoutScreen() {
         />
       </Sider>
       <Layout className={colorBgContainer}>
-        <Header className="flex p-0 bg-primary justify-between px-2">
+        <Header className="flex p-0 bg-primary justify-between px-2 items-center">
           <Button
             type="text"
             icon={
@@ -67,7 +67,7 @@ function LayoutScreen() {
           />
           <LogoutButton />
         </Header>
-        <Content className={`my-6 mx-4 min-h-[280px] h-[100vh] rounded`}>
+        <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />
         </Content>
         <Footer className="text-center">

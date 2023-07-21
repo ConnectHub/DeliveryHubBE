@@ -30,6 +30,13 @@ export class OrderController {
   ) {}
 
   @ApiOkResponse({ type: OrderViewModel })
+  @Get('/totalByStatus')
+  async getTotalByStatus(@Request() req: RequestI) {
+    const orders = await this.orderService.getTotalByStatus(req.sub);
+    return orders.map(OrderViewModel.countByStatus);
+  }
+
+  @ApiOkResponse({ type: OrderViewModel })
   @Get(':id')
   async findById(@Param('id', ParseUUIDPipe) id: string) {
     return await this.orderService.findOrderById(id);

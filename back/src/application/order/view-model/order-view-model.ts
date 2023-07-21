@@ -3,6 +3,7 @@ import { Order } from 'src/domain/entities/order';
 import { FormatDate } from '../../../infra/utils/format-date';
 import { translateStatus } from '../translator/order.translator';
 import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
+import { ChartDataDTO } from '../dto/chart-data-order.dto';
 
 export class OrderViewModel {
   @ApiProperty()
@@ -29,6 +30,9 @@ export class OrderViewModel {
   @ApiProperty()
   updatedAt: string;
 
+  @ApiProperty()
+  _count: string;
+
   static toHttp(order: Order) {
     return {
       id: order.id,
@@ -37,6 +41,7 @@ export class OrderViewModel {
         order?.addressee?.phoneNumber ?? undefined,
       ),
       sender: order.sender ?? '-----',
+      //analyze best solution to translate status
       status: translateStatus[order.status].toUpperCase(),
       originalStatus: order.status,
       code: order.code,
@@ -49,6 +54,14 @@ export class OrderViewModel {
       signDateHour: FormatDate.format(order.signDateHour),
       createdAt: FormatDate.format(order.receiptDateHour),
       updatedAt: FormatDate.format(order.updatedAt),
+    };
+  }
+
+  static countByStatus(order: ChartDataDTO) {
+    return {
+      total: +order._count,
+      //analyze best solution to translate status
+      description: translateStatus[order.status].toUpperCase() + 'S',
     };
   }
 }
