@@ -20,7 +20,6 @@ export class AuthService {
     username: string;
   }> {
     const user = await this.userService.findUserByLogin(login);
-    console.log(user);
     if (!user) throw new UserUnauthorized();
     const isMatch = await compare(password, user.password);
     if (!isMatch) throw new UserUnauthorized();
