@@ -17,10 +17,13 @@ import Webcam from 'react-webcam';
 import { videoConstraints } from './constraints';
 import { BarcodeOutlined } from '@ant-design/icons';
 import RateComponent from '../../components/Rate';
+import { useTranslation } from 'react-i18next';
 
 function OrdersPage() {
   const { data, isLoading, error } = useGetOrders();
   const { data: residents } = useGetResidents();
+
+  const { t } = useTranslation('common');
 
   const [form] = Form.useForm();
 
@@ -34,9 +37,9 @@ function OrdersPage() {
     setImgSrc(imageSrc);
   }, [webcamRef]);
 
-  const { mutate: createOrderMutation } = useCreateOrder();
+  const { mutate: createOrderMutation } = useCreateOrder(t);
 
-  const { mutate: reSendNotificationMutation } = useReSendNotification();
+  const { mutate: reSendNotificationMutation } = useReSendNotification(t);
 
   function handleSubmit(values: CreateOrder) {
     createOrderMutation({
@@ -63,11 +66,14 @@ function OrdersPage() {
         form={form}
         width={500}
         onCancel={handleCancel}
-        title={'Cadastrar encomenda'}
+        title={t('orders.modal.title')}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item className="col-span-full" name="sender">
-            <Input prefix={<Truck size={16} />} placeholder="Remetente" />
+            <Input
+              prefix={<Truck size={16} />}
+              placeholder={t('orders.sender.placeholder')}
+            />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -75,17 +81,17 @@ function OrdersPage() {
             rules={[
               {
                 min: 13,
-                message: 'O código deve ter no mínimo 13 caracteres',
+                message: t('orders.trackingCode.min'),
               },
             ]}
           >
             <Input
               prefix={<BarcodeOutlined size={16} />}
-              placeholder="código de rastreamento"
+              placeholder={t('orders.trackingCode.placeholder')}
             />
           </Form.Item>
           <Form.Item className="col-span-full" name="description">
-            <Input.TextArea placeholder="Descrição" />
+            <Input.TextArea placeholder={t('orders.description.placeholder')} />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -93,13 +99,13 @@ function OrdersPage() {
             rules={[
               {
                 required: true,
-                message: 'Selecione o residente!',
+                message: t('orders.addresseeId.required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder="Selecione o residente"
+              placeholder={t('orders.addresseeId.placeholder')}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? '')
@@ -128,14 +134,14 @@ function OrdersPage() {
               />
             )}
             <Button className="mt-3" onClick={capture}>
-              {imgSrc ? 'Recapturar' : 'Capturar'}
+              {imgSrc ? t('orders.webcam.retake') : t('orders.webcam.take')}
             </Button>
           </Form.Item>
         </Form>
       </Modal>
       <RateComponent />
       {isLoading && <LoadingComponent />}
-      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {error && <GlitchError />}
       {data && <DataTable data={data ?? []} columns={orderColumns} />}
     </>
   );
