@@ -1,15 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import DataTable from '../../components/DataTable';
-import { createOrder, getOrders, reSendNotification } from './api';
+import {
+  useCreateOrder,
+  useGetOrders,
+  useReSendNotification,
+} from './api/service';
 import { columns } from './components/Columns/index';
 import Modal from '../../components/Modal';
 import { useCallback, useRef, useState } from 'react';
 import { Button, Form, Input, Select } from 'antd';
 import { Truck } from 'lucide-react';
-import { getResidents } from '../Residents/api';
-import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
-import { ErrorResponse } from '../../services/api/interfaces';
+import { useGetResidents } from '../Residents/api';
 import { CreateOrder } from './interfaces';
 import LoadingComponent from '../../components/Loading';
 import GlitchError from '../../components/Error';
@@ -19,12 +19,14 @@ import { BarcodeOutlined } from '@ant-design/icons';
 import RateComponent from '../../components/Rate';
 
 function OrdersPage() {
-  const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery('orderData', getOrders);
-  const { data: residents } = useQuery('residentsList', getResidents);
+  const { data, isLoading, error } = useGetOrders();
+  const { data: residents } = useGetResidents();
+
   const [form] = Form.useForm();
+
   const [open, setOpen] = useState(false);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
+
   const webcamRef = useRef<Webcam>(null);
 
   const capture = useCallback(() => {
@@ -32,37 +34,17 @@ function OrdersPage() {
     setImgSrc(imageSrc);
   }, [webcamRef]);
 
-  const { mutate: createOrderMutation } = useMutation(createOrder, {
-    onSuccess: () => {
-      setOpen(false);
-      form.resetFields();
-      queryClient.invalidateQueries('orderData');
-      toast.success('Encomenda cadastrada com sucesso');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar a encomenda',
-      );
-    },
-  });
+  const { mutate: createOrderMutation } = useCreateOrder();
 
-  const { mutate: reSendNotificationMutation } = useMutation(
-    reSendNotification,
-    {
-      onSuccess: () => {
-        toast.success('Notificação enviada com sucesso');
-      },
-      onError: () => {
-        toast.error('Erro ao enviar a notificação');
-      },
-    },
-  );
+  const { mutate: reSendNotificationMutation } = useReSendNotification();
 
   function handleSubmit(values: CreateOrder) {
     createOrderMutation({
       ...values,
       imgSrc,
     });
+    setOpen(false);
+    form.resetFields();
   }
 
   function handleCancel() {

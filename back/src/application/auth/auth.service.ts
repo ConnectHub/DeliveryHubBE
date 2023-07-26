@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { UserUnauthorized } from './errors/user-unauthorized';
 import { JwtService } from '@nestjs/jwt';
-import { CondominiumService } from '../condominium/condominium.service';
 import { compare } from 'bcrypt';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly condominiumService: CondominiumService,
+    private readonly userService: UserService,
   ) {}
 
   async signIn(
@@ -17,8 +17,10 @@ export class AuthService {
   ): Promise<{
     authToken: string;
     rate: boolean;
+    username: string;
   }> {
-    const user = await this.condominiumService.findCondominiumByLogin(login);
+    const user = await this.userService.findUserByLogin(login);
+    console.log(user);
     if (!user) throw new UserUnauthorized();
     const isMatch = await compare(password, user.password);
     if (!isMatch) throw new UserUnauthorized();
@@ -26,6 +28,7 @@ export class AuthService {
     return {
       authToken: await this.jwtService.signAsync(payload),
       rate: !!user.rateId,
+      username: user.name,
     };
   }
 }

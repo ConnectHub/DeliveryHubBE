@@ -9,6 +9,7 @@ import { AuthModule } from './application/auth/auth.module';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RateModule } from './application/rate/rate.module';
+import { UserModule } from './application/user/user.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RateModule } from './application/rate/rate.module';
     CondominiumModule,
     AuthModule,
     RateModule,
+    UserModule,
   ],
   providers: [
     {

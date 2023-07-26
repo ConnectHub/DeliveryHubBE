@@ -4,16 +4,16 @@ import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './guard/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
-import { CondominiumModule } from '../condominium/condominium.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: '50d' },
     }),
-    CondominiumModule,
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [

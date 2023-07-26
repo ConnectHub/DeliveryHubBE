@@ -9,6 +9,7 @@ export const AuthContext = createContext({
   user: {
     authToken: '',
     rate: false,
+    username: '',
   },
   signIn: (values: FormValues) => {
     return Promise.resolve(values.email);
@@ -24,28 +25,33 @@ function ContextUserContext({ children }: UserContextProps) {
   const [user, setUser] = useState<User>({
     authToken: '',
     rate: false,
+    username: '',
   });
   const { mutateAsync, isError } = useMutation('login', login);
   const [token, setToken] = useLocalStorage('token', '');
   const [rate, setRate] = useLocalStorage<boolean>('rate', false);
+  const [username, setUsername] = useLocalStorage('username', '');
 
   useEffect(() => {
     if (token) {
       setUser({
         authToken: token,
         rate,
+        username,
       });
     }
   }, [token, rate]);
 
   async function signIn(values: FormValues) {
-    const { authToken, rate } = await mutateAsync(values);
+    const { authToken, rate, username } = await mutateAsync(values);
     setUser({
       authToken,
       rate,
+      username,
     });
     setToken(authToken);
     setRate(rate);
+    setUsername(username);
     return authToken;
   }
 

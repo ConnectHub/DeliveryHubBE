@@ -7,4 +7,5 @@ export interface FormValues {
 export interface LoginResponse {
   authToken: string;
   rate: boolean;
+  username: string;
 }

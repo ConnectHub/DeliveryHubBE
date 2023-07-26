@@ -5,7 +5,6 @@ export class CondominiumViewModel {
     return {
       id: condominium.id,
       name: condominium.name,
-      login: condominium.login,
       createdAt: FormatDate.format(condominium.createdAt),
       updateAt: FormatDate.format(condominium.updatedAt),
       deletedAt: FormatDate.format(condominium.deletedAt),

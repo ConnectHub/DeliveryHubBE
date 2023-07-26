@@ -21,6 +21,8 @@ import UserContext from './context/UserContext.tsx';
 import ProtectedRouter from './components/ProtectedRoute/index.tsx';
 import CondominiumsPage from './pages/Condominiums/index.tsx';
 import DashboardPage from './pages/Dashboard/index.tsx';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -73,10 +75,11 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ToastContainer theme="colored" position="bottom-right" />
-      <UserContext>
-        {/* <ConfigProvider
+    <I18nextProvider i18n={i18n}>
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer theme="colored" position="bottom-right" />
+        <UserContext>
+          {/* <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
         }}
@@ -84,8 +87,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       we can use this to change the theme of antd to dark mode
       <RouterProvider router={router} />
       </ConfigProvider> */}
-        <RouterProvider router={router} />
-      </UserContext>
-    </QueryClientProvider>
+          <RouterProvider router={router} />
+        </UserContext>
+      </QueryClientProvider>
+    </I18nextProvider>
   </React.StrictMode>,
 );

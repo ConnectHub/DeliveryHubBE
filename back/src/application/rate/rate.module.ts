@@ -3,10 +3,10 @@ import { PrismaModule } from '../../infra/prisma/prisma.module';
 import { RateController } from './rate.controller';
 import { RateService } from './rate.service';
 import { RateRepository } from './repository/rate.repository';
-import { CondominiumModule } from '../condominium/condominium.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [PrismaModule, CondominiumModule],
+  imports: [PrismaModule, UserModule],
   controllers: [RateController],
   providers: [RateService, RateRepository],
 })

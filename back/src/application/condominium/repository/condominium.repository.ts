@@ -49,27 +49,4 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
       },
     });
   }
-
-  async findByLogin(login: string): Promise<Condominium> {
-    return await this.prisma.condominium.findFirst({
-      where: {
-        login,
-        deletedAt: null,
-      },
-      include: {
-        rate: true,
-      },
-    });
-  }
-
-  async updateRate(rateId: string, id: string): Promise<void> {
-    await this.prisma.condominium.update({
-      where: {
-        id,
-      },
-      data: {
-        rateId,
-      },
-    });
-  }
 }

@@ -6,10 +6,14 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useToggle } from '../../hooks/useToggle';
 import Logo from '../Logo';
 import LogoutButton from './components/LogoutButton';
+import useLocalStorage from 'use-local-storage';
+import { useTranslation } from 'react-i18next';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
+  const [username] = useLocalStorage('username', '');
+  const { t } = useTranslation('common');
 
   const {
     token: { colorBgContainer },
@@ -65,7 +69,14 @@ function LayoutScreen() {
             onClick={toggleCollapsed}
             className="text-base w-[64px] h-[64px]"
           />
-          <LogoutButton />
+          <div className="flex items-center justify-center text-center">
+            <div className="mr-2">
+              <span className="text-white text-base font-inter">
+                {t('welcome.title')}, {username.toUpperCase()}.
+              </span>
+            </div>
+            <LogoutButton />
+          </div>
         </Header>
         <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />

@@ -1,3 +1,4 @@
+import { useQuery } from 'react-query';
 import { api } from '../../../services/api';
 import { Resident } from '../interfaces';
 
@@ -19,4 +20,9 @@ export async function deleteResident(id: string): Promise<void> {
 
 export async function updateResident(resident: Resident): Promise<Resident> {
   return (await api.post('/resident/update', resident)).data;
+}
+
+const QUERY_KEY = 'residentData';
+export function useGetResidents() {
+  return useQuery(QUERY_KEY, getResidents);
 }
