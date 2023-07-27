@@ -45,7 +45,7 @@ export class OrderController {
   @ApiOkResponse({ type: [OrderViewModel] })
   @Get('list/recipient')
   async findByRecipient(@Request() req: RequestInterface) {
-    const orders = await this.orderService.findOrders(req.user.sub);
+    const orders = await this.orderService.findOrders(req.user.condominiumId);
     return orders.map(OrderViewModel.toHttp);
   }
 
