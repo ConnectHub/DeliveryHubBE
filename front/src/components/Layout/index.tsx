@@ -26,7 +26,7 @@ function LayoutScreen() {
     <Layout className="m-0">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="mb-2">
-          <Logo />
+          <Logo mobile={collapsed} />
         </div>
         <Menu
           theme="dark"
