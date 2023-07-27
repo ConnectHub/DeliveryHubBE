@@ -22,10 +22,6 @@ export class OrderService {
     return order;
   }
 
-  async getTotalByStatus(condominiumId: string): Promise<ChartDataDTO[]> {
-    return await this.orderRepository.getTotalByStatus(condominiumId);
-  }
-
   async createOrder(order: Order): Promise<Order> {
     order.code = new RandomStringGenerator().generate(6);
     if (order.img) order.img = await this.uploadService.uploadFile(order.img);
