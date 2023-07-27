@@ -1,7 +1,6 @@
 export interface Condominium {
   id: string;
-  email: string;
-  password: string;
+  name: string;
   remember?: boolean;
   label: string;
   value: string;
