@@ -20,7 +20,7 @@ export async function deleteCondominium(id: string): Promise<void> {
 }
 
 export async function updateCondominium(
-  resident: Condominium,
+  condominium: Condominium,
 ): Promise<Condominium> {
-  return (await api.post('/condominium/update', resident)).data;
+  return (await api.post('/condominium/update', condominium)).data;
 }
