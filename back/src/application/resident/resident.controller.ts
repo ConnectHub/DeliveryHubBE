@@ -31,8 +31,10 @@ export class ResidentController {
   @ApiOkResponse({ type: [ResidentViewModel] })
   @Get('list')
   async list(@Request() req: RequestInterface) {
-    const orders = await this.residentService.listAllResidents(req.user.sub);
-    return orders.map(ResidentViewModel.toHttp);
+    const residents = await this.residentService.listAllResidents(
+      req.user.condominiumId,
+    );
+    return residents.map(ResidentViewModel.toHttp);
   }
 
   @ApiOkResponse({ type: ResidentViewModel })
