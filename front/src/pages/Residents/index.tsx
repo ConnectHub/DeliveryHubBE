@@ -74,7 +74,6 @@ function ResidentsPage() {
       form.setFieldsValue({ ...resident, id: resident.id });
       setOpen(true);
       setIsEditing(true);
-      console.log(resident);
     };
   }
 
@@ -88,6 +87,7 @@ function ResidentsPage() {
   return (
     <>
       <Modal
+        onCancel={() => setIsEditing(false)}
         open={open}
         setOpen={setOpen}
         setIsEditing={setIsEditing}
