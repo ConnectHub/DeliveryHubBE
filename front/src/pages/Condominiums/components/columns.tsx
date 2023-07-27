@@ -17,12 +17,6 @@ export function columns({
       key: 'name',
     },
     {
-      title: 'Email',
-      dataIndex: 'login',
-      key: 'email',
-      editable: true,
-    },
-    {
       title: 'Ações',
       key: 'action',
       render: (_: any, record: Condominium) => (
