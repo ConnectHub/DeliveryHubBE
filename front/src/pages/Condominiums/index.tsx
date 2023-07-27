@@ -72,35 +72,6 @@ function CondominiumsPage() {
         <Form form={form} className="grid grid-cols-12">
           <Form.Item
             className="col-span-full"
-            name="login"
-            rules={[
-              {
-                required: true,
-                message: 'Informe o email do condomínio!',
-              },
-            ]}
-          >
-            <Input prefix={<FormInput size={16} />} placeholder="Email" />
-          </Form.Item>
-
-          <Form.Item
-            className="col-span-full"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Informe a senha do condomínio!',
-              },
-            ]}
-          >
-            <Input.Password
-              prefix={<KeyRound size={16} />}
-              placeholder="Senha"
-            />
-          </Form.Item>
-
-          <Form.Item
-            className="col-span-full"
             name="name"
             rules={[
               {
