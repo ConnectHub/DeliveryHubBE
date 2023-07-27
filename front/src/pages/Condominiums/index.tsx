@@ -4,12 +4,17 @@ import { Form, Input } from 'antd';
 import Modal from '../../components/Modal';
 import DataTable from '../../components/DataTable';
 import LoadingComponent from '../../components/Loading';
-import { createCondominium, deleteCondominium, getCondominiums } from './api';
+import {
+  createCondominium,
+  deleteCondominium,
+  getCondominiums,
+  updateCondominium,
+} from './api';
 import { columns } from './components/columns';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../services/api/interfaces';
 import { toast } from 'react-toastify';
-import { Building2, FormInput, KeyRound } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 import { Condominium } from './interfaces';
 import GlitchError from '../../components/Error';
 
@@ -37,6 +42,19 @@ function CondominiumsPage() {
     },
   });
 
+  const { mutate: updateCondominiumMutation } = useMutation(updateCondominium, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('condominiumData');
+      toast.success('Condomínio editado com sucesso');
+      setOpen(false);
+    },
+    onError: (error: AxiosError<ErrorResponse>) => {
+      toast.error(
+        error.response?.data?.message[0] ?? 'Erro ao editar o condomínio',
+      );
+    },
+  });
+
   const { mutate: deleteCondominiumMutation } = useMutation(deleteCondominium, {
     onSuccess: () => {
       queryClient.invalidateQueries('condominiumData');
@@ -49,12 +67,17 @@ function CondominiumsPage() {
     },
   });
 
-  function handleEdit(resident: Condominium) {
+  function handleEdit(condominium: Condominium) {
     return () => {
-      form.setFieldsValue({ ...resident, id: resident.id });
+      form.setFieldsValue({ ...condominium, id: condominium.id });
       setOpen(true);
       setIsEditing(true);
     };
+  }
+
+  function handleSubmit(values: Condominium) {
+    if (isEditing) return updateCondominiumMutation(values);
+    createCondominiumMutation(values);
   }
 
   const condominiumColumns = columns({ deleteCondominiumMutation, handleEdit });
@@ -62,14 +85,16 @@ function CondominiumsPage() {
   return (
     <>
       <Modal
+        onCancel={() => setIsEditing(false)}
         open={open}
         setOpen={setOpen}
-        onSubmit={createCondominiumMutation}
+        onSubmit={handleSubmit}
         form={form}
         width={500}
         title={isEditing ? 'Editar condomínio' : 'Cadastrar condomínio'}
       >
         <Form form={form} className="grid grid-cols-12">
+          <Form.Item name="id" className="hidden"></Form.Item>
           <Form.Item
             className="col-span-full"
             name="name"

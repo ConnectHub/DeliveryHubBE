@@ -3,7 +3,6 @@ import { Order } from 'src/domain/entities/order';
 import { FormatDate } from '../../../infra/utils/format-date';
 import { translateStatus } from '../translator/order.translator';
 import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
-import { ChartDataDTO } from '../dto/chart-data-order.dto';
 
 export class OrderViewModel {
   @ApiProperty()
