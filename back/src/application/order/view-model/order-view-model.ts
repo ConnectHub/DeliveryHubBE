@@ -56,12 +56,4 @@ export class OrderViewModel {
       updatedAt: FormatDate.format(order.updatedAt),
     };
   }
-
-  static countByStatus(order: ChartDataDTO) {
-    return {
-      total: +order._count,
-      //analyze best solution to translate status
-      description: translateStatus[order.status].toUpperCase() + 'S',
-    };
-  }
 }
