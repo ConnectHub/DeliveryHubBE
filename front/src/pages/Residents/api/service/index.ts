@@ -2,17 +2,17 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from '../../../../services/api/interfaces';
 import { AxiosError } from 'axios';
-import { ResidentRepository } from '../repository';
+import { residentRepository } from '../repository';
 
 const QUERY_KEY = 'residentData';
 
 export function useGetResidents() {
-  return useQuery(QUERY_KEY, ResidentRepository.getResidents);
+  return useQuery(QUERY_KEY, residentRepository().getResidents);
 }
 
 export function useCreateResident() {
   const queryClient = useQueryClient();
-  return useMutation(ResidentRepository.createResident, {
+  return useMutation(residentRepository().createResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Residente cadastrado com sucesso');
@@ -27,7 +27,7 @@ export function useCreateResident() {
 
 export function useUpdateResident() {
   const queryClient = useQueryClient();
-  return useMutation(ResidentRepository.updateResident, {
+  return useMutation(residentRepository().updateResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Residente editado com sucesso!');
@@ -42,7 +42,7 @@ export function useUpdateResident() {
 
 export function useDeleteResident() {
   const queryClient = useQueryClient();
-  return useMutation(ResidentRepository.deleteResident, {
+  return useMutation(residentRepository().deleteResident, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Residente deletado com sucesso!');

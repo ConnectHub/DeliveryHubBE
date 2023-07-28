@@ -36,6 +36,7 @@ function CondominiumsPage() {
     if (isEditing) {
       updateCondominiumMutation(values);
       setOpen(false);
+      setIsEditing(false);
       return;
     }
 

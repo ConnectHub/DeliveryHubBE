@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { CondominiumRepository } from '../repository';
+import { condominiumRepository } from '../repository';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { ErrorResponse } from '../../../../services/api/interfaces';
@@ -7,12 +7,12 @@ import { ErrorResponse } from '../../../../services/api/interfaces';
 const QUERY_KEY = 'condominiumsData';
 
 export function useGetCondominiums() {
-  return useQuery(QUERY_KEY, CondominiumRepository.getCondominiums);
+  return useQuery(QUERY_KEY, condominiumRepository().getCondominiums);
 }
 
 export function useCreateCondominium() {
   const queryClient = useQueryClient();
-  return useMutation(CondominiumRepository.createCondominium, {
+  return useMutation(condominiumRepository().createCondominium, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Condomínio cadastrado com sucesso');
@@ -27,7 +27,7 @@ export function useCreateCondominium() {
 
 export function useDeleteCondominium() {
   const queryClient = useQueryClient();
-  return useMutation(CondominiumRepository.deleteCondominium, {
+  return useMutation(condominiumRepository().deleteCondominium, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Condomínio deletado com sucesso!');
@@ -43,7 +43,7 @@ export function useDeleteCondominium() {
 export function useUpdateCondominium() {
   const queryClient = useQueryClient();
 
-  return useMutation(CondominiumRepository.updateCondominium, {
+  return useMutation(condominiumRepository().updateCondominium, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Condomínio editado com sucesso');
