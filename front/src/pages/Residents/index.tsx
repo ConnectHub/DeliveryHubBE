@@ -1,72 +1,33 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import DataTable from '../../components/DataTable';
-import {
-  createResident,
-  getResidents,
-  deleteResident,
-  updateResident,
-} from './api';
 import { columns } from './components/Columns';
-import { toast } from 'react-toastify';
 import Modal from '../../components/Modal';
 import Input from '../../components/Input';
 import GlitchError from '../../components/Error';
 import { Form, Select } from 'antd';
-import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { ErrorResponse } from '../../services/api/interfaces';
 import { Resident } from './interfaces';
 import { Home, Mail, Phone, User } from 'lucide-react';
 import LoadingComponent from '../../components/Loading';
-
-const query = 'residentData';
+import { useGetCondominiums } from '../Condominiums/api/service';
+import {
+  useCreateResident,
+  useDeleteResident,
+  useGetResidents,
+  useUpdateResident,
+} from './api/service';
 
 function ResidentsPage() {
-  const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const { isLoading, error, data } = useQuery(query, getResidents);
-  const { data: condominiums } = useQuery('condominiumsList', getCondominiums);
+  const { isLoading, error, data } = useGetResidents();
+  const { data: condominiums } = useGetCondominiums();
 
-  const { mutate: createResidentMutation } = useMutation(createResident, {
-    onSuccess: () => {
-      setOpen(false);
-      form.resetFields();
-      queryClient.invalidateQueries(query);
-      toast.success('Residente cadastrado com sucesso!');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error ao cadastrar o residente.',
-      );
-    },
-  });
+  const { mutate: createResidentMutation } = useCreateResident();
 
-  const { mutate: updateResidentMutation } = useMutation(updateResident, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(query);
-      toast.success('Resident editado com sucesso!');
-      setOpen(false);
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error ao editar o residente.',
-      );
-    },
-  });
+  const { mutate: updateResidentMutation } = useUpdateResident();
 
-  const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(query);
-      toast.success('Resident deletado com sucesso!');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error ao deletar o residente.',
-      );
-    },
-  });
+  const { mutate: deleteResidentMutation } = useDeleteResident();
 
   function handleEdit(resident: Resident) {
     return () => {
@@ -77,8 +38,14 @@ function ResidentsPage() {
   }
 
   function handleSubmit(values: Resident) {
-    if (isEditing) return updateResidentMutation(values);
+    if (isEditing) {
+      updateResidentMutation(values);
+      setOpen(false);
+      return;
+    }
     createResidentMutation(values);
+    setOpen(false);
+    form.resetFields();
   }
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
