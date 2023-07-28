@@ -11,9 +11,6 @@ function DataTable({ data, columns }: DataTableProps) {
       bordered
       columns={columns}
       dataSource={data}
-      rowSelection={{
-        type: 'checkbox',
-      }}
       pagination={{
         pageSize: 7,
       }}
