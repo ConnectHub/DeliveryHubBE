@@ -5,14 +5,13 @@ export function configCreate(data: ChartData[]) {
     data,
     xField: 'month',
     yField: 'value',
-    label: {},
     point: {
       size: 5,
       shape: 'diamond',
       style: {
-        fill: 'white',
-        stroke: '#5B8FF9',
-        lineWidth: 2,
+        fill: '#000',
+        stroke: '#000',
+        lineWidth: 4,
       },
     },
     tooltip: {
@@ -32,5 +31,6 @@ export function configCreate(data: ChartData[]) {
         type: 'marker-active',
       },
     ],
+    smooth: true,
   };
 }
