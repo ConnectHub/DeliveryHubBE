@@ -42,7 +42,6 @@ export function useDeleteCondominium() {
 
 export function useUpdateCondominium() {
   const queryClient = useQueryClient();
-
   return useMutation(condominiumRepository().updateCondominium, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
