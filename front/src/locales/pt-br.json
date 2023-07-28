@@ -7,5 +7,35 @@
   },
   "footer": {
     "title": "Delivery Hub ©2023 Feito com muito ❤️ pela equipe Delivery Hub!"
+  },
+  "orders": {
+    "trackingCode": {
+      "min": "Código de rastreio deve ter no mínimo 13 caracteres",
+      "placeholder": "Código de rastreio"
+    },
+    "modal": {
+      "title": "Cadastrar encomenda"
+    },
+    "sender": {
+      "placeholder": "Remetente"
+    },
+    "description": {
+      "placeholder": "Descrição"
+    },
+    "addresseeId": {
+      "required": "Selecione o residente!",
+      "placeholder": "Selecione o residente"
+    },
+    "webcam": {
+      "retake": "Recapturar",
+      "take": "Capturar"
+    },
+    "create": {
+      "success": "Encomenda cadastrada com sucesso"
+    },
+    "notification": {
+      "success": "Notificação enviada com sucesso",
+      "error": "Erro ao enviar a notificação"
+    }
   }
 }

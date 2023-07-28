@@ -1,5 +1,5 @@
 interface GlitchErrorProps {
-  text: string;
+  text?: string;
 }
 
 function GlitchError({ text = 'ERROR!' }: GlitchErrorProps) {
