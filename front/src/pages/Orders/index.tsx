@@ -9,7 +9,7 @@ import Modal from '../../components/Modal';
 import { useCallback, useRef, useState } from 'react';
 import { Button, Form, Input, Select } from 'antd';
 import { Truck } from 'lucide-react';
-import { useGetResidents } from '../Residents/api';
+import { useGetResidents } from '../Residents/api/service';
 import { CreateOrder } from './interfaces';
 import LoadingComponent from '../../components/Loading';
 import GlitchError from '../../components/Error';

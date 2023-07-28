@@ -2,17 +2,17 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from '../../../../services/api/interfaces';
 import { AxiosError } from 'axios';
-import { orderRepository } from '../repository';
+import { OrderRepository } from '../repository';
 
 const QUERY_KEY = 'orderData';
 
 export function useGetOrders() {
-  return useQuery(QUERY_KEY, orderRepository().getOrders);
+  return useQuery(QUERY_KEY, OrderRepository.getOrders);
 }
 
 export function useCreateOrder() {
   const queryClient = useQueryClient();
-  return useMutation(orderRepository().createOrder, {
+  return useMutation(OrderRepository.createOrder, {
     onSuccess: () => {
       queryClient.invalidateQueries(QUERY_KEY);
       toast.success('Encomenda cadastrada com sucesso');
@@ -26,7 +26,7 @@ export function useCreateOrder() {
 }
 
 export function useReSendNotification() {
-  return useMutation(orderRepository().reSendNotification, {
+  return useMutation(OrderRepository.reSendNotification, {
     onSuccess: () => {
       toast.success('Notificação enviada com sucesso');
     },
