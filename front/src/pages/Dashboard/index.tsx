@@ -7,6 +7,9 @@ function DashboardPage() {
   return (
     <>
       <h1 className="text-4xl text-left pb-4">Dashboard</h1>
+      <p className="text-lg text-left font-bold">
+        work in progress... (miss the back)
+      </p>
 
       <div className="flex flex-col gap-5 ">
         <div className="flex flex-col p-2 sm:flex-row gap-7">
