@@ -31,7 +31,7 @@ const BarChart = ({ title }: BarChartData) => {
     seriesField: 'year',
   };
   return (
-    <div className=" bg-primary p-2 rounded sm:min-w-[500px] hover:scale-105">
+    <div className=" bg-primary p-2 rounded sm:min-w-[500px] hover:scale-[1.01]">
       <div className="bg-slate-50 rounded p-2 ">
         <h2 className="text-3xl font-semibold mb-2 text-left">{title}</h2>
         {/* {isLoading && <LoadingComponent />} */}
