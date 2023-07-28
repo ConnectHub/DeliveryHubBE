@@ -18,24 +18,48 @@ function LineChart({ title }: LineChartData) {
   const data = [
     {
       month: 'janeiro',
-      value: 3,
+      value: 1,
     },
     {
-      month: '1992',
+      month: 'fevereiro',
       value: 4,
     },
     {
-      month: '1993',
-      value: 3.5,
+      month: 'março',
+      value: 0,
+    },
+    {
+      month: 'maio',
+      value: 3,
+    },
+    {
+      month: 'junho',
+      value: 4,
+    },
+    {
+      month: 'julho',
+      value: 20,
+    },
+    {
+      month: 'agosto',
+      value: 3,
+    },
+    {
+      month: 'setembro',
+      value: 4,
+    },
+    {
+      month: 'dezembro',
+      value: 1,
     },
   ];
   const config = configCreate(data ?? []);
+
   return (
-    <div className="bg-primary p-5 rounded hover:scale-105 w-[1100px]">
-      <div className="bg-slate-50 rounded flex flex-col ">
-        <span className="text-3xl font-semibold mb-2 text-center py-6">
-          {title}
-        </span>
+    <div className="bg-primary p-2 rounded min-w-[200px] w-full hover:scale-[1.01]">
+      <div className="bg-slate-50 rounded p-2">
+        <h2 className="text-3xl font-semibold mb-2 text-left">{title}</h2>
+
         <Line {...config} />
       </div>
     </div>
