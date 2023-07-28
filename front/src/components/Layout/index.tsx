@@ -14,7 +14,6 @@ function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
   const [username] = useLocalStorage('username', '');
   const { t } = useTranslation('common');
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -48,7 +47,7 @@ function LayoutScreen() {
             },
             {
               key: '/condominiums',
-              icon: <Building2 size={14} />,
+              icon: <Building2 size={18} />,
               label: 'Condomínios',
               onClick: () => navigator('/condominiums'),
             },
@@ -71,7 +70,7 @@ function LayoutScreen() {
           />
           <div className="flex items-center justify-center text-center">
             <div className="mr-2">
-              <span className="text-white text-base font-inter">
+              <span className="hidden sm:block text-white text-base font-inter">
                 {t('welcome.title')}, {username.toUpperCase()}.
               </span>
             </div>
