@@ -71,7 +71,7 @@ function LayoutScreen() {
           <div className="flex items-center justify-center text-center">
             <div className="mr-2">
               <span className="hidden sm:block text-white text-base font-inter">
-                {t('welcome.title')}, {username.toUpperCase()}.
+                {t('welcome.title')}, {username}.
               </span>
             </div>
             <LogoutButton />
@@ -80,9 +80,7 @@ function LayoutScreen() {
         <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />
         </Content>
-        <Footer className="text-center">
-          Delivery Hub ©2023 Created with ❤️ by Delivery Hub
-        </Footer>
+        <Footer className="text-center">{t('footer.title')}</Footer>
       </Layout>
     </Layout>
   );
