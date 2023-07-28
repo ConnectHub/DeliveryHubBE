@@ -5,3 +5,7 @@ export interface Condominium {
   label: string;
   value: string;
 }
+
+export interface CreateCondominium {
+  name: string;
+}

@@ -1,12 +1,12 @@
-import { api } from '../../../services/api';
-import { Condominium } from '../interfaces';
+import { api } from '../../../../services/api';
+import { Condominium, CreateCondominium } from '../../interfaces';
 
 export async function getCondominiums(): Promise<Condominium[]> {
   return (await api.get('/condominium/list')).data;
 }
 
 export async function createCondominium(
-  newCondominium: Condominium,
+  newCondominium: CreateCondominium,
 ): Promise<Condominium> {
   return (
     await api.post('/condominium/create', {
@@ -23,4 +23,13 @@ export async function updateCondominium(
   condominium: Condominium,
 ): Promise<Condominium> {
   return (await api.post('/condominium/update', condominium)).data;
+}
+
+export function condominiumRepository() {
+  return {
+    getCondominiums,
+    createCondominium,
+    deleteCondominium,
+    updateCondominium,
+  };
 }

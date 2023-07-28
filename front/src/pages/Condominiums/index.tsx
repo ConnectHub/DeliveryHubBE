@@ -1,71 +1,24 @@
 import { useState } from 'react';
-import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { Form, Input } from 'antd';
 import Modal from '../../components/Modal';
 import DataTable from '../../components/DataTable';
 import LoadingComponent from '../../components/Loading';
 import {
-  createCondominium,
-  deleteCondominium,
-  getCondominiums,
-  updateCondominium,
-} from './api';
+  useCreateCondominium,
+  useDeleteCondominium,
+  useGetCondominiums,
+  useUpdateCondominium,
+} from './api/service';
 import { columns } from './components/columns';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '../../services/api/interfaces';
-import { toast } from 'react-toastify';
 import { Building2 } from 'lucide-react';
 import { Condominium } from './interfaces';
 import GlitchError from '../../components/Error';
 
 function CondominiumsPage() {
-  const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery(
-    'condominiumData',
-    getCondominiums,
-  );
+  const { data, isLoading, error } = useGetCondominiums();
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
-  const { mutate: createCondominiumMutation } = useMutation(createCondominium, {
-    onSuccess: () => {
-      setOpen(false);
-      form.resetFields();
-      queryClient.invalidateQueries('condominiumData');
-      toast.success('Condomínio cadastrado com sucesso');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar o condomínio',
-      );
-    },
-  });
-
-  const { mutate: updateCondominiumMutation } = useMutation(updateCondominium, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('condominiumData');
-      toast.success('Condomínio editado com sucesso');
-      setOpen(false);
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao editar o condomínio',
-      );
-    },
-  });
-
-  const { mutate: deleteCondominiumMutation } = useMutation(deleteCondominium, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('condominiumData');
-      toast.success('Condomínio deletado com sucesso!');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error ao deletar o Condomínio.',
-      );
-    },
-  });
 
   function handleEdit(condominium: Condominium) {
     return () => {
@@ -75,9 +28,20 @@ function CondominiumsPage() {
     };
   }
 
+  const { mutate: createCondominiumMutation } = useCreateCondominium();
+  const { mutate: deleteCondominiumMutation } = useDeleteCondominium();
+  const { mutate: updateCondominiumMutation } = useUpdateCondominium();
+
   function handleSubmit(values: Condominium) {
-    if (isEditing) return updateCondominiumMutation(values);
+    if (isEditing) {
+      updateCondominiumMutation(values);
+      setOpen(false);
+      return;
+    }
+
     createCondominiumMutation(values);
+    setOpen(false);
+    form.resetFields();
   }
 
   const condominiumColumns = columns({ deleteCondominiumMutation, handleEdit });

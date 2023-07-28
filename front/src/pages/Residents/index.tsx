@@ -18,7 +18,6 @@ import { ErrorResponse } from '../../services/api/interfaces';
 import { Resident } from './interfaces';
 import { Home, Mail, Phone, User } from 'lucide-react';
 import LoadingComponent from '../../components/Loading';
-import { getCondominiums } from '../Condominiums/api';
 
 const query = 'residentData';
 
