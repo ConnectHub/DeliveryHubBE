@@ -2,9 +2,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from '../../../../services/api/interfaces';
 import { AxiosError } from 'axios';
-import { orderRepository } from '../repository';
+import { OrderRepository } from '../repository';
 import { TFunction } from 'i18next';
-
 
 const QUERY_KEY = 'orderData';
 
@@ -25,9 +24,8 @@ export function useCreateOrder(t: TFunction) {
   });
 }
 
-
 export function useReSendNotification(t: TFunction) {
-  return useMutation(orderRepository().reSendNotification, {
+  return useMutation(OrderRepository.reSendNotification, {
     onSuccess: () => {
       toast.success(t('orders.notification.success'));
     },
