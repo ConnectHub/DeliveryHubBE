@@ -32,9 +32,6 @@ dependencies:
   lucide-react:
     specifier: ^0.258.0
     version: 0.258.0(react@18.2.0)
-  prettier:
-    specifier: ^3.0.0
-    version: 3.0.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -109,6 +106,9 @@ devDependencies:
   postcss:
     specifier: ^8.4.24
     version: 8.4.24
+  prettier:
+    specifier: ^3.0.0
+    version: 3.0.0
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.2
@@ -4166,7 +4166,6 @@ packages:
     resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: false
 
   /probe.gl@3.6.0:
     resolution: {integrity: sha512-19JydJWI7+DtR4feV+pu4Mn1I5TAc0xojuxVgZdXIyfmTLfUaFnk4OloWK1bKbPtkgGKLr2lnbnCXmpZEcEp9g==}

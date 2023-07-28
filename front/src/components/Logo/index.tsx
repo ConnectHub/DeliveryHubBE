@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom';
 import LogoImg from '../../assets/DeliveryHub.svg';
-import mobileLogoImg from '../../assets/DH.svg';
+import MobileLogoImg from '../../assets/DH.svg';
 interface LogoProps {
-  width?: string;
+  logoWidth?: string;
   mobile?: boolean;
 }
 
-function Logo({ width = 'max-w-full', mobile = false }: LogoProps) {
+function Logo({ logoWidth = 'max-w-full', mobile = false }: LogoProps) {
   return (
     <Link to={'/'}>
       <img
-        className={`p-5 ${width} h-auto align-middle border-none items-center justify-center flex`}
-        src={mobile ? mobileLogoImg : LogoImg}
+        className={`flex justify-center items-center p-5 ${logoWidth} h-auto align-middle border-none`}
+        src={mobile ? MobileLogoImg : LogoImg}
         alt="logo"
         loading="lazy"
       />

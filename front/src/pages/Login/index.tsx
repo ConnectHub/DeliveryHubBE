@@ -25,9 +25,9 @@ function LoginPage() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="p-5 rounded-2xl shadow-2xl shadow-black">
-        <Logo width="w-[300px]" />
+    <div className="flex items-center justify-center h-screen">
+      <div className="p-5 shadow-2xl rounded-2xl shadow-black">
+        <Logo logoWidth="w-[300px]" />
 
         <Form
           name="basic"
@@ -39,8 +39,8 @@ function LoginPage() {
           autoComplete="off"
         >
           {isError && (
-            <div className="flex justify-center items-center w-full py-2 bg-red-500 mb-4 rounded mx-auto">
-              <label className="text-white text-center">
+            <div className="flex items-center justify-center w-full py-2 mx-auto mb-4 bg-red-500 rounded">
+              <label className="text-center text-white">
                 Email ou senha incorretos
               </label>
             </div>
@@ -87,7 +87,7 @@ function LoginPage() {
           >
             <Checkbox className="text-white">lembre me?</Checkbox>
           </Form.Item>
-          <Form.Item className="flex justify-center items-center">
+          <Form.Item className="flex items-center justify-center">
             <Button type="default" htmlType="submit">
               entrar
             </Button>

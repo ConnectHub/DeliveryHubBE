@@ -5,7 +5,7 @@ interface BarChartData {
   queryFunction?: () => Promise<ChartData[]>;
   title: string;
 }
-const BarChart = ({ title }: BarChartData) => {
+function BarChart({ title }: BarChartData) {
   const data = [
     {
       year: 'VINICIN',
@@ -31,18 +31,13 @@ const BarChart = ({ title }: BarChartData) => {
     seriesField: 'year',
   };
   return (
-    <div className=" bg-primary p-2 rounded sm:min-w-[500px] hover:scale-[1.01]">
-      <div className="bg-slate-50 rounded p-2 ">
-        <h2 className="text-3xl font-semibold mb-2 text-left">{title}</h2>
-        {/* {isLoading && <LoadingComponent />} */}
-        {/* {error && <GlitchError text="ERROR AO GERAR O GRÁFICO" />} */}
-        {/* {data && data?.length == 0 && (
-          <GlitchError text="Não há dados para mostrar!" />
-        )} */}
+    <div className="bg-primary p-2 rounded sm:min-w-[500px] hover:scale-[1.01]">
+      <div className="p-2 rounded bg-slate-50 ">
+        <h2 className="mb-2 text-3xl font-semibold text-left">{title}</h2>
         {data && data?.length > 0 && <Bar {...config} />}
       </div>
     </div>
   );
-};
+}
 
 export default BarChart;

@@ -30,11 +30,9 @@ function ResidentsPage() {
   const { mutate: deleteResidentMutation } = useDeleteResident();
 
   function handleEdit(resident: Resident) {
-    return () => {
-      form.setFieldsValue({ ...resident, id: resident.id });
-      setOpen(true);
-      setIsEditing(true);
-    };
+    form.setFieldsValue({ ...resident, id: resident.id });
+    setOpen(true);
+    setIsEditing(true);
   }
 
   function handleSubmit(values: Resident) {

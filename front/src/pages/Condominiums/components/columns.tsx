@@ -3,7 +3,7 @@ import { Condominium } from '../interfaces';
 
 interface ColumnsProps {
   deleteCondominiumMutation: (id: string) => void;
-  handleEdit: (resident: Condominium) => () => void;
+  handleEdit: (resident: Condominium) => void;
 }
 
 export function columns({
@@ -21,7 +21,7 @@ export function columns({
       key: 'action',
       render: (_: any, record: Condominium) => (
         <>
-          <Button type="link" onClick={handleEdit(record)}>
+          <Button type="link" onClick={() => handleEdit(record)}>
             Editar
           </Button>
 

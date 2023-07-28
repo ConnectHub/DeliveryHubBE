@@ -9,14 +9,12 @@ function InformationCard({
   total,
 }: InformationCardProps) {
   return (
-    <>
-      <div
-        className={`flex flex-col gap-2 p-5 rounded-md ${backgroundColor} hover:scale-[1.01]`}
-      >
-        <p className="text-white text-base">{description}</p>
-        <span className="text-white font-bold text-4xl">{total}</span>
-      </div>
-    </>
+    <div
+      className={`flex rounded-md gap-2 p-5 ${backgroundColor} hover:scale-[1.01] flex-col`}
+    >
+      <p className="text-base text-white">{description}</p>
+      <span className="text-4xl font-bold text-white">{total}</span>
+    </div>
   );
 }
 

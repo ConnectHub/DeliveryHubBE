@@ -21,11 +21,9 @@ function CondominiumsPage() {
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEdit(condominium: Condominium) {
-    return () => {
-      form.setFieldsValue({ ...condominium, id: condominium.id });
-      setOpen(true);
-      setIsEditing(true);
-    };
+    form.setFieldsValue({ ...condominium, id: condominium.id });
+    setOpen(true);
+    setIsEditing(true);
   }
 
   const { mutate: createCondominiumMutation } = useCreateCondominium();
