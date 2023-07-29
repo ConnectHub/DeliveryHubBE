@@ -1,26 +1,42 @@
-import { getTotalByStatus } from './api';
-import PieChart from '../../components/PieChart';
+import BarChart from '../../components/BarChart';
+import InformationCard from '../../components/InformationCard';
 import LineChart from '../../components/LineChart';
+import PieChart from '../../components/PieChart';
 
 function DashboardPage() {
   return (
     <>
-      <h1 className="text-6xl text-center">Dashboard</h1>
-      <h1 className="text-6xl text-center">work in progress...</h1>
+      <h1 className="text-4xl text-left pb-4">Dashboard</h1>
+      <p className="text-lg text-left font-bold">
+        work in progress... (miss the back)
+      </p>
 
-      <div className="flex justify-center items-center flex-col gap-5">
-        <div>
-          <LineChart title="Total de entregas por mês EXEMPLO" />
+      <div className="flex flex-col gap-5 ">
+        <div className="flex flex-col p-2 sm:flex-row gap-7">
+          <InformationCard
+            description="Total de encomendas entregues"
+            total={1400}
+            backgroundColor="bg-violet-700"
+          />
+          <InformationCard
+            description="Total de moradores cadastrados"
+            total={15}
+            backgroundColor="bg-blue-700"
+          />
+          <InformationCard
+            description="Total de encomendas pendentes"
+            total={7}
+            backgroundColor="bg-orange-700"
+          />
         </div>
-        <div className="flex gap-4 w-full justify-around">
-          <PieChart
-            title="Total de entregas por status"
-            queryFunction={getTotalByStatus}
-          />
-          <PieChart
-            title="Aqui tá só de teste EXEMPLO"
-            queryFunction={getTotalByStatus}
-          />
+
+        <div className="flex flex-col xl:flex-row p-2 gap-10">
+          <PieChart title="Summary" />
+          <LineChart title="Summary" />
+        </div>
+
+        <div className="p-2">
+          <BarChart title="Dev mais forte" />
         </div>
       </div>
     </>

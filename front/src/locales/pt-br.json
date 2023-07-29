@@ -3,7 +3,10 @@
     "button": "Sair"
   },
   "welcome": {
-    "title": "Seja bem vindo"
+    "title": "Seja Bem-vindo"
+  },
+  "footer": {
+    "title": "Delivery Hub ©2023 Feito com muito ❤️ pela equipe Delivery Hub!"
   },
   "orders": {
     "trackingCode": {

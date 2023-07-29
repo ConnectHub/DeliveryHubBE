@@ -4,5 +4,8 @@
   },
   "welcome": {
     "title": "Welcome to the app"
+  },
+  "footer": {
+    "title": "Delivery Hub ©2023 Created with ❤️ by Delivery Hub!"
   }
 }

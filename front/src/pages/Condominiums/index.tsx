@@ -1,60 +1,46 @@
 import { useState } from 'react';
-import { useQueryClient, useQuery, useMutation } from 'react-query';
 import { Form, Input } from 'antd';
 import Modal from '../../components/Modal';
 import DataTable from '../../components/DataTable';
 import LoadingComponent from '../../components/Loading';
-import { createCondominium, deleteCondominium, getCondominiums } from './api';
+import {
+  useCreateCondominium,
+  useDeleteCondominium,
+  useGetCondominiums,
+  useUpdateCondominium,
+} from './api/service';
 import { columns } from './components/columns';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '../../services/api/interfaces';
-import { toast } from 'react-toastify';
-import { Building2, FormInput, KeyRound } from 'lucide-react';
+import { Building2 } from 'lucide-react';
 import { Condominium } from './interfaces';
 import GlitchError from '../../components/Error';
 
 function CondominiumsPage() {
-  const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery(
-    'condominiumData',
-    getCondominiums,
-  );
+  const { data, isLoading, error } = useGetCondominiums();
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const { mutate: createCondominiumMutation } = useMutation(createCondominium, {
-    onSuccess: () => {
+  function handleEdit(condominium: Condominium) {
+    form.setFieldsValue({ ...condominium, id: condominium.id });
+    setOpen(true);
+    setIsEditing(true);
+  }
+
+  const { mutate: createCondominiumMutation } = useCreateCondominium();
+  const { mutate: deleteCondominiumMutation } = useDeleteCondominium();
+  const { mutate: updateCondominiumMutation } = useUpdateCondominium();
+
+  function handleSubmit(values: Condominium) {
+    if (isEditing) {
+      updateCondominiumMutation(values);
       setOpen(false);
-      form.resetFields();
-      queryClient.invalidateQueries('condominiumData');
-      toast.success('Condomínio cadastrado com sucesso');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Erro ao cadastrar o condomínio',
-      );
-    },
-  });
+      setIsEditing(false);
+      return;
+    }
 
-  const { mutate: deleteCondominiumMutation } = useMutation(deleteCondominium, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('condominiumData');
-      toast.success('Condomínio deletado com sucesso!');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error ao deletar o Condomínio.',
-      );
-    },
-  });
-
-  function handleEdit(resident: Condominium) {
-    return () => {
-      form.setFieldsValue({ ...resident, id: resident.id });
-      setOpen(true);
-      setIsEditing(true);
-    };
+    createCondominiumMutation(values);
+    setOpen(false);
+    form.resetFields();
   }
 
   const condominiumColumns = columns({ deleteCondominiumMutation, handleEdit });
@@ -62,43 +48,16 @@ function CondominiumsPage() {
   return (
     <>
       <Modal
+        onCancel={() => setIsEditing(false)}
         open={open}
         setOpen={setOpen}
-        onSubmit={createCondominiumMutation}
+        onSubmit={handleSubmit}
         form={form}
         width={500}
         title={isEditing ? 'Editar condomínio' : 'Cadastrar condomínio'}
       >
         <Form form={form} className="grid grid-cols-12">
-          <Form.Item
-            className="col-span-full"
-            name="login"
-            rules={[
-              {
-                required: true,
-                message: 'Informe o email do condomínio!',
-              },
-            ]}
-          >
-            <Input prefix={<FormInput size={16} />} placeholder="Email" />
-          </Form.Item>
-
-          <Form.Item
-            className="col-span-full"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Informe a senha do condomínio!',
-              },
-            ]}
-          >
-            <Input.Password
-              prefix={<KeyRound size={16} />}
-              placeholder="Senha"
-            />
-          </Form.Item>
-
+          <Form.Item name="id" className="hidden"></Form.Item>
           <Form.Item
             className="col-span-full"
             name="name"

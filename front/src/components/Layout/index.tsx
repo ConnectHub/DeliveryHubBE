@@ -14,7 +14,6 @@ function LayoutScreen() {
   const { state: collapsed, toggle: toggleCollapsed } = useToggle();
   const [username] = useLocalStorage('username', '');
   const { t } = useTranslation('common');
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -26,7 +25,7 @@ function LayoutScreen() {
     <Layout className="m-0">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="mb-2">
-          <Logo />
+          <Logo mobile={collapsed} />
         </div>
         <Menu
           theme="dark"
@@ -48,7 +47,7 @@ function LayoutScreen() {
             },
             {
               key: '/condominiums',
-              icon: <Building2 size={14} />,
+              icon: <Building2 size={18} />,
               label: 'Condomínios',
               onClick: () => navigator('/condominiums'),
             },
@@ -71,8 +70,8 @@ function LayoutScreen() {
           />
           <div className="flex items-center justify-center text-center">
             <div className="mr-2">
-              <span className="text-white text-base font-inter">
-                {t('welcome.title')}, {username.toUpperCase()}.
+              <span className="hidden sm:block text-white text-base font-inter">
+                {t('welcome.title')}, {username}.
               </span>
             </div>
             <LogoutButton />
@@ -81,9 +80,7 @@ function LayoutScreen() {
         <Content className="my-6 mx-4 min-h-[100vh] rounded">
           <Outlet />
         </Content>
-        <Footer className="text-center">
-          Delivery Hub ©2023 Created with ❤️ by Delivery Hub
-        </Footer>
+        <Footer className="text-center">{t('footer.title')}</Footer>
       </Layout>
     </Layout>
   );

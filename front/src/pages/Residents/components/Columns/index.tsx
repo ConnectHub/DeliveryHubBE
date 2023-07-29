@@ -3,7 +3,7 @@ import { Resident } from '../../interfaces';
 
 interface ColumnsProps {
   deleteResidentMutation: (id: string) => void;
-  handleEdit: (resident: Resident) => () => void;
+  handleEdit: (resident: Resident) => void;
 }
 
 export function columns({ deleteResidentMutation, handleEdit }: ColumnsProps) {
@@ -34,7 +34,7 @@ export function columns({ deleteResidentMutation, handleEdit }: ColumnsProps) {
       key: 'action',
       render: (_: any, record: Resident) => (
         <>
-          <Button type="link" onClick={handleEdit(record)}>
+          <Button type="link" onClick={() => handleEdit(record)}>
             Editar
           </Button>
 
