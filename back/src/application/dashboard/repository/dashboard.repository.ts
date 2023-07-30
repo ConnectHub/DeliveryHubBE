@@ -43,4 +43,22 @@ export class DashboardRepository implements DashboardRepositoryInterface {
       },
     });
   }
+
+  async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
+    const orders = await this.prisma.order.findMany({
+      select: {
+        addressee: {
+          select: {
+            condominiumId: true,
+            condominium: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return orders;
+  }
 }
