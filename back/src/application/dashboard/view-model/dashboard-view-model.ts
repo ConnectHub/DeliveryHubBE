@@ -25,20 +25,19 @@ export class DashboardViewModel {
       'Novembro',
       'Dezembro',
     ];
-    const ordersByMonthMap: Record<string, number> = {};
-    monthNames.forEach((month) => {
-      ordersByMonthMap[month] = 0;
-    });
+
+    const ordersByMonthMap = new Map<string, number>();
 
     orders.forEach((order) => {
       const orderDate = new Date(order.receiptDateHour);
       const orderMonth = monthNames[orderDate.getMonth()];
-      ordersByMonthMap[orderMonth] += 1;
+      const count = ordersByMonthMap.get(orderMonth) || 0;
+      ordersByMonthMap.set(orderMonth, count + 1);
     });
 
     const ordersGroupedByMonth: ChartDataInterface[] = [];
 
-    Object.entries(ordersByMonthMap).forEach(([month, count]) => {
+    ordersByMonthMap.forEach((count, month) => {
       ordersGroupedByMonth.push({ month, orderCount: count });
     });
 
