@@ -6,8 +6,8 @@ import PieChart from '../../components/PieChart';
 function DashboardPage() {
   return (
     <>
-      <h1 className="text-4xl text-left pb-4">Dashboard</h1>
-      <p className="text-lg text-left font-bold">
+      <h1 className="pb-4 text-4xl text-left">Dashboard</h1>
+      <p className="text-lg font-bold text-left">
         work in progress... (miss the back)
       </p>
 
@@ -30,13 +30,13 @@ function DashboardPage() {
           />
         </div>
 
-        <div className="flex flex-col xl:flex-row p-2 gap-10">
-          <PieChart title="Summary" />
-          <LineChart title="Summary" />
+        <div className="flex flex-col gap-10 p-2 xl:flex-row">
+          <PieChart title="Entregas por status" />
+          <LineChart title="Entregas por mês" />
         </div>
 
         <div className="p-2">
-          <BarChart title="Dev mais forte" />
+          <BarChart title="Entregas por condomínio" />
         </div>
       </div>
     </>

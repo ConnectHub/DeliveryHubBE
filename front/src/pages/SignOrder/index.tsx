@@ -64,11 +64,11 @@ function SignOrderPage() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col items-center">
-        <Logo width="w-[200px] " />
-        <h2 className="text-white text-center">
+        <Logo logoWidth="w-[200px] " />
+        <h2 className="text-center text-white">
           Digite o código recebido no seu whatsapp <br /> e assine o pedido
         </h2>
-        <span className="text-red-400 font-bold mb-2 text-center max-w-sm">
+        <span className="max-w-sm mb-2 font-bold text-center text-red-400">
           {translatedError}
         </span>
         <div className="relative">
