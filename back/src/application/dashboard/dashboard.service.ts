@@ -24,4 +24,8 @@ export class DashboardService {
   async totalOrdersByMonths() {
     return await this.dashboardRepository.totalOrdersByMonths();
   }
+
+  async listOrdersByCondominium() {
+    return await this.dashboardRepository.listOrdersByCondominium();
+  }
 }
