@@ -4,4 +4,11 @@ export class ChartDataInterface {
   orderCount?: number;
   value?: number;
   receiptDateHour?: Date;
+  condominiumName?: string;
+  addressee?: {
+    condominiumId?: string;
+    condominium?: {
+      name?: string;
+    };
+  };
 }
