@@ -4,9 +4,9 @@ interface GlitchErrorProps {
 
 function GlitchError({ text = 'ERROR!' }: GlitchErrorProps) {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-self-center">
       <h2
-        className="text-center text-black text-4xl font-bold"
+        className="text-4xl font-bold text-center text-black"
         style={{ textShadow: 'red -2px 0, cyan 2px 0' }}
       >
         {text}
