@@ -10,6 +10,7 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RateModule } from './application/rate/rate.module';
 import { UserModule } from './application/user/user.module';
+import { DashboardModule } from './application/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserModule } from './application/user/user.module';
     AuthModule,
     RateModule,
     UserModule,
+    DashboardModule,
   ],
   providers: [
     {
