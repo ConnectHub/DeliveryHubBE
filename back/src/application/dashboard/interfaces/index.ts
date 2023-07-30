@@ -1,4 +1,7 @@
 export class ChartDataInterface {
-  _count?: number;
   status?: string;
+  month?: string;
+  orderCount?: number;
+  value?: number;
+  receiptDateHour?: Date;
 }
