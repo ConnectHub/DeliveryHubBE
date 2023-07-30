@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
+import { DashboardViewModel } from './view-model/dashboard-view-model';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -27,6 +28,7 @@ export class DashboardController {
 
   @Get('totalOrdersByMonths')
   async totalOrdersByMonths() {
-    return this.dashboardService.totalOrdersByMonths();
+    const ordersByMonth = await this.dashboardService.totalOrdersByMonths();
+    return DashboardViewModel.aggregateOrdersByMonth(ordersByMonth);
   }
 }
