@@ -25,22 +25,43 @@ export class DashboardViewModel {
       'Novembro',
       'Dezembro',
     ];
-
-    const ordersByMonthMap = new Map<string, number>();
+    const ordersByMonthMap: Record<string, number> = {};
+    monthNames.forEach((month) => {
+      ordersByMonthMap[month] = 0;
+    });
 
     orders.forEach((order) => {
       const orderDate = new Date(order.receiptDateHour);
       const orderMonth = monthNames[orderDate.getMonth()];
-      const count = ordersByMonthMap.get(orderMonth) || 0;
-      ordersByMonthMap.set(orderMonth, count + 1);
+      ordersByMonthMap[orderMonth] += 1;
     });
 
     const ordersGroupedByMonth: ChartDataInterface[] = [];
 
-    ordersByMonthMap.forEach((count, month) => {
+    Object.entries(ordersByMonthMap).forEach(([month, count]) => {
       ordersGroupedByMonth.push({ month, orderCount: count });
     });
 
     return ordersGroupedByMonth;
+  }
+
+  static aggregateOrdersByCondominium(orders) {
+    const deliveriesByCondominium = orders.reduce((result, order) => {
+      const condominiumId = order.addressee?.condominiumId;
+      const condominiumName = order.addressee?.condominium?.name;
+      if (condominiumId && condominiumName) {
+        const foundCondominium = result.find(
+          (item) => item.condominiumName === condominiumName,
+        );
+        if (foundCondominium) {
+          foundCondominium.value += 1;
+        } else {
+          result.push({ condominiumName, value: 1 });
+        }
+      }
+      return result;
+    }, [] as { condominiumName: string; value: number }[]);
+
+    return deliveriesByCondominium;
   }
 }
