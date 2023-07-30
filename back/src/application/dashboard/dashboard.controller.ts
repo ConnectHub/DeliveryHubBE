@@ -23,7 +23,8 @@ export class DashboardController {
 
   @Get('listOrdersByStatus')
   async listOrdersByStatus() {
-    return this.dashboardService.listOrdersByStatus();
+    const list = await this.dashboardService.listOrdersByStatus();
+    return list.map(DashboardViewModel.toHttp);
   }
 
   @Get('totalOrdersByMonths')
