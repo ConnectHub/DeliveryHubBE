@@ -4,7 +4,7 @@ export function configCreate(data: ChartData[]) {
   return {
     data,
     xField: 'month',
-    yField: 'value',
+    yField: 'orderCount',
     point: {
       size: 5,
       shape: 'diamond',
