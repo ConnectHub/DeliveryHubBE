@@ -27,9 +27,16 @@ export class DashboardController {
     return list.map(DashboardViewModel.toHttp);
   }
 
-  @Get('totalOrdersByMonths')
-  async totalOrdersByMonths() {
+  @Get('listOrdersByMonths')
+  async listOrdersByMonths() {
     const ordersByMonth = await this.dashboardService.totalOrdersByMonths();
     return DashboardViewModel.aggregateOrdersByMonth(ordersByMonth);
+  }
+
+  @Get('listOrdersByCondominium')
+  async listOrdersByCondominium() {
+    const ordersByCondominium =
+      await this.dashboardService.listOrdersByCondominium();
+    return DashboardViewModel.aggregateOrdersByCondominium(ordersByCondominium);
   }
 }
