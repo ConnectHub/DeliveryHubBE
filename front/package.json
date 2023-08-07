@@ -23,7 +23,7 @@
     "axios": "^1.4.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "i18next": "^23.4.1",
+    "i18next": "^23.4.2",
     "lucide-react": "^0.258.0",
     "react": "^18.2.0",
     "react-auth-code-input": "^3.2.1",
