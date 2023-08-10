@@ -7,27 +7,42 @@ import { ChartDataInterface } from '../interfaces';
 export class DashboardRepository implements DashboardRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async allDeliveredOrders(): Promise<number> {
+  async allDeliveredOrders(condominiumId: string): Promise<number> {
     return await this.prisma.order.count({
-      where: { status: 'DELIVERED', deletedAt: null },
+      where: {
+        status: 'DELIVERED',
+        deletedAt: null,
+        addressee: {
+          condominiumId,
+        },
+      },
     });
   }
 
-  async totalResidents(): Promise<number> {
+  async totalResidents(condominiumId: string): Promise<number> {
     return await this.prisma.resident.count({
-      where: { deletedAt: null },
+      where: {
+        deletedAt: null,
+        condominiumId,
+      },
     });
   }
 
-  async totalOrdersPending(): Promise<number> {
+  async totalOrdersPending(condominiumId: string): Promise<number> {
     return await this.prisma.order.count({
-      where: { status: 'PENDING', deletedAt: null },
+      where: {
+        status: 'PENDING',
+        deletedAt: null,
+        addressee: { condominiumId },
+      },
     });
   }
-  async listOrdersByStatus(): Promise<ChartDataInterface[]> {
+  async listOrdersByStatus(
+    condominiumId: string,
+  ): Promise<ChartDataInterface[]> {
     const list = await this.prisma.order.groupBy({
       by: ['status'],
-      where: { deletedAt: null },
+      where: { deletedAt: null, addressee: { condominiumId } },
       _count: true,
     });
     return list.map((item) => ({
@@ -36,11 +51,14 @@ export class DashboardRepository implements DashboardRepositoryInterface {
     }));
   }
 
-  async totalOrdersByMonths(): Promise<ChartDataInterface[]> {
+  async totalOrdersByMonths(
+    condominiumId: string,
+  ): Promise<ChartDataInterface[]> {
     return await this.prisma.order.findMany({
       select: {
         receiptDateHour: true,
       },
+      where: { addressee: { condominiumId } },
     });
   }
 
