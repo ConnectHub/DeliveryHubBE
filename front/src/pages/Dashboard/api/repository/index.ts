@@ -20,6 +20,7 @@ async function getTotalOrdersPending() {
 async function getOrderByMonth(): Promise<ChartData[]> {
   return (await api.get('/dashboard/listOrdersByMonths')).data;
 }
+
 async function getOrderByCondominium(): Promise<ChartData[]> {
   return (await api.get('/dashboard/listOrdersByCondominium')).data;
 }
