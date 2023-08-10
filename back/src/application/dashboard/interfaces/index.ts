@@ -7,8 +7,5 @@ export class ChartDataInterface {
   condominiumName?: string;
   addressee?: {
     condominiumId?: string;
-    condominium?: {
-      name?: string;
-    };
   };
 }
