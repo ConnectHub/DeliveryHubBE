@@ -37,6 +37,7 @@ export class DashboardRepository implements DashboardRepositoryInterface {
       },
     });
   }
+
   async listOrdersByStatus(
     condominiumId: string,
   ): Promise<ChartDataInterface[]> {
@@ -63,7 +64,7 @@ export class DashboardRepository implements DashboardRepositoryInterface {
   }
 
   async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
-    const orders = await this.prisma.order.findMany({
+    return await this.prisma.order.findMany({
       select: {
         addressee: {
           select: {
@@ -77,6 +78,5 @@ export class DashboardRepository implements DashboardRepositoryInterface {
         },
       },
     });
-    return orders;
   }
 }
