@@ -6,6 +6,9 @@ export class ChartDataInterface {
   receiptDateHour?: Date;
   condominiumName?: string;
   addressee?: {
+    condominium?: {
+      name?: string;
+    };
     condominiumId?: string;
   };
 }
