@@ -52,6 +52,26 @@ export class DashboardService {
   }
 
   async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
-    return await this.dashboardRepository.listOrdersByCondominium();
+    const ordersByCondominiums =
+      await this.dashboardRepository.listOrdersByCondominium();
+
+    return ordersByCondominiums.reduce((result, order) => {
+      const condominiumId = order.addressee?.condominiumId;
+      const condominiumName = order.addressee?.condominium?.name;
+
+      if (condominiumId && condominiumName) {
+        const foundCondominium = result.find(
+          (item) => item.condominiumName === condominiumName,
+        );
+
+        if (foundCondominium) {
+          foundCondominium.value += 1;
+        } else {
+          result.push({ condominiumName, value: 1 });
+        }
+      }
+
+      return result;
+    }, []);
   }
 }
