@@ -10,12 +10,14 @@ import {
   useGetOrdersByMonth,
   useGetOrdersByCondominium,
 } from './api/service';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/UserContext.tsx';
 
 function DashboardPage() {
   const { data: ordersDelivered } = useGetTotalOrdersDelivered();
   const { data: countResidents } = useGetTotalResidents();
   const { data: ordersPending } = useGetTotalOrdersPending();
-
+  const { role } = useContext(AuthContext).user;
   return (
     <>
       <h1 className="pb-4 text-4xl text-left">Dashboard</h1>
@@ -50,12 +52,14 @@ function DashboardPage() {
           />
         </div>
 
-        <div className="p-2">
-          <BarChart
-            title="Entregas por condomínio"
-            queryFunction={useGetOrdersByCondominium}
-          />
-        </div>
+        {role === 'admin' && (
+          <div className="p-2">
+            <BarChart
+              title="Entregas por condomínio"
+              queryFunction={useGetOrdersByCondominium}
+            />
+          </div>
+        )}
       </div>
     </>
   );
