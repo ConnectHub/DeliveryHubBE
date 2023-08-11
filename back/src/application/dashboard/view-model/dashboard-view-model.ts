@@ -1,5 +1,6 @@
 import { translateStatus } from 'src/application/order/translator/order.translator';
 import { ChartDataInterface } from '../interfaces';
+import { FormatMonth } from '../../../infra/utils/format-month';
 
 export class DashboardViewModel {
   static toHttp(data: ChartDataInterface) {
@@ -10,21 +11,9 @@ export class DashboardViewModel {
       value: data.value,
     };
   }
+
   static aggregateOrdersByMonth(orders: ChartDataInterface[]) {
-    const monthNames = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
+    const monthNames = FormatMonth.monthNames;
     const ordersByMonthMap: Record<string, number> = {};
     monthNames.forEach((month) => {
       ordersByMonthMap[month] = 0;
