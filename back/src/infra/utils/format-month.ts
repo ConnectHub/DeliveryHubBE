@@ -1,5 +1,5 @@
 export class FormatMonth {
-  private static monthNames = [
+  public static monthNames = [
     'Janeiro',
     'Fevereiro',
     'Março',
