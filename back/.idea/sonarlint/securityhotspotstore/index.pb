@@ -1,23 +1,11 @@
 
-W
-'src/application/auth/auth.controller.ts,a/9/a9733744e612e90413b3d6f6239cf555a3b50179
 O
 src/infra/whatsapp/venom-bot.ts,8/4/84d13036ac0957bd201eb7e70ae880ef5f3d1540
-T
-$src/application/auth/auth.service.ts,9/1/9103727cf9129097e4d270a1fc024ef06fa03d91
 j
 :src/application/resident/view-model/resident-view-model.ts,a/9/a95f51e1651a5e761414e8a94c0176fa4716973c
-l
-<src/application/dashboard/view-model/dashboard-view-model.ts,a/1/a125e15b35be1546d4018e08351a24ad8d433fa7
 e
 5src/application/condominium/condominium.controller.ts,1/d/1d400b67dd3fd7f494818a997ff806fc1cbe737b
-a
-1src/application/dashboard/dashboard.controller.ts,f/f/fffc821f65a21d2d314e739a387cafe520a35099
 O
 src/infra/utils/format-month.ts,0/d/0d4afb2d479a277dcf4d7da9abcabb5996f7677d
 B
 docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
-^
-.src/application/dashboard/dashboard.service.ts,c/4/c4d5cb028ceb98e9225a7d493cf0fcea2f71c92f
-]
--src/application/dashboard/interfaces/index.ts,c/d/cda941de6cdcccd022355370e450846218d6cd19
