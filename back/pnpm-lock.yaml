@@ -27,7 +27,7 @@ dependencies:
     specifier: ^9.4.3
     version: 9.4.3(@nestjs/common@9.4.3)(@nestjs/core@9.4.3)
   '@nestjs/swagger':
-    specifier: ^7.1.2
+    specifier: ^7.1.4
     version: 7.1.4(@nestjs/common@9.4.3)(@nestjs/core@9.4.3)(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)
   '@prisma/client':
     specifier: ^5.0.0
@@ -105,6 +105,7 @@ devDependencies:
     version: 8.46.0
   eslint-config-prettier:
     specifier: ^8.8.0
+
     version: 8.9.0(eslint@8.46.0)
   eslint-plugin-prettier:
     specifier: ^4.2.1
