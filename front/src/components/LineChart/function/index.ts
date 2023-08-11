@@ -1,4 +1,4 @@
-import { ChartData } from '../interfaces';
+import { ChartData } from '../../../pages/Dashboard/interfaces';
 
 export function configCreate(data: ChartData[]) {
   return {
