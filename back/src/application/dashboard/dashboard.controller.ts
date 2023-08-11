@@ -43,8 +43,6 @@ export class DashboardController {
 
   @Get('listOrdersByCondominium')
   async listOrdersByCondominium() {
-    const ordersByCondominium =
-      await this.dashboardService.listOrdersByCondominium();
-    return DashboardViewModel.aggregateOrdersByCondominium(ordersByCondominium);
+    return await this.dashboardService.listOrdersByCondominium();
   }
 }
