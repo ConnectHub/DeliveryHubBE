@@ -1,7 +1,7 @@
 import { Bar } from '@ant-design/charts';
 import { ChartData } from '../../pages/Dashboard/interfaces';
 import { UseQueryResult } from 'react-query';
-import { createConfig } from '../BarChart/function';
+import { createConfig } from './function';
 import LoadingComponent from '../Loading';
 import GlitchError from '../Error';
 

@@ -1,5 +1,5 @@
 import { Line } from '@ant-design/charts';
-import { ChartData } from './interfaces';
+import { ChartData } from '../../pages/Dashboard/interfaces';
 import { configCreate } from './function';
 import { UseQueryResult } from 'react-query';
 import LoadingComponent from '../Loading';
