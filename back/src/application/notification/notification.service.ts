@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { VenomBot } from '../..//infra/whatsapp/venom-bot';
+import { VenomBot } from '../../infra/whatsapp/venom-bot';
 import { NotificationTemplate } from './templates/notification-messsage-template';
 import { NotificationErrorRepository } from './repository/notification-errors-repository';
 import { PhoneNumberNotProvided } from '../order/errors/phone-number-not-provided';
@@ -16,23 +16,19 @@ export class NotificationService {
     private readonly notificationErrorRepository: NotificationErrorRepository,
   ) {}
 
-  private async sendNotification(
-    orderMessage: OrderCreatedTemplate,
-    resident: string,
-    orderImg: string,
-  ): Promise<void> {
-    if (orderImg)
-      await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
-    await this.whatsapp.sendMessage(orderMessage.message, resident);
-  }
-
   async sendOrderNotification(
     orderId: string,
+    description: string,
+    trackingCode: string,
     phoneNumber: string,
     orderImg?: string,
   ): Promise<void> {
     await this.sendNotification(
-      new NotificationTemplate().orderCreated(orderId),
+      new NotificationTemplate().orderCreated(
+        orderId,
+        trackingCode,
+        description,
+      ),
       phoneNumber,
       orderImg,
     );
@@ -54,6 +50,8 @@ export class NotificationService {
         orderId: order.url,
         phoneNumber: order.addressee.phoneNumber,
         orderImg: order?.img,
+        trackingCode: order.trackingCode,
+        description: order.description,
       },
       {
         attempts: 3,
@@ -61,5 +59,15 @@ export class NotificationService {
         removeOnFail: true,
       },
     );
+  }
+
+  private async sendNotification(
+    orderMessage: OrderCreatedTemplate,
+    resident: string,
+    orderImg: string,
+  ): Promise<void> {
+    if (orderImg)
+      await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
+    await this.whatsapp.sendMessage(orderMessage.message, resident);
   }
 }
