@@ -16,7 +16,7 @@ function PieChart({ title, queryFunction }: PieChartData) {
   const config = createConfig(data ?? []);
 
   return (
-    <div className=" bg-primary p-2 rounded sm:min-w-[500px] hover:scale-[1.01] min-h-full ">
+    <div className="bg-primary p-2 rounded sm:min-w-[500px] hover:scale-[1.01] min-h-full">
       <div className="flex flex-col items-center min-h-full p-2 rounded justify-items-start bg-slate-50">
         <h2 className="w-full mb-2 text-3xl font-semibold text-left">
           {title}

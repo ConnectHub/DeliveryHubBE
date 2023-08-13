@@ -12,12 +12,16 @@ import {
 } from './api/service';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/UserContext.tsx';
+import {useTranslation} from "react-i18next";
 
 function DashboardPage() {
   const { data: ordersDelivered } = useGetTotalOrdersDelivered();
   const { data: countResidents } = useGetTotalResidents();
   const { data: ordersPending } = useGetTotalOrdersPending();
   const { role } = useContext(AuthContext).user;
+
+  const { t } = useTranslation('common');
+
   return (
     <>
       <h1 className="pb-4 text-4xl text-left">Dashboard</h1>
@@ -25,17 +29,17 @@ function DashboardPage() {
       <div className="flex flex-col gap-5 ">
         <div className="flex flex-col p-2 sm:flex-row gap-7">
           <InformationCard
-            description="Total de encomendas entregues"
+            description={t('dashboard.totalDeliveredOrders')}
             total={ordersDelivered ?? 0}
             backgroundColor="bg-green-500"
           />
           <InformationCard
-            description="Total de moradores cadastrados"
+            description={t('dashboard.totalResidents')}
             total={countResidents ?? 0}
             backgroundColor="bg-blue-600"
           />
           <InformationCard
-            description="Total de encomendas pendentes"
+            description={t('dashboard.totalPendingOrders')}
             total={ordersPending ?? 0}
             backgroundColor="bg-zinc-700"
           />
@@ -43,11 +47,11 @@ function DashboardPage() {
 
         <div className="flex flex-col gap-10 p-2 xl:flex-row">
           <PieChart
-            title="Entregas por status"
+            title={t('dashboard.deliveriesByStatus')}
             queryFunction={useGetOrderByStatus}
           />
           <LineChart
-            title="Entregas por mês"
+              title={t('dashboard.deliveriesByMonth')}
             queryFunction={useGetOrdersByMonth}
           />
         </div>
