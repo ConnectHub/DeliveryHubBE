@@ -10,6 +10,7 @@ export const AuthContext = createContext({
     authToken: '',
     rate: false,
     username: '',
+    role: '',
   },
   signIn: (values: FormValues) => {
     return Promise.resolve(values.email);
@@ -26,11 +27,13 @@ function ContextUserContext({ children }: UserContextProps) {
     authToken: '',
     rate: false,
     username: '',
+    role: '',
   });
   const { mutateAsync, isError } = useMutation('login', login);
   const [token, setToken] = useLocalStorage('token', '');
   const [rate, setRate] = useLocalStorage<boolean>('rate', false);
   const [username, setUsername] = useLocalStorage('username', '');
+  const [role, setRole] = useLocalStorage('role', '');
 
   useEffect(() => {
     if (token) {
@@ -38,20 +41,23 @@ function ContextUserContext({ children }: UserContextProps) {
         authToken: token,
         rate,
         username,
+        role,
       });
     }
   }, [token, rate]);
 
   async function signIn(values: FormValues) {
-    const { authToken, rate, username } = await mutateAsync(values);
+    const { authToken, rate, username, role } = await mutateAsync(values);
     setUser({
       authToken,
       rate,
       username,
+      role,
     });
     setToken(authToken);
     setRate(rate);
     setUsername(username);
+    setRole(role);
     return authToken;
   }
 

@@ -34,6 +34,11 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# IDE - IntelliJ
+./.idea
+/*/.idea
+
+
 .env
 tokens
 

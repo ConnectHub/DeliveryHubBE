@@ -8,4 +8,5 @@ export interface LoginResponse {
   authToken: string;
   rate: boolean;
   username: string;
+  role: string;
 }

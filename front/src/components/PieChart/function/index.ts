@@ -1,10 +1,10 @@
-import { ChartData } from '../interfaces';
+import { ChartData } from '../../../pages/Dashboard/interfaces';
 
 export function createConfig(data: ChartData[]) {
   return {
     data: data,
-    angleField: 'total',
-    colorField: 'description',
+    angleField: 'orderCount',
+    colorField: 'status',
     radius: 0.75,
     label: {
       type: 'inner',

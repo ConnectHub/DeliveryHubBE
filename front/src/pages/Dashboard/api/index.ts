@@ -1,4 +1,4 @@
-import { ChartData } from '../../../components/PieChart/interfaces';
+import { ChartData } from '../interfaces';
 import { api } from '../../../services/api';
 
 export async function getTotalByStatus(): Promise<ChartData[]> {

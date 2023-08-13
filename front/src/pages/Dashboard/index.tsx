@@ -2,42 +2,64 @@ import BarChart from '../../components/BarChart';
 import InformationCard from '../../components/InformationCard';
 import LineChart from '../../components/LineChart';
 import PieChart from '../../components/PieChart';
+import {
+  useGetOrderByStatus,
+  useGetTotalOrdersDelivered,
+  useGetTotalResidents,
+  useGetTotalOrdersPending,
+  useGetOrdersByMonth,
+  useGetOrdersByCondominium,
+} from './api/service';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/UserContext.tsx';
 
 function DashboardPage() {
+  const { data: ordersDelivered } = useGetTotalOrdersDelivered();
+  const { data: countResidents } = useGetTotalResidents();
+  const { data: ordersPending } = useGetTotalOrdersPending();
+  const { role } = useContext(AuthContext).user;
   return (
     <>
-      <h1 className="text-4xl text-left pb-4">Dashboard</h1>
-      <p className="text-lg text-left font-bold">
-        work in progress... (miss the back)
-      </p>
+      <h1 className="pb-4 text-4xl text-left">Dashboard</h1>
 
       <div className="flex flex-col gap-5 ">
         <div className="flex flex-col p-2 sm:flex-row gap-7">
           <InformationCard
             description="Total de encomendas entregues"
-            total={1400}
-            backgroundColor="bg-violet-700"
+            total={ordersDelivered ?? 0}
+            backgroundColor="bg-green-500"
           />
           <InformationCard
             description="Total de moradores cadastrados"
-            total={15}
-            backgroundColor="bg-blue-700"
+            total={countResidents ?? 0}
+            backgroundColor="bg-blue-600"
           />
           <InformationCard
             description="Total de encomendas pendentes"
-            total={7}
-            backgroundColor="bg-orange-700"
+            total={ordersPending ?? 0}
+            backgroundColor="bg-zinc-700"
           />
         </div>
 
-        <div className="flex flex-col xl:flex-row p-2 gap-10">
-          <PieChart title="Summary" />
-          <LineChart title="Summary" />
+        <div className="flex flex-col gap-10 p-2 xl:flex-row">
+          <PieChart
+            title="Entregas por status"
+            queryFunction={useGetOrderByStatus}
+          />
+          <LineChart
+            title="Entregas por mês"
+            queryFunction={useGetOrdersByMonth}
+          />
         </div>
 
-        <div className="p-2">
-          <BarChart title="Dev mais forte" />
-        </div>
+        {role === 'admin' && (
+          <div className="p-2">
+            <BarChart
+              title="Entregas por condomínio"
+              queryFunction={useGetOrdersByCondominium}
+            />
+          </div>
+        )}
       </div>
     </>
   );
