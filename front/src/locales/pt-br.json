@@ -37,5 +37,12 @@
       "success": "Notificação enviada com sucesso",
       "error": "Erro ao enviar a notificação"
     }
+  },
+  "dashboard": {
+    "totalDeliveredOrders": "Total de encomendas entregues",
+    "totalResidents": "Total de moradores cadastrados",
+    "totalPendingOrders": "Total de encomendas pendentes",
+    "deliveriesByStatus": "Entregas por status",
+    "deliveriesByMonth": "Entregas por mês"
   }
 }
