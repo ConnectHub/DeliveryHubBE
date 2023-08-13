@@ -16,7 +16,7 @@ dependencies:
     version: 2.4.0(react@18.2.0)
   '@react-buddy/palette-antd':
     specifier: ^5.3.0
-    version: 5.3.0(@ant-design/icons@5.1.4)(antd@5.6.4)(react@18.2.0)
+    version: 5.3.0(@ant-design/icons@5.1.4)(antd@5.7.3)(react@18.2.0)
   '@types/react-signature-canvas':
     specifier: ^1.0.2
     version: 1.0.2
@@ -74,8 +74,8 @@ dependencies:
 
 devDependencies:
   '@types/react':
-    specifier: ^18.2.17
-    version: 18.2.17
+    specifier: ^18.2.20
+    version: 18.2.20
   '@types/react-dom':
     specifier: ^18.2.7
     version: 18.2.7
@@ -1733,7 +1733,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-buddy/palette-antd@5.3.0(@ant-design/icons@5.1.4)(antd@5.6.4)(react@18.2.0):
+  /@react-buddy/palette-antd@5.3.0(@ant-design/icons@5.1.4)(antd@5.7.3)(react@18.2.0):
     resolution: {integrity: sha512-c1B6b1r47JudvMqnl0BWZW9cJg/cSNSSnCoOZTDfZSgEDHUfqp/yRk3BBA0ajo+erXUQ3yR/bQUNt95OU7Lopg==}
     peerDependencies:
       '@ant-design/icons': ^5.0.0
@@ -1742,13 +1742,12 @@ packages:
     dependencies:
       '@ant-design/icons': 5.1.4(react-dom@18.2.0)(react@18.2.0)
       '@react-buddy/ide-toolbox': 2.4.0(react@18.2.0)
-      antd: 5.6.4(react-dom@18.2.0)(react@18.2.0)
+      antd: 5.7.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /@remix-run/router@1.7.1:
-    resolution: {integrity: sha512-bgVQM4ZJ2u2CM8k1ey70o1ePFXsEzYVZoWghh6WjM8p59jQ7HxzbHW4SbnWFG7V9ig9chLawQxDTZ3xzOF8MkQ==}
-
+  /@remix-run/router@1.7.2:
+    resolution: {integrity: sha512-7Lcn7IqGMV+vizMPoEl5F0XDshcdDYtMI6uJLQdQz5CfZAwy3vvGKYSUk789qndt5dEC4HfSjviSYlSoHGL2+A==}
     engines: {node: '>=14'}
     dev: false
 
@@ -1844,24 +1843,24 @@ packages:
   /@types/react-dom@18.2.7:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
     dependencies:
-      '@types/react': 18.2.17
+      '@types/react': 18.2.20
     dev: true
 
   /@types/react-highlight-words@0.16.4:
     resolution: {integrity: sha512-KITBX3xzheQLu2s3bUgLmRE7ekmhc52zRjRTwkKayQARh30L4fjEGzGm7ULK9TuX2LgxWWavZqyQGDGjAHbL3w==}
     dependencies:
-      '@types/react': 18.2.17
+      '@types/react': 18.2.20
     dev: true
 
   /@types/react-signature-canvas@1.0.2:
     resolution: {integrity: sha512-uDHDoo2JM/9qYS+U7PRKDLBgOnQOOUEkDdXjCxBvI19fWtOLqXisrjiquPu+enu5iu2oWIfU7cVhn1QJZPkLTg==}
     dependencies:
-      '@types/react': 18.2.17
+      '@types/react': 18.2.20
       '@types/signature_pad': 2.3.2
     dev: false
 
-  /@types/react@18.2.17:
-    resolution: {integrity: sha512-u+e7OlgPPh+aryjOm5UJMX32OvB2E3QASOAqVMY6Ahs90djagxwv2ya0IctglNbNTexC12qCSMZG47KPfy1hAA==}
+  /@types/react@18.2.20:
+    resolution: {integrity: sha512-WKNtmsLWJM/3D5mG4U84cysVY31ivmyw85dE84fOCk5Hx78wezB/XEjVPWl2JTZ5FkEeaTJf+VgUAUn3PE7Isw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
