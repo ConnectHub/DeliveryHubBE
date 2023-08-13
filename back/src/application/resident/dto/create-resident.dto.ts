@@ -37,6 +37,5 @@ export class CreateResidentDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  @Length(3, 15)
   buildingApartment: string;
 }
