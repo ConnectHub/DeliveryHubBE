@@ -12,7 +12,7 @@ import {
 } from './api/service';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/UserContext.tsx';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
 function DashboardPage() {
   const { data: ordersDelivered } = useGetTotalOrdersDelivered();
@@ -51,7 +51,7 @@ function DashboardPage() {
             queryFunction={useGetOrderByStatus}
           />
           <LineChart
-              title={t('dashboard.deliveriesByMonth')}
+            title={t('dashboard.deliveriesByMonth')}
             queryFunction={useGetOrdersByMonth}
           />
         </div>
