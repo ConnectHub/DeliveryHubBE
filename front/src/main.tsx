@@ -3,10 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {
-  Route,
-  RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
+  Route,
+  RouterProvider,
 } from 'react-router-dom';
 import ResidentsPage from './pages/Residents/index.tsx';
 import OrdersPage from './pages/Orders/index.tsx';
@@ -22,7 +22,7 @@ import ProtectedRouter from './components/ProtectedRoute/index.tsx';
 import CondominiumsPage from './pages/Condominiums/index.tsx';
 import DashboardPage from './pages/Dashboard/index.tsx';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n';
+import i18n from './lang/i18n.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
