@@ -11,18 +11,21 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { RateModule } from './application/rate/rate.module';
 import { UserModule } from './application/user/user.module';
 import { DashboardModule } from './application/dashboard/dashboard.module';
+import { EnvModule } from './infra/env/env.module';
+import { env } from './infra/env/env.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    EnvModule,
     CacheModule.register({
       isGlobal: true,
       ttl: 5,
     }),
     BullModule.forRoot({
       redis: {
-        host: process.env.REDIS_HOST,
-        port: +process.env.REDIS_PORT,
+        host: env.REDIS_HOST,
+        port: env.REDIS_PORT,
       },
     }),
     NotificationModule,

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UserUnauthorized } from './errors/user-unauthorized';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
@@ -7,6 +7,8 @@ import { Role } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
@@ -21,6 +23,7 @@ export class AuthService {
     username: string;
     role: Role[];
   }> {
+    this.logger.log(`Signing in user with login ${login}`);
     const user = await this.userService.findUserByLogin(login);
     if (!user) throw new UserUnauthorized();
     const isMatch = await compare(password, user.password);

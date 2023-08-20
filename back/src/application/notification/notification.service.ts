@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { VenomBot } from '../../infra/whatsapp/venom-bot';
 import { NotificationTemplate } from './templates/notification-messsage-template';
 import { NotificationErrorRepository } from './repository/notification-errors-repository';
@@ -10,10 +10,13 @@ import { OrderCreatedTemplate } from './interfaces';
 
 @Injectable()
 export class NotificationService {
+  private readonly logger = new Logger(NotificationService.name);
+
   constructor(
     @InjectQueue('notification') private readonly notificationQueue: Queue,
     private readonly whatsapp: VenomBot,
     private readonly notificationErrorRepository: NotificationErrorRepository,
+    private readonly notificationTemplate: NotificationTemplate,
   ) {}
 
   async sendOrderNotification(
@@ -23,8 +26,9 @@ export class NotificationService {
     phoneNumber: string,
     orderImg?: string,
   ): Promise<void> {
+    this.logger.log(`Sending notification to ${phoneNumber}`);
     await this.sendNotification(
-      new NotificationTemplate().orderCreated(
+      this.notificationTemplate.orderCreated(
         orderId,
         trackingCode,
         description,
@@ -39,11 +43,13 @@ export class NotificationService {
     orderId: string,
     error: Error,
   ): Promise<void> {
+    this.logger.error(`Error sending notification to ${orderId}`);
     await this.notificationErrorRepository.create(message, orderId, error);
   }
 
   async addNotificationQueue(order: Order): Promise<void> {
     if (!order.addressee.phoneNumber) throw new PhoneNumberNotProvided();
+    this.logger.log(`Adding notification to queue ${order.url}`);
     await this.notificationQueue.add(
       'order.created',
       {
@@ -66,6 +72,7 @@ export class NotificationService {
     resident: string,
     orderImg: string,
   ): Promise<void> {
+    this.logger.log(`Sending notification to ${resident}`);
     if (orderImg)
       await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
     await this.whatsapp.sendMessage(orderMessage.message, resident);

@@ -1,10 +1,13 @@
 import { OrderCreatedTemplate } from '../interfaces';
+import { Injectable } from '@nestjs/common';
+import { env } from '../../../infra/env/env.service';
 
+@Injectable()
 export class NotificationTemplate {
   private readonly domain: string;
 
   constructor() {
-    this.domain = process.env.DOMAIN_NAME || 'http://localhost:5173';
+    this.domain = env.DOMAIN;
   }
 
   messageList(): string[] {
