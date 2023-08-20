@@ -40,7 +40,8 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "venom-bot": "^5.0.17",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.1.11",

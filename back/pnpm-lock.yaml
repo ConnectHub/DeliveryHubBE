@@ -33,7 +33,7 @@ dependencies:
     specifier: ^5.1.1
     version: 5.1.1(prisma@5.0.0)
   aws-sdk:
-    specifier: ^2.1435.0
+    specifier: ^2.1422.0
     version: 2.1435.0
   bcrypt:
     specifier: ^5.1.0
@@ -65,6 +65,9 @@ dependencies:
   winston:
     specifier: ^3.10.0
     version: 3.10.0
+  zod:
+    specifier: ^3.22.2
+    version: 3.22.2
 
 devDependencies:
   '@nestjs/cli':
@@ -8636,4 +8639,8 @@ packages:
       lolcatjs: 2.4.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /zod@3.22.2:
+    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
     dev: false
