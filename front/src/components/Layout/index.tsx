@@ -8,6 +8,8 @@ import Logo from '../Logo';
 import LogoutButton from './components/LogoutButton';
 import useLocalStorage from 'use-local-storage';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '../../context/UserContext.tsx';
+import { useContext } from 'react';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
@@ -18,8 +20,32 @@ function LayoutScreen() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const { role } = useContext(AuthContext).user;
+
   const navigator = useNavigate();
   const location = useLocation();
+  const menuItems = [
+    {
+      key: '/orders',
+      icon: <Package size={18} />,
+      label: 'Encomendas',
+      onClick: () => navigator('/orders'),
+    },
+    {
+      key: '/residents',
+      icon: <Users size={18} />,
+      label: 'Residentes',
+      onClick: () => navigator('/residents'),
+    },
+    {
+      key: '/condominiums',
+      icon: <Building2 size={18} />,
+      label: 'Condomínios',
+      onClick: () => navigator('/condominiums'),
+    },
+  ];
+
+  if (!role.includes('ADMIN')) menuItems.pop();
 
   return (
     <Layout className="m-0">
@@ -32,26 +58,7 @@ function LayoutScreen() {
           mode="inline"
           defaultSelectedKeys={['1']}
           selectedKeys={[location.pathname]}
-          items={[
-            {
-              key: '/orders',
-              icon: <Package size={18} />,
-              label: 'Encomendas',
-              onClick: () => navigator('/orders'),
-            },
-            {
-              key: '/residents',
-              icon: <Users size={18} />,
-              label: 'Residentes',
-              onClick: () => navigator('/residents'),
-            },
-            {
-              key: '/condominiums',
-              icon: <Building2 size={18} />,
-              label: 'Condomínios',
-              onClick: () => navigator('/condominiums'),
-            },
-          ]}
+          items={menuItems}
         />
       </Sider>
       <Layout className={colorBgContainer}>
