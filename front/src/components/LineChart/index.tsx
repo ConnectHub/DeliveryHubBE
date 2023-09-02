@@ -16,17 +16,15 @@ function LineChart({ title, queryFunction }: LineChartData) {
   const config = configCreate(data ?? []);
 
   return (
-    <div className="bg-primary p-2 rounded min-w-[200px] w-full hover:scale-[1.01]">
-      <div className="min-h-full p-2 rounded bg-slate-50">
-        <h2 className="mb-2 text-3xl font-semibold text-left">{title}</h2>
+    <div className="min-h-full bg-[#e5e5e5] p-4 rounded min-w-[200px] w-full hover:scale-[1.01]">
+      <h2 className="mb-2 text-3xl font-semibold text-left">{title}</h2>
 
-        {isLoading && <LoadingComponent />}
-        {error && <GlitchError text="ERROR AO GERAR O GRÁFICO" />}
-        {data && data?.length == 0 && (
-          <GlitchError text="Ainda não há dados para mostrar!" />
-        )}
-        {data && data?.length > 0 && <Line {...config} />}
-      </div>
+      {isLoading && <LoadingComponent />}
+      {error && <GlitchError text="ERROR AO GERAR O GRÁFICO" />}
+      {data && data?.length == 0 && (
+        <GlitchError text="Ainda não há dados para mostrar!" />
+      )}
+      {data && data?.length > 0 && <Line {...config} />}
     </div>
   );
 }
