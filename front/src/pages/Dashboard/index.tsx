@@ -56,7 +56,7 @@ function DashboardPage() {
           />
         </div>
 
-        {role === 'admin' && (
+        {role.includes('ADMIN') && (
           <div className="p-2">
             <BarChart
               title="Entregas por condomínio"
