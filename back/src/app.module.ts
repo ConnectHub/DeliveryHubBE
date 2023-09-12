@@ -16,7 +16,9 @@ import { env } from './infra/env/env.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     EnvModule,
     CacheModule.register({
       isGlobal: true,
