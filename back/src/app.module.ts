@@ -18,6 +18,8 @@ import { env } from './infra/env/env.service';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env'],
+      cache: true,
     }),
     EnvModule,
     CacheModule.register({
