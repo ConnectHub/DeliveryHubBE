@@ -16,12 +16,23 @@ enum Status {
   CANCELED
 }
 
+enum Role {
+  ADMIN
+  TRUSTEE
+  DOORMAN
+}
+
 model order {
   id              String    @id @unique @default(uuid())
   url             String    @unique @default(cuid())
   code            String
+  img             String?
+  description     String?
+  trackingCode    String?
   status          Status    @default(PENDING)
   sender          String?
+  sign            String?
+  signDateHour    DateTime?
   receiptDateHour DateTime  @default(now())
   updatedAt       DateTime  @default(now()) @updatedAt
   deletedAt       DateTime?
@@ -50,15 +61,40 @@ model resident {
 
 model condominium {
   id        String     @id @unique @default(uuid())
-  login     String     @unique
-  password  String
   name      String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now()) @updatedAt
   deletedAt DateTime?
   resident  resident[]
+  user      user[]
 
   @@map("Condominium")
+}
+
+model user {
+  id            String      @id @unique @default(uuid())
+  login         String      @unique
+  password      String
+  name          String
+  roles         Role[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  deletedAt     DateTime?
+  condominiumId String
+  rateId        String?
+  rate          rate?       @relation(fields: [rateId], references: [id])
+  condominium   condominium @relation(fields: [condominiumId], references: [id])
+
+  @@map("User")
+}
+
+model rate {
+  id        String    @id @unique @default(uuid())
+  value     Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  deletedAt DateTime?
+  user      user[]
 }
 
 model inboxMessageErrors {

@@ -1,103 +1,64 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import DataTable from '../../components/DataTable';
-import {
-  createResident,
-  getResidents,
-  deleteResident,
-  updateResident,
-} from './api';
-import NavBar from '../../components/Layout';
-import { columns } from './components/columns';
+import { columns } from './components/Columns';
 import Modal from '../../components/Modal';
-import { toast } from 'react-toastify';
 import Input from '../../components/Input';
-import {
-  ApartmentOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Form } from 'antd';
-import { AxiosError } from 'axios';
+import GlitchError from '../../components/Error';
+import { Form, Select } from 'antd';
 import { useState } from 'react';
-import { ErrorResponse } from '../../services/api/interfaces';
 import { Resident } from './interfaces';
-
-const query = 'residentData';
+import { Home, Mail, Phone, User } from 'lucide-react';
+import LoadingComponent from '../../components/Loading';
+import { useGetCondominiums } from '../Condominiums/api/service';
+import {
+  useCreateResident,
+  useDeleteResident,
+  useGetResidents,
+  useUpdateResident,
+} from './api/service';
 
 function ResidentsPage() {
-  const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const { isLoading, error, data } = useQuery(query, getResidents);
+  const { isLoading, error, data } = useGetResidents();
+  const { data: condominiums } = useGetCondominiums();
 
-  const { mutate: createResidentMutation } = useMutation(createResident, {
-    onSuccess: () => {
-      setOpen(false);
-      form.resetFields();
-      queryClient.invalidateQueries(query);
-      toast.success('Resident created successfully');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
-    },
-  });
+  const { mutate: createResidentMutation } = useCreateResident();
 
-  const { mutate: updateResidentMutation } = useMutation(updateResident, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
-      setOpen(false);
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
-    },
-  });
+  const { mutate: updateResidentMutation } = useUpdateResident();
 
-  const { mutate: deleteResidentMutation } = useMutation(deleteResident, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(query);
-      toast.success('Resident deleted successfully');
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(
-        error.response?.data?.message[0] ?? 'Error creating resident'
-      );
-    },
-  });
+  const { mutate: deleteResidentMutation } = useDeleteResident();
 
   function handleEdit(resident: Resident) {
-    return () => {
-      form.setFieldsValue({ ...resident, id: resident.id });
-      setOpen(true);
-      setIsEditing(true);
-    };
+    form.setFieldsValue({ ...resident, id: resident.id });
+    setOpen(true);
+    setIsEditing(true);
   }
 
   function handleSubmit(values: Resident) {
-    if (isEditing) return updateResidentMutation(values);
+    if (isEditing) {
+      updateResidentMutation(values);
+      setOpen(false);
+      return;
+    }
     createResidentMutation(values);
+    setOpen(false);
+    form.resetFields();
   }
 
   const residentColumns = columns({ deleteResidentMutation, handleEdit });
 
-  if (error) return <div>error</div>;
-
   return (
     <>
       <Modal
+        onCancel={() => setIsEditing(false)}
         open={open}
         setOpen={setOpen}
         setIsEditing={setIsEditing}
         onSubmit={handleSubmit}
         form={form}
         width={500}
-        title={isEditing ? 'editar residente' : 'criar residente'}
+        title={isEditing ? 'Editar Residente' : 'Cadastrar residente'}
       >
         <Form form={form} className="grid grid-cols-12">
           <Form.Item name="id" className="hidden"></Form.Item>
@@ -111,7 +72,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="nome" />
+            <Input prefix={<User size={16} />} placeholder="Nome" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -123,7 +84,7 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<PhoneOutlined />} placeholder="telefone" />
+            <Input prefix={<Phone size={16} />} placeholder="Telefone" />
           </Form.Item>
           <Form.Item
             className="col-span-full"
@@ -136,8 +97,8 @@ function ResidentsPage() {
             ]}
           >
             <Input
-              prefix={<ApartmentOutlined />}
-              placeholder="bloco e apartamento"
+              prefix={<Home size={16} />}
+              placeholder="Bloco e apartamento"
             />
           </Form.Item>
           <Form.Item
@@ -150,15 +111,27 @@ function ResidentsPage() {
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} placeholder="email" />
+            <Input prefix={<Mail size={16} />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item className="col-span-full" name="condominiumId">
+            <Select
+              showSearch
+              placeholder="Selecione o condomínio"
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '')
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+              }
+              options={condominiums ?? []}
+            />
           </Form.Item>
         </Form>
       </Modal>
-      {isLoading ? (
-        <div>loading...</div>
-      ) : (
-        <DataTable data={data ?? []} columns={residentColumns} />
-      )}
+
+      {isLoading && <LoadingComponent />}
+      {error && <GlitchError text="ERRO NA BUSCA DE DADOS" />}
+      {data && <DataTable data={data ?? []} columns={residentColumns} />}
     </>
   );
 }

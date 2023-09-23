@@ -7,25 +7,33 @@ import { CondominiumViewModel } from './view-model/condominium-view-model';
 @Controller('condominium')
 export class CondominiumController {
   constructor(private readonly condominiumService: CondominiumService) {}
+
   @Post('create')
   async create(@Body() condominium: CreateCondominiumDto) {
-    return await this.condominiumService.createCondominium(condominium);
+    const newCondominium = await this.condominiumService.createCondominium(
+      condominium,
+    );
+    return CondominiumViewModel.toHttp(newCondominium);
   }
 
   @Post('update')
   async update(@Body() condominium: UpdateCondominiumDto) {
-    return await this.condominiumService.updateCondominium(condominium);
+    const updateCondominium = await this.condominiumService.updateCondominium(
+      condominium,
+    );
+    return CondominiumViewModel.toHttp(updateCondominium);
   }
 
   @Get('list')
   async list() {
     const orders = await this.condominiumService.listAllCondominiums();
-    return orders.map(CondominiumViewModel.toHttp)
+    return orders.map(CondominiumViewModel.toHttp);
   }
 
   @Get(':id')
   async findById(@Param('id') id: string) {
-    return await this.condominiumService.findById(id);
+    const condominium = await this.condominiumService.findById(id);
+    return CondominiumViewModel.toHttp(condominium);
   }
 
   @Delete(':id')

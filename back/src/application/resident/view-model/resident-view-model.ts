@@ -1,7 +1,7 @@
-import { UnformatPhoneNumber } from '../helpers/unformat-phone-number';
 import { FormatDate } from '../../../infra/utils/format-date';
 import { Resident } from 'src/domain/entities/resident';
 import { ApiProperty } from '@nestjs/swagger';
+import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
 export class ResidentViewModel {
   @ApiProperty()
   id: string;
@@ -24,14 +24,16 @@ export class ResidentViewModel {
   static toHttp(resident: Resident) {
     return {
       id: resident.id,
-      key: resident.id,
       name: resident.name,
-      phoneNumber: UnformatPhoneNumber.format(
+      phoneNumber: FormatPhoneNumber.unFormat(
         resident?.phoneNumber ?? 'Não possui número',
       ),
       email: resident.email,
       buildingApartment: resident.buildingApartment,
       createdAt: FormatDate.format(resident.createAt),
+      key: resident.id,
+      value: resident.id,
+      label: resident.name,
     };
   }
 }

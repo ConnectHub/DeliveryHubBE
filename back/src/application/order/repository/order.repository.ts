@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Status } from '@prisma/client';
 import { Order } from 'src/domain/entities/order';
 import { OrderRepositoryInterface } from 'src/domain/repositories/order';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class OrderRepository implements OrderRepositoryInterface {
@@ -13,6 +13,9 @@ export class OrderRepository implements OrderRepositoryInterface {
       where: {
         id,
         deletedAt: null,
+      },
+      include: {
+        addressee: true,
       },
     });
   }
@@ -47,13 +50,15 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async updateStatus(url: string): Promise<Order> {
+  async updateStatus(url: string, sign: string): Promise<Order> {
     return await this.prisma.order.update({
       where: {
         url,
       },
       data: {
         status: Status.DELIVERED,
+        sign,
+        signDateHour: new Date(),
       },
     });
   }
@@ -69,13 +74,19 @@ export class OrderRepository implements OrderRepositoryInterface {
     });
   }
 
-  async findOrders(): Promise<Order[]> {
+  async findOrders(condominiumId: string): Promise<Order[]> {
     return await this.prisma.order.findMany({
       where: {
         deletedAt: null,
+        addressee: {
+          condominiumId,
+        },
       },
       include: {
         addressee: true,
+      },
+      orderBy: {
+        receiptDateHour: 'desc',
       },
     });
   }

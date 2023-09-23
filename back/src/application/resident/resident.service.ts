@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ResidentRepository } from './repository/resident.repository';
 import { Resident } from 'src/domain/entities/resident';
-import { FormatPhoneNumber } from './helpers/format-phone-number';
 import { ResidentNotFound } from './errors/resident-not-found';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
+import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
 
 @Injectable()
 export class ResidentService {
+  private readonly logger = new Logger(ResidentService.name);
+
   constructor(private residentRepository: ResidentRepository) {}
 
   async createResident(resident: Resident): Promise<Resident> {
+    this.logger.log(`Creating resident with name ${resident.name}`);
     await this.findResident(resident);
     resident.phoneNumber = this.formatPhoneNumber(resident.phoneNumber);
     return await this.residentRepository.create(resident);
@@ -21,11 +24,12 @@ export class ResidentService {
     return prevResident;
   }
 
-  async listAllResidents(): Promise<Resident[]> {
-    return await this.residentRepository.list();
+  async listAllResidents(condominiumId: string): Promise<Resident[]> {
+    return await this.residentRepository.list(condominiumId);
   }
 
   async deleteResident(id: string): Promise<void> {
+    this.logger.log(`Deleting resident with id ${id}`);
     await this.findById(id);
     await this.residentRepository.delete(id);
   }
@@ -37,10 +41,13 @@ export class ResidentService {
   }
 
   async updateResidentInfos(residentInfos: Resident): Promise<Resident> {
-    const { id, ...rest } = residentInfos;
+    this.logger.log(`Updating resident with id ${residentInfos.id}`);
+    const { id } = residentInfos;
     await this.findById(id);
-    if (rest.phoneNumber)
-      rest.phoneNumber = this.formatPhoneNumber(rest.phoneNumber);
+    if (residentInfos.phoneNumber)
+      residentInfos.phoneNumber = this.formatPhoneNumber(
+        residentInfos.phoneNumber,
+      );
     return await this.residentRepository.update(residentInfos);
   }
 
