@@ -39,7 +39,7 @@
     "npm-check-updates": "^16.11.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "venom-bot": "^5.0.17",
+    "venom-bot": "^5.0.21",
     "winston": "^3.10.0",
     "zod": "^3.22.2"
   },

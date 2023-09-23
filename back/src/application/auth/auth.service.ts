@@ -3,7 +3,6 @@ import { UserUnauthorized } from './errors/user-unauthorized';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserService } from '../user/user.service';
-import { Role } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +20,6 @@ export class AuthService {
     authToken: string;
     rate: boolean;
     username: string;
-    role: Role[];
   }> {
     this.logger.log(`Signing in user with login ${login}`);
     const user = await this.userService.findUserByLogin(login);
@@ -38,7 +36,6 @@ export class AuthService {
       authToken: await this.jwtService.signAsync(payload),
       rate: !!user.rateId,
       username: user.name,
-      role: user.roles,
     };
   }
 }
