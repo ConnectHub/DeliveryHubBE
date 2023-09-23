@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.2.1
     version: 4.2.1(eslint-config-prettier@8.10.0)(eslint@8.47.0)(prettier@3.0.3)
   i18next:
-    specifier: ^23.4.4
-    version: 23.4.4
+    specifier: ^23.5.1
+    version: 23.5.1
   jsonwebtoken:
     specifier: ^8.5.1
     version: 8.5.1
@@ -52,7 +52,7 @@ dependencies:
     version: 0.20.0(react@18.2.0)
   react-i18next:
     specifier: ^13.1.2
-    version: 13.1.2(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0)
+    version: 13.1.2(i18next@23.5.1)(react-dom@18.2.0)(react@18.2.0)
   react-query:
     specifier: ^3.39.3
     version: 3.39.3(react-dom@18.2.0)(react@18.2.0)
@@ -3615,8 +3615,8 @@ packages:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
     dev: false
 
-  /i18next@23.4.4:
-    resolution: {integrity: sha512-+c9B0txp/x1m5zn+QlwHaCS9vyFtmIAEXbVSFzwCX7vupm5V7va8F9cJGNJZ46X9ZtoGzhIiRC7eTIIh93TxPA==}
+  /i18next@23.5.1:
+    resolution: {integrity: sha512-JelYzcaCoFDaa+Ysbfz2JsGAKkrHiMG6S61+HLBUEIPaF40WMwW9hCPymlQGrP+wWawKxKPuSuD71WZscCsWHg==}
     dependencies:
       '@babel/runtime': 7.22.10
     dev: false
@@ -5351,7 +5351,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-i18next@13.1.2(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0):
+  /react-i18next@13.1.2(i18next@23.5.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-D/OJ/8ZQYscabsvbCAiOgvJq8W3feQF/VIV0to1w7V7UvrUE1IZ3hcalOckUYvKBd7BP3b8EPm+hop3J8sS+Mw==}
     peerDependencies:
       i18next: '>= 23.2.3'
@@ -5366,7 +5366,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.10
       html-parse-stringify: 3.0.1
-      i18next: 23.4.4
+      i18next: 23.5.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
