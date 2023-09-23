@@ -4,13 +4,14 @@ import { login } from '../pages/Login/api';
 import useLocalStorage from 'use-local-storage';
 import { FormValues } from '../pages/Login/interfaces';
 import { User } from './interfaces';
+import jwt from 'jsonwebtoken';
 
 export const AuthContext = createContext({
   user: {
     authToken: '',
     rate: false,
     username: '',
-    role: '',
+    role: [''],
   },
   signIn: (values: FormValues) => {
     return Promise.resolve(values.email);
@@ -27,13 +28,14 @@ function ContextUserContext({ children }: UserContextProps) {
     authToken: '',
     rate: false,
     username: '',
-    role: '',
+    role: [''],
   });
   const { mutateAsync, isError } = useMutation('login', login);
   const [token, setToken] = useLocalStorage('token', '');
   const [rate, setRate] = useLocalStorage<boolean>('rate', false);
   const [username, setUsername] = useLocalStorage('username', '');
-  const [role, setRole] = useLocalStorage('role', '');
+
+  const decodedToken = jwt.decode(token) as { roles: string[] };
 
   useEffect(() => {
     if (token) {
@@ -41,23 +43,23 @@ function ContextUserContext({ children }: UserContextProps) {
         authToken: token,
         rate,
         username,
-        role,
+        role: decodedToken?.roles ?? [],
       });
     }
-  }, [token, rate]);
+  }, [token, rate, username, decodedToken?.roles]);
 
   async function signIn(values: FormValues) {
-    const { authToken, rate, username, role } = await mutateAsync(values);
+    const { authToken, rate, username } = await mutateAsync(values);
+    const decodedToken = jwt.decode(token) as { roles: string[] };
     setUser({
       authToken,
       rate,
       username,
-      role,
+      role: decodedToken?.roles ?? [],
     });
     setToken(authToken);
     setRate(rate);
     setUsername(username);
-    setRole(role);
     return authToken;
   }
 
