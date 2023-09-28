@@ -10,7 +10,7 @@ import useLocalStorage from 'use-local-storage';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../context/UserContext.tsx';
 import { useContext } from 'react';
-import { useIsMobile } from '../../hooks/useMediaQuery.ts';
+import { useIsMobile } from '../../hooks/useIsMobile.ts';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
