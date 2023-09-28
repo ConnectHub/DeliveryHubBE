@@ -46,7 +46,7 @@ function ContextUserContext({ children }: UserContextProps) {
         role: decodedToken?.roles ?? [],
       });
     }
-  }, [token, rate, username, decodedToken?.roles]);
+  }, [token, rate, username]);
 
   async function signIn(values: FormValues) {
     const { authToken, rate, username } = await mutateAsync(values);
