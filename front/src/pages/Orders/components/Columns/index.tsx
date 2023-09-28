@@ -18,9 +18,9 @@ export function columns({ reSendNotificationMutation }: ColumnsProps) {
       key: 'name',
     },
     {
-      title: 'Número de Telefone',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
+      title: 'Bloco / Apartamento',
+      dataIndex: 'buildingApartment',
+      key: 'buildingApartment',
     },
     {
       title: 'Código',
@@ -62,7 +62,7 @@ export function columns({ reSendNotificationMutation }: ColumnsProps) {
       key: 'action',
       align: 'center',
       render: (record: Order) => (
-        <div className="flex justify-center text-center items-center">
+        <div className="flex items-center justify-center text-center">
           {record.sign && (
             <a target="_blank" href={record.sign} className="mr-3">
               <CloudDownloadOutlined className="text-2xl" />

@@ -19,7 +19,7 @@ export function columns({ deleteResidentMutation, handleEdit }: ColumnsProps) {
       key: 'phoneNumber',
     },
     {
-      title: 'Número do Apartamento',
+      title: 'Bloco / Apartamento',
       dataIndex: 'buildingApartment',
       key: 'buildingApartment',
     },
