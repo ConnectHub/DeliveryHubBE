@@ -1,11 +1,48 @@
 {
   "logout": {
-    "button": "Exit"
+    "button": "Logout"
   },
   "welcome": {
-    "title": "Welcome to the app"
+    "title": "Welcome"
   },
   "footer": {
-    "title": "Delivery Hub ©2023 Created with ❤️ by Delivery Hub!"
+    "title": "Delivery Hub ©2023 Made with ❤️ by the Connect Hub team!"
+  },
+  "orders": {
+    "trackingCode": {
+      "min": "Tracking code must have at least 13 characters",
+      "placeholder": "Tracking code"
+    },
+    "modal": {
+      "title": "Register parcel"
+    },
+    "sender": {
+      "placeholder": "Sender"
+    },
+    "description": {
+      "placeholder": "Description"
+    },
+    "addresseeId": {
+      "required": "Select the resident!",
+      "placeholder": "Select the resident"
+    },
+    "webcam": {
+      "retake": "Retake",
+      "take": "Take"
+    },
+    "create": {
+      "success": "Parcel registered successfully"
+    },
+    "notification": {
+      "success": "Notification sent successfully",
+      "error": "Error sending the notification"
+    }
+  },
+  "dashboard": {
+    "totalDeliveredOrders": "Total delivered parcels",
+    "totalResidents": "Total registered residents",
+    "totalPendingOrders": "Total pending parcels",
+    "deliveriesByStatus": "Deliveries by status",
+    "deliveriesByMonth": "Deliveries by month"
   }
 }
