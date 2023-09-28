@@ -39,6 +39,7 @@
     "react-webcam": "^7.1.1",
     "use-local-storage": "^3.0.0",
     "util": "^0.12.5",
+    "@uidotdev/usehooks": "^2.3.1",
     "util.inherits": "^1.0.3",
     "vite-plugin-node-polyfills": "^0.14.1"
   },
