@@ -10,6 +10,7 @@ import useLocalStorage from 'use-local-storage';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../context/UserContext.tsx';
 import { useContext } from 'react';
+import { useIsMobile } from '../../hooks/useMediaQuery.ts';
 const { Header, Sider, Content } = Layout;
 
 function LayoutScreen() {
@@ -20,6 +21,7 @@ function LayoutScreen() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const isMobile = useIsMobile();
   const { role } = useContext(AuthContext).user;
 
   const navigator = useNavigate();
@@ -49,9 +51,9 @@ function LayoutScreen() {
 
   return (
     <Layout className="m-0">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider trigger={null} collapsible collapsed={collapsed || isMobile}>
         <div className="mb-2">
-          <Logo mobile={collapsed} />
+          <Logo mobile={collapsed || isMobile} />
         </div>
         <Menu
           theme="dark"
@@ -62,11 +64,11 @@ function LayoutScreen() {
         />
       </Sider>
       <Layout className={colorBgContainer}>
-        <Header className="flex p-0 bg-primary justify-between px-2 items-center">
+        <Header className="flex items-center justify-between p-0 px-2 bg-primary">
           <Button
             type="text"
             icon={
-              collapsed ? (
+              collapsed || isMobile ? (
                 <MenuUnfoldOutlined className="text-white" />
               ) : (
                 <MenuFoldOutlined className="text-white" />
@@ -77,7 +79,7 @@ function LayoutScreen() {
           />
           <div className="flex items-center justify-center text-center">
             <div className="mr-2">
-              <span className="hidden sm:block text-white text-base font-inter">
+              <span className="hidden text-base text-white sm:block font-inter">
                 {t('welcome.title')}, {username}.
               </span>
             </div>
