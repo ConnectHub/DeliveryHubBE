@@ -8,6 +8,7 @@ interface DataTableProps extends React.HTMLAttributes<HTMLDivElement> {
 function DataTable({ data, columns }: DataTableProps) {
   return (
     <Table
+      className="overflow-auto"
       bordered
       columns={columns}
       dataSource={data}
