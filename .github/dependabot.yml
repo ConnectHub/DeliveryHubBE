@@ -5,22 +5,9 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/back"
+  - package-ecosystem: 'npm'
+    directory: './'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     commit-message:
-      prefix: "npm-back"
-  - package-ecosystem: "npm"
-    directory: "/front"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "npm-front"
-  - package-ecosystem: "docker"
-    directory: "/back"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "docker"
-
+      prefix: 'npm-back'
