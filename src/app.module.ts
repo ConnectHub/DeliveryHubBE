@@ -13,6 +13,7 @@ import { UserModule } from './application/user/user.module';
 import { DashboardModule } from './application/dashboard/dashboard.module';
 import { EnvModule } from './infra/env/env.module';
 import { env } from './infra/env/env.service';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
@@ -23,6 +24,9 @@ import { env } from './infra/env/env.service';
     }),
     EnvModule,
     CacheModule.register({
+      store: redisStore as unknown as string,
+      host: env.REDIS_HOST,
+      port: env.REDIS_PORT,
       isGlobal: true,
       ttl: 5,
     }),
