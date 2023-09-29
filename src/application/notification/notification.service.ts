@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { VenomBot } from '../../infra/whatsapp/venom-bot';
 import { NotificationTemplate } from './templates/notification-messsage-template';
 import { NotificationErrorRepository } from './repository/notification-errors-repository';
 import { PhoneNumberNotProvided } from '../order/errors/phone-number-not-provided';
@@ -7,6 +6,7 @@ import { Order } from '../../domain/entities/order';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { OrderCreatedTemplate } from './interfaces';
+import { Messaging } from 'src/infra/messaging/messaging';
 
 @Injectable()
 export class NotificationService {
@@ -14,7 +14,7 @@ export class NotificationService {
 
   constructor(
     @InjectQueue('notification') private readonly notificationQueue: Queue,
-    private readonly whatsapp: VenomBot,
+    private readonly messaging: Messaging,
     private readonly notificationErrorRepository: NotificationErrorRepository,
     private readonly notificationTemplate: NotificationTemplate,
   ) {}
@@ -74,7 +74,7 @@ export class NotificationService {
   ): Promise<void> {
     this.logger.log(`Sending notification to ${resident}`);
     if (orderImg)
-      await this.whatsapp.sendImage(orderImg, resident, orderMessage.caption);
-    await this.whatsapp.sendMessage(orderMessage.message, resident);
+      await this.messaging.sendImage(orderImg, resident, orderMessage.caption);
+    await this.messaging.sendMessage(orderMessage.message, resident);
   }
 }

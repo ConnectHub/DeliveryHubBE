@@ -1,7 +1,16 @@
-import { Logger, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnApplicationShutdown,
+  OnModuleInit,
+} from '@nestjs/common';
 import { create, Whatsapp } from 'venom-bot';
+import { Messaging } from './messaging';
 
-export class VenomBot implements OnApplicationShutdown, OnModuleInit {
+@Injectable()
+export class VenomBot
+  implements OnApplicationShutdown, OnModuleInit, Messaging
+{
   private readonly logger = new Logger('VenomBot');
   private client: Whatsapp;
 
@@ -25,14 +34,18 @@ export class VenomBot implements OnApplicationShutdown, OnModuleInit {
     });
   }
 
-  async sendMessage(message: string, recipient: string) {
+  async sendMessage(message: string, recipient: string): Promise<void> {
     this.logger.log('Sending message:', message, 'to', recipient);
     await this.client.sendText(recipient, message).catch((err) => {
       this.logger.error(err);
     });
   }
 
-  async sendImage(file: string, recipient: string, caption: string) {
+  async sendImage(
+    file: string,
+    recipient: string,
+    caption: string,
+  ): Promise<void> {
     this.logger.log('Sending file:', file, 'to', recipient);
     await this.client
       .sendImage(recipient, file, caption, caption)

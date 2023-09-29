@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { WhatsappModule } from '../../infra/whatsapp/whatsapp.module';
+import { MessagingModule } from '../../infra/messaging/messaging.module';
 import { NotificationService } from './notification.service';
 import { NotificationConsumer } from './processors/notification.consumer';
 import { NotificationErrorRepository } from './repository/notification-errors-repository';
@@ -12,7 +12,7 @@ import { NotificationTemplate } from './templates/notification-messsage-template
     BullModule.registerQueue({
       name: 'notification',
     }),
-    WhatsappModule,
+    MessagingModule,
     PrismaModule,
   ],
   providers: [
