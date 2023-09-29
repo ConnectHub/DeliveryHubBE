@@ -45,8 +45,8 @@ dependencies:
     specifier: ^5.2.3
     version: 5.2.3
   cache-manager-redis-store:
-    specifier: 3.0.0
-    version: 3.0.0
+    specifier: 3.0.1
+    version: 3.0.1
   class-transformer:
     specifier: ^0.5.1
     version: 0.5.1
@@ -2737,8 +2737,8 @@ packages:
       unique-filename: 3.0.0
     dev: false
 
-  /cache-manager-redis-store@3.0.0:
-    resolution: {integrity: sha512-9nI8qbZEo4TjvyrWEAKs00oIImIMGILep3FMEBUqU0WlK1DBEztvM/czh/9suMLQ0PZB1BJZeN1EScH5GqKQ2Q==}
+  /cache-manager-redis-store@3.0.1:
+    resolution: {integrity: sha512-o560kw+dFqusC9lQJhcm6L2F2fMKobJ5af+FoR2PdnMVdpQ3f3Bz6qzvObTGyvoazQJxjQNWgMQeChP4vRTuXQ==}
     engines: {node: '>= 16.18.0'}
     dependencies:
       redis: 4.6.10
