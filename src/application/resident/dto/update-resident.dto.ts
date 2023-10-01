@@ -56,6 +56,6 @@ export class UpdateResidentDto {
   @IsNotEmpty()
   @IsString()
   @IsOptional()
-  @Length(3, 15)
+  @Length(3, 30)
   buildingApartment: string;
 }
