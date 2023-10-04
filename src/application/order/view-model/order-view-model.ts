@@ -2,14 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Order } from 'src/domain/entities/order';
 import { FormatDate } from '../../../infra/utils/format-date';
 import { translateStatus } from '../translator/order.translator';
-import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
 
 export class OrderViewModel {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
-  phoneNumber: string;
+  buildingApartment: string;
 
   @ApiProperty()
   status: string;
@@ -36,11 +35,10 @@ export class OrderViewModel {
     return {
       id: order.id,
       key: order.id,
-      phoneNumber: FormatPhoneNumber.unFormat(
-        order?.addressee?.phoneNumber ?? undefined,
-      ),
+      buildingApartment: order?.addressee?.buildingApartment ?? undefined,
       sender: order.sender ?? '-----',
       //analyze best solution to translate status
+      //TO DO
       status: translateStatus[order.status].toUpperCase(),
       originalStatus: order.status,
       code: order.code,
