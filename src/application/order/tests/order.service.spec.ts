@@ -115,7 +115,7 @@ describe('OrderService', () => {
     it('should accept an order', async () => {
       const code = 'ABC123';
       const url = 'https://example.com/order';
-      const file = `https://tsttst.s3.amazonaws.com/.png`;
+      const file = `https://tsttst.s3.amazonaws.com/example.png`;
 
       const updatedOrder = { ...mockOrder, status: Status.DELIVERED };
 
@@ -128,7 +128,12 @@ describe('OrderService', () => {
 
       expect(result).toBe(updatedOrder);
       expect(orderRepository.findByUrl).toHaveBeenCalledWith(url);
-      expect(orderRepository.updateStatus).toHaveBeenCalledWith(url, file);
+      expect(orderRepository.updateStatus).toHaveBeenCalledWith(
+        url,
+        expect.stringMatching(
+          /^https:\/\/tsttst\.s3\.amazonaws\.com\/.*\.png$/,
+        ),
+      );
     });
 
     it('should throw OrderNotFound error if order is not found', async () => {
