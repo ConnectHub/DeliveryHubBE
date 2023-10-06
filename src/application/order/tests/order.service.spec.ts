@@ -11,7 +11,6 @@ import { RandomStringGenerator } from '../helpers/generate-random-string';
 import { NotificationModule } from '../../notification/notification.module';
 import { UploadModule } from '../../upload/upload.module';
 import { UploadService } from 'src/application/upload/upload.service';
-import { randomUUID } from 'crypto';
 
 describe('OrderService', () => {
   let orderService: OrderService;
