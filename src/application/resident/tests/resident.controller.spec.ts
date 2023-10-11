@@ -83,6 +83,18 @@ describe('ResidentController', () => {
       );
       expect(residentService.listAllResidents).toHaveBeenCalledTimes(1);
     });
-    
+
+    it('should return a resident by id', async () => {
+      const mockId = '12345';
+      const mockResident = { id: mockId } as Resident;
+
+      jest.spyOn(residentService, 'findById').mockResolvedValue(mockResident);
+
+      const result = await residentController.findById(mockId);
+
+      expect(result).toBe(mockResident);
+      expect(residentService.findById).toHaveBeenCalledWith(mockId);
+      expect(residentService.findById).toHaveBeenCalledTimes(1);
+    });
   });
 });
