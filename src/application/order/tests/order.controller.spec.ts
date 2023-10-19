@@ -11,7 +11,7 @@ describe('OrderController', () => {
   let orderController: OrderController;
   let orderService: OrderService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [OrderController],
       providers: [OrderService, OrderRepository, PrismaService],
@@ -25,14 +25,19 @@ describe('OrderController', () => {
   describe('findById', () => {
     it('should return an order', async () => {
       const orderId = '123';
-      const mockOrder = { id: orderId } as Order;
+      const mockOrder = {
+        id: orderId,
+        code: 'ABC123',
+        sender: 'Sender Name',
+        addresseeId: '123',
+      } as Order;
 
       jest.spyOn(orderService, 'findOrderById').mockResolvedValue(mockOrder);
 
       const result = await orderController.findById(orderId);
 
-      expect(result).toBe(mockOrder);
       expect(orderService.findOrderById).toHaveBeenCalledWith(orderId);
+      expect(result).toBe(mockOrder);
     });
   });
 });

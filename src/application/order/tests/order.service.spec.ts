@@ -17,7 +17,7 @@ describe('OrderService', () => {
   let orderRepository: OrderRepository;
   let uploadService: UploadService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [OrderService, OrderRepository, PrismaService, UploadService],
       imports: [NotificationModule, UploadModule],
