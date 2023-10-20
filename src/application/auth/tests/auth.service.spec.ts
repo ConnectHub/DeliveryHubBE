@@ -9,6 +9,7 @@ import { AuthService } from '../auth.service';
 import { AuthGuard } from '../guard/auth.guard';
 import { User } from 'src/domain/entities/user';
 import * as bcrypt from 'bcrypt';
+import { UserUnauthorized } from '../errors/user-unauthorized';
 
 describe('AuthService', () => {
   let authService: AuthService;
@@ -73,6 +74,34 @@ describe('AuthService', () => {
         mockUser,
       );
       expect(result).toEqual(mockResponse);
+    });
+
+    it('should throw an error if user is not found', async () => {
+      const login = 'test';
+      const password = 'test123';
+
+      jest.spyOn(userService, 'findUserByLogin').mockResolvedValue(undefined);
+
+      const result = authService.signIn(login, password);
+      expect(result).rejects.toThrow(UserUnauthorized);
+    });
+
+    it('should throw an error if password is incorrect', async () => {
+      const login = 'test';
+      const password = 'test123';
+      const mockUser = {
+        name: 'User test',
+        login,
+        password,
+        roles: ['ADMIN'],
+      } as User;
+
+      jest.spyOn(userService, 'findUserByLogin').mockResolvedValue(mockUser);
+      jest.spyOn(bcrypt, 'compare').mockImplementation(async () => false);
+
+      expect(authService.signIn(login, password)).rejects.toThrow(
+        UserUnauthorized,
+      );
     });
   });
 });
