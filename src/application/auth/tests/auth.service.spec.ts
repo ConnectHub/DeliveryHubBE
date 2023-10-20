@@ -1,0 +1,78 @@
+import { APP_GUARD } from '@nestjs/core';
+import { JwtService, JwtModule } from '@nestjs/jwt';
+import { TestingModule, Test } from '@nestjs/testing';
+import { env } from 'process';
+import { UserModule } from 'src/application/user/user.module';
+import { UserService } from 'src/application/user/user.service';
+import { AuthController } from '../auth.controller';
+import { AuthService } from '../auth.service';
+import { AuthGuard } from '../guard/auth.guard';
+import { User } from 'src/domain/entities/user';
+import * as bcrypt from 'bcrypt';
+
+describe('AuthService', () => {
+  let authService: AuthService;
+  let jwtService: JwtService;
+  let userService: UserService;
+  beforeAll(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          global: true,
+          secret: env.JWT_SECRET,
+          signOptions: { expiresIn: '50d' },
+        }),
+        UserModule,
+      ],
+      controllers: [AuthController],
+      providers: [
+        {
+          provide: APP_GUARD,
+          useClass: AuthGuard,
+        },
+        AuthService,
+      ],
+      exports: [AuthService],
+    }).compile();
+
+    authService = module.get<AuthService>(AuthService);
+    jwtService = module.get<JwtService>(JwtService);
+    userService = module.get<UserService>(UserService);
+  });
+
+  describe('singIn', () => {
+    it('should return a login response with authToken, rate and username', async () => {
+      const mockUser = {
+        name: 'User test',
+        login: 'test',
+        password: 'test123',
+        roles: ['ADMIN'],
+      } as User;
+      const mockPayload = {
+        login: mockUser.login,
+        sub: mockUser.id,
+        roles: mockUser.roles,
+        condominiumId: mockUser.condominiumId,
+      };
+      const mockResponse = {
+        authToken: await jwtService.signAsync(mockPayload),
+        rate: false,
+        username: 'User test',
+      };
+
+      jest.spyOn(userService, 'findUserByLogin').mockResolvedValue(mockUser);
+      jest.spyOn(bcrypt, 'compare').mockImplementation(async () => true);
+
+      const result = await authService.signIn(
+        mockUser.login,
+        mockUser.password,
+      );
+
+      expect(userService.findUserByLogin).toHaveBeenCalledWith(mockUser.login);
+      expect(await userService.findUserByLogin(mockUser.login)).toEqual(
+        mockUser,
+      );
+      expect(result).toEqual(mockResponse);
+    });
+  });
+});

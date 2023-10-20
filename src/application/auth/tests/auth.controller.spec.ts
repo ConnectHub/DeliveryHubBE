@@ -12,7 +12,7 @@ describe('Auth controller', () => {
   let authController: AuthController;
   let authService: AuthService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         JwtModule.register({
@@ -41,18 +41,22 @@ describe('Auth controller', () => {
     it('should return a token', async () => {
       const mockLogin = {
         login: 'test',
-        password: 'test',
+        password: 'test123',
       } as LoginDto;
       const mockResponse = {
-        authToken: 'test',
+        authToken: '123456789',
         rate: false,
-        username: 'test',
+        username: 'User test',
       };
 
       jest.spyOn(authService, 'signIn').mockResolvedValue(mockResponse);
 
       const result = await authController.login(mockLogin);
 
+      expect(authService.signIn).toHaveBeenCalledWith(
+        mockLogin.login,
+        mockLogin.password,
+      );
       expect(result).toBe(mockResponse);
     });
   });
