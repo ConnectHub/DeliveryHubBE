@@ -13,12 +13,13 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
   }
 
   async update(condominium: Condominium): Promise<Condominium> {
-    const { id, ...rest } = condominium;
     return await this.prisma.condominium.update({
       where: {
-        id,
+        id: condominium.id,
       },
-      data: rest,
+      data: {
+        ...condominium,
+      },
     });
   }
 
