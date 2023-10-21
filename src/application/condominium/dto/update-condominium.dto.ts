@@ -1,7 +1,10 @@
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
 
 export class UpdateCondominiumDto {
-  @IsOptional()
+  @IsNotEmpty()
+  @IsUUID()
+  id: string;
+
   @IsString()
   @IsNotEmpty()
   @Length(3, 30)
