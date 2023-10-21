@@ -4,6 +4,8 @@ import { DashboardController } from '../dashboard.controller';
 import { DashboardService } from '../dashboard.service';
 import { DashboardRepository } from '../repository/dashboard.repository';
 import { RequestInterface } from 'src/application/auth/interfaces';
+import { ChartDataInterface } from '../interfaces';
+import { DashboardViewModel } from '../view-model/dashboard-view-model';
 
 describe('dashboardController', () => {
   let dashboardService: DashboardService;
@@ -83,6 +85,43 @@ describe('dashboardController', () => {
         mockRequest.user.condominiumId,
       );
       expect(dashboardService.totalOrdersPending).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe('listOrdersByStatus', () => {
+    it('should return orders grouped by status', async () => {
+      const mockRequest = {
+        user: { condominiumId: '12345' },
+      } as RequestInterface;
+
+      const mockTotalOrdersByStatus = [
+        {
+          status: 'PENDING',
+          orderCount: 3,
+        },
+        {
+          status: 'DELIVERED',
+          orderCount: 4,
+        },
+        {
+          status: 'CANCELED',
+          orderCount: 1,
+        },
+      ] as ChartDataInterface[];
+
+      const formattedTotalOrderByStatus = mockTotalOrdersByStatus.map(
+        DashboardViewModel.toHttp,
+      );
+      jest
+        .spyOn(dashboardService, 'listOrdersByStatus')
+        .mockResolvedValue(mockTotalOrdersByStatus);
+
+      const result = await dashboardController.listOrdersByStatus(mockRequest);
+
+      expect(result).toEqual(formattedTotalOrderByStatus);
+      expect(dashboardService.listOrdersByStatus).toHaveBeenCalledWith(
+        mockRequest.user.condominiumId,
+      );
+      expect(dashboardService.listOrdersByStatus).toHaveBeenCalledTimes(1);
     });
   });
 });
