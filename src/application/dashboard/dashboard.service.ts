@@ -85,7 +85,6 @@ export class DashboardService {
     ordersByMonths.map((order) => {
       const orderDate = new Date(order.receiptDateHour).getMonth();
       order.month = MonthNames.format(orderDate);
-      order.orderCount = 0;
 
       listOrdersByMonth.map((item) => {
         if (item.month === order.month) {
