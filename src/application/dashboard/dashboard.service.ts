@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DashboardRepository } from './repository/dashboard.repository';
 import { ChartDataInterface } from './interfaces';
-import { FormatMonth } from '../../infra/utils/format-month';
+import { MonthNames } from '../../infra/utils/format-month';
 
 @Injectable()
 export class DashboardService {
@@ -31,24 +31,70 @@ export class DashboardService {
     const ordersByMonths = await this.dashboardRepository.totalOrdersByMonths(
       condominiumId,
     );
+    const listOrdersByMonth = [
+      {
+        month: 'January',
+        orderCount: 0,
+      },
+      {
+        month: 'February',
+        orderCount: 0,
+      },
+      {
+        month: 'March',
+        orderCount: 0,
+      },
+      {
+        month: 'April',
+        orderCount: 0,
+      },
+      {
+        month: 'May',
+        orderCount: 0,
+      },
+      {
+        month: 'June',
+        orderCount: 0,
+      },
+      {
+        month: 'July',
+        orderCount: 0,
+      },
+      {
+        month: 'August',
+        orderCount: 0,
+      },
+      {
+        month: 'September',
+        orderCount: 0,
+      },
+      {
+        month: 'October',
+        orderCount: 0,
+      },
+      {
+        month: 'November',
+        orderCount: 0,
+      },
+      {
+        month: 'December',
+        orderCount: 0,
+      },
+    ];
 
-    const monthNames = FormatMonth.monthNames;
-    const monthCounts = {};
-
-    monthNames.forEach((monthName) => {
-      monthCounts[monthName] = 0;
-    });
-
-    ordersByMonths.forEach((order: ChartDataInterface) => {
+    ordersByMonths.map((order) => {
       const orderDate = new Date(order.receiptDateHour).getMonth();
-      const monthName = monthNames[orderDate];
-      monthCounts[monthName]++;
+      order.month = MonthNames.format(orderDate);
+      order.orderCount = 0;
+
+      listOrdersByMonth.map((item) => {
+        if (item.month === order.month) {
+          item.orderCount++;
+        }
+      });
     });
 
-    return Object.keys(monthCounts).map((monthName) => ({
-      month: monthName,
-      orderCount: monthCounts[monthName],
-    }));
+    return listOrdersByMonth;
   }
 
   async listOrdersByCondominium(): Promise<ChartDataInterface[]> {

@@ -60,6 +60,7 @@ export class DashboardRepository implements DashboardRepositoryInterface {
         receiptDateHour: true,
       },
       where: { addressee: { condominiumId } },
+      orderBy: { receiptDateHour: 'asc' },
     });
   }
 
