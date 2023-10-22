@@ -124,4 +124,109 @@ describe('dashboardController', () => {
       expect(dashboardService.listOrdersByStatus).toHaveBeenCalledTimes(1);
     });
   });
+  describe('listOrdersByMonths', () => {
+    it('should return orders grouped by months', async () => {
+      const mockRequest = {
+        user: { condominiumId: '12345' },
+      } as RequestInterface;
+
+      const mockTotalOrdersByMonths = [
+        {
+          month: 'Janeiro',
+          orderCount: 3,
+        },
+        {
+          month: 'Fevereiro',
+          orderCount: 4,
+        },
+        {
+          month: 'Março',
+          orderCount: 2,
+        },
+        {
+          month: 'Abril',
+          orderCount: 0,
+        },
+        {
+          month: 'Maio',
+          orderCount: 6,
+        },
+        {
+          month: 'Junho',
+          orderCount: 4,
+        },
+        {
+          month: 'Julho',
+          orderCount: 10,
+        },
+        {
+          month: 'Agosto',
+          orderCount: 2,
+        },
+        {
+          month: 'Setembro',
+          orderCount: 8,
+        },
+        {
+          month: 'Outubro',
+          orderCount: 9,
+        },
+        {
+          month: 'Novembro',
+          orderCount: 1,
+        },
+        {
+          month: 'Dezembro',
+          orderCount: 10,
+        },
+      ];
+
+      jest
+        .spyOn(dashboardService, 'totalOrdersByMonths')
+        .mockResolvedValue(mockTotalOrdersByMonths);
+
+      const result = await dashboardController.listOrdersByMonths(mockRequest);
+
+      expect(result).toEqual(mockTotalOrdersByMonths);
+      expect(dashboardService.totalOrdersByMonths).toHaveBeenCalledWith(
+        mockRequest.user.condominiumId,
+      );
+      expect(dashboardService.totalOrdersByMonths).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe('listOrdersByCondominium', () => {
+    it('should return orders grouped by condominium', async () => {
+      const mockTotalOrdersByCondominium = [
+        {
+          condominiumName: 'Condomínio 1',
+          value: 3,
+        },
+        {
+          condominiumName: 'Condomínio 2',
+          value: 4,
+        },
+        {
+          condominiumName: 'Condomínio 3',
+          value: 2,
+        },
+        {
+          condominiumName: 'Condomínio 4',
+          value: 0,
+        },
+        {
+          condominiumName: 'Condomínio 5',
+          value: 6,
+        },
+      ];
+
+      jest
+        .spyOn(dashboardService, 'listOrdersByCondominium')
+        .mockResolvedValue(mockTotalOrdersByCondominium);
+
+      const result = await dashboardController.listOrdersByCondominium();
+
+      expect(result).toEqual(mockTotalOrdersByCondominium);
+      expect(dashboardService.listOrdersByCondominium).toHaveBeenCalledTimes(1);
+    });
+  });
 });
