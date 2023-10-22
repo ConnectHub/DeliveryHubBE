@@ -66,4 +66,34 @@ describe('DashboardService', () => {
       expect(dashboardRepository.totalOrdersPending).toHaveBeenCalledTimes(1);
     });
   });
+  describe('listOrdersByStatus', () => {
+    it('should return list of orders by status', async () => {
+      const mockCondId = '12345';
+      const mockListOrdersByStatus = [
+        {
+          status: 'pending',
+          orderCount: 4,
+        },
+        {
+          status: 'delivered',
+          orderCount: 5,
+        },
+        {
+          status: 'canceled',
+          orderCount: 2,
+        },
+      ];
+      jest
+        .spyOn(dashboardRepository, 'listOrdersByStatus')
+        .mockResolvedValue(mockListOrdersByStatus);
+
+      const result = await dashboardService.listOrdersByStatus(mockCondId);
+
+      expect(result).toEqual(mockListOrdersByStatus);
+      expect(dashboardRepository.listOrdersByStatus).toHaveBeenCalledWith(
+        mockCondId,
+      );
+      expect(dashboardRepository.listOrdersByStatus).toHaveBeenCalledTimes(1);
+    });
+  });
 });
