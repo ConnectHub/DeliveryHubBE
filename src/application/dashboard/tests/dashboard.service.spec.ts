@@ -18,4 +18,20 @@ describe('DashboardService', () => {
     dashboardService = module.get<DashboardService>(DashboardService);
     dashboardRepository = module.get<DashboardRepository>(DashboardRepository);
   });
+  describe('allDeliveredOrders', () => {
+    it('should return total orders delivered', async () => {
+      const mockCondId = '123456';
+      const mockTotalOrdersDelivered = 10;
+      jest
+        .spyOn(dashboardRepository, 'allDeliveredOrders')
+        .mockResolvedValue(mockTotalOrdersDelivered);
+
+      const result = await dashboardService.allDeliveredOrders(mockCondId);
+      expect(result).toEqual(mockTotalOrdersDelivered);
+      expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledWith(
+        mockCondId,
+      );
+      expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledTimes(1);
+    });
+  });
 });
