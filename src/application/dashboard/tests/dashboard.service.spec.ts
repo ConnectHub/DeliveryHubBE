@@ -50,4 +50,20 @@ describe('DashboardService', () => {
       expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledTimes(1);
     });
   });
+  describe('totalOrdersPending', () => {
+    it('should return total orders pending', async () => {
+      const mockCondId = '123456';
+      const mockTotalOrdersPending = 5;
+      jest
+        .spyOn(dashboardRepository, 'totalOrdersPending')
+        .mockResolvedValue(mockTotalOrdersPending);
+
+      const result = await dashboardService.totalOrdersPending(mockCondId);
+      expect(result).toEqual(mockTotalOrdersPending);
+      expect(dashboardRepository.totalOrdersPending).toHaveBeenCalledWith(
+        mockCondId,
+      );
+      expect(dashboardRepository.totalOrdersPending).toHaveBeenCalledTimes(1);
+    });
+  });
 });
