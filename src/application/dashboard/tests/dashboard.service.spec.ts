@@ -34,4 +34,20 @@ describe('DashboardService', () => {
       expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledTimes(1);
     });
   });
+  describe('totalResidents', () => {
+    it('should return total of residents ', async () => {
+      const mockCondId = '123456';
+      const mockTotalResidents = 34;
+      jest
+        .spyOn(dashboardRepository, 'totalResidents')
+        .mockResolvedValue(mockTotalResidents);
+
+      const result = await dashboardService.totalResidents(mockCondId);
+      expect(result).toEqual(mockTotalResidents);
+      expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledWith(
+        mockCondId,
+      );
+      expect(dashboardRepository.allDeliveredOrders).toHaveBeenCalledTimes(1);
+    });
+  });
 });
