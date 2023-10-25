@@ -82,7 +82,7 @@ export class DashboardService {
       },
     ];
 
-    ordersByMonths.map((order) => {
+    ordersByMonths.forEach((order) => {
       const orderDate = new Date(order.receiptDateHour).getMonth();
       order.month = MonthNames.format(orderDate);
 
