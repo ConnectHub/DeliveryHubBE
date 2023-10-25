@@ -3,6 +3,8 @@ import { PrismaModule } from 'src/infra/prisma/prisma.module';
 import { DashboardController } from '../dashboard.controller';
 import { DashboardService } from '../dashboard.service';
 import { DashboardRepository } from '../repository/dashboard.repository';
+import { ChartDataInterface } from '../interfaces';
+import { MonthNames } from 'src/infra/utils/format-month';
 
 describe('DashboardService', () => {
   let dashboardService: DashboardService;
@@ -94,6 +96,108 @@ describe('DashboardService', () => {
         mockCondId,
       );
       expect(dashboardRepository.listOrdersByStatus).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe('listOrdersByMonth', () => {
+    it('should return a list of orders by month', async () => {
+      const mockId = '12345';
+
+      const mockOrdersByMonth: ChartDataInterface[] = [
+        {
+          receiptDateHour: new Date('2023-05-25T16:26:39.421Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-07-25T16:26:37.283Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-07-25T16:26:38.005Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-09-25T16:26:35.502Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-10-25T16:26:38.739Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-10-25T16:26:40.527Z'),
+        },
+        {
+          receiptDateHour: new Date('2023-11-25T16:26:36.460Z'),
+        },
+      ];
+      const listOrdersByMonth = [
+        {
+          month: 'January',
+          orderCount: 0,
+        },
+        {
+          month: 'February',
+          orderCount: 0,
+        },
+        {
+          month: 'March',
+          orderCount: 0,
+        },
+        {
+          month: 'April',
+          orderCount: 0,
+        },
+        {
+          month: 'May',
+          orderCount: 0,
+        },
+        {
+          month: 'June',
+          orderCount: 0,
+        },
+        {
+          month: 'July',
+          orderCount: 0,
+        },
+        {
+          month: 'August',
+          orderCount: 0,
+        },
+        {
+          month: 'September',
+          orderCount: 0,
+        },
+        {
+          month: 'October',
+          orderCount: 0,
+        },
+        {
+          month: 'November',
+          orderCount: 0,
+        },
+        {
+          month: 'December',
+          orderCount: 0,
+        },
+      ];
+
+      jest
+        .spyOn(dashboardRepository, 'totalOrdersByMonths')
+        .mockResolvedValue(mockOrdersByMonth);
+
+      const result = await dashboardService.totalOrdersByMonths(mockId);
+
+      mockOrdersByMonth.forEach((order) => {
+        const orderDate = new Date(order.receiptDateHour).getMonth();
+        order.month = MonthNames.format(orderDate);
+
+        listOrdersByMonth.map((item) => {
+          if (item.month === order.month) {
+            item.orderCount++;
+          }
+        });
+      });
+
+      expect(result).toEqual(listOrdersByMonth);
+      expect(dashboardRepository.totalOrdersByMonths).toHaveBeenCalledWith(
+        mockId,
+      );
+      expect(dashboardRepository.totalOrdersByMonths).toHaveBeenCalledTimes(1);
     });
   });
 });
