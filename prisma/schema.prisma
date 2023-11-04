@@ -23,21 +23,23 @@ enum Role {
 }
 
 model order {
-  id              String    @id @unique @default(uuid())
-  url             String    @unique @default(cuid())
+  id              String      @id @unique @default(uuid())
+  url             String      @unique @default(cuid())
   code            String
   img             String?
   description     String?
   trackingCode    String?
-  status          Status    @default(PENDING)
+  status          Status      @default(PENDING)
   sender          String?
   sign            String?
   signDateHour    DateTime?
-  receiptDateHour DateTime  @default(now())
-  updatedAt       DateTime  @default(now()) @updatedAt
+  receiptDateHour DateTime    @default(now())
+  updatedAt       DateTime    @default(now()) @updatedAt
   deletedAt       DateTime?
-  addressee       resident  @relation(fields: [addresseeId], references: [id])
+  addressee       resident    @relation(fields: [addresseeId], references: [id])
   addresseeId     String
+  condominium     condominium @relation(fields: [condominiumId], references: [id])
+  condominiumId   String
 
   @@map("Order")
 }
@@ -67,6 +69,7 @@ model condominium {
   deletedAt DateTime?
   resident  resident[]
   user      user[]
+  order     order[]
 
   @@map("Condominium")
 }
