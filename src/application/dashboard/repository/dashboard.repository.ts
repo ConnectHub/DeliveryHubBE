@@ -65,19 +65,14 @@ export class DashboardRepository implements DashboardRepositoryInterface {
   }
 
   async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
-    return await this.prisma.order.findMany({
-      select: {
-        addressee: {
-          select: {
-            condominiumId: true,
-            condominium: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+    const list = await this.prisma.order.groupBy({
+      by: ['condominiumId'],
+      where: { deletedAt: null },
+      _count: true,
     });
+    return list.map((item) => ({
+      condominiumId: item.condominiumId,
+      orderCount: item._count || 0,
+    }));
   }
 }
