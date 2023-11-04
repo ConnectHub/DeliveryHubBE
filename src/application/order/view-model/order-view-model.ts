@@ -36,6 +36,7 @@ export class OrderViewModel {
       id: order.id,
       key: order.id,
       buildingApartment: order?.addressee?.buildingApartment ?? undefined,
+      condominiumId: order.condominiumId,
       sender: order.sender ?? '-----',
       //analyze best solution to translate status
       //TO DO
