@@ -5,20 +5,27 @@ import { DashboardService } from '../dashboard.service';
 import { DashboardRepository } from '../repository/dashboard.repository';
 import { ChartDataInterface } from '../interfaces';
 import { MonthNames } from 'src/infra/utils/format-month';
+import { listOrdersByMonth } from '../utils/list-of-order-by-month';
+import { CondominiumRepository } from 'src/application/condominium/repository/condominium.repository';
+import { Condominium } from 'src/domain/entities/condominium';
 
 describe('DashboardService', () => {
   let dashboardService: DashboardService;
   let dashboardRepository: DashboardRepository;
+  let condominiumRepository: CondominiumRepository;
   beforeAll(async () => {
     const module = await Test.createTestingModule({
       imports: [PrismaModule],
       controllers: [DashboardController],
-      providers: [DashboardService, DashboardRepository],
+      providers: [DashboardService, DashboardRepository, CondominiumRepository],
       exports: [DashboardService],
     }).compile();
 
     dashboardService = module.get<DashboardService>(DashboardService);
     dashboardRepository = module.get<DashboardRepository>(DashboardRepository);
+    condominiumRepository = module.get<CondominiumRepository>(
+      CondominiumRepository,
+    );
   });
   describe('allDeliveredOrders', () => {
     it('should return total orders delivered', async () => {
@@ -98,7 +105,7 @@ describe('DashboardService', () => {
       expect(dashboardRepository.listOrdersByStatus).toHaveBeenCalledTimes(1);
     });
   });
-  describe('listOrdersByMonth', () => {
+  describe('totalOrdersByMonths', () => {
     it('should return a list of orders by month', async () => {
       const mockId = '12345';
 
@@ -125,56 +132,6 @@ describe('DashboardService', () => {
           receiptDateHour: new Date('2023-11-25T16:26:36.460Z'),
         },
       ];
-      const listOrdersByMonth = [
-        {
-          month: 'January',
-          orderCount: 0,
-        },
-        {
-          month: 'February',
-          orderCount: 0,
-        },
-        {
-          month: 'March',
-          orderCount: 0,
-        },
-        {
-          month: 'April',
-          orderCount: 0,
-        },
-        {
-          month: 'May',
-          orderCount: 0,
-        },
-        {
-          month: 'June',
-          orderCount: 0,
-        },
-        {
-          month: 'July',
-          orderCount: 0,
-        },
-        {
-          month: 'August',
-          orderCount: 0,
-        },
-        {
-          month: 'September',
-          orderCount: 0,
-        },
-        {
-          month: 'October',
-          orderCount: 0,
-        },
-        {
-          month: 'November',
-          orderCount: 0,
-        },
-        {
-          month: 'December',
-          orderCount: 0,
-        },
-      ];
 
       jest
         .spyOn(dashboardRepository, 'totalOrdersByMonths')
@@ -198,6 +155,38 @@ describe('DashboardService', () => {
         mockId,
       );
       expect(dashboardRepository.totalOrdersByMonths).toHaveBeenCalledTimes(1);
+    });
+  });
+  describe('listOrdersByCondominium', () => {
+    it('should return a list of orders by condominium', async () => {
+      const mockCondOne = { name: 'Condominium 1', id: '1234' } as Condominium;
+      const mockCondTwo = { name: 'Condominium 2', id: '5678' } as Condominium;
+      const mockOrderByCondominium: ChartDataInterface[] = [
+        {
+          condominiumId: mockCondOne.id,
+          orderCount: 2,
+        },
+        {
+          condominiumId: mockCondTwo.id,
+          orderCount: 4,
+        },
+      ];
+
+      jest
+        .spyOn(condominiumRepository, 'findById')
+        .mockResolvedValueOnce(mockCondOne)
+        .mockResolvedValue(mockCondTwo);
+
+      jest
+        .spyOn(dashboardRepository, 'listOrdersByCondominium')
+        .mockResolvedValue(mockOrderByCondominium);
+
+      const result = await dashboardService.listOrdersByCondominium();
+
+      expect(result).toEqual(mockOrderByCondominium);
+      expect(dashboardRepository.listOrdersByCondominium).toHaveBeenCalledTimes(
+        1,
+      );
     });
   });
 });
