@@ -1,5 +1,6 @@
 import { Status } from '@prisma/client';
 import { Resident } from './resident';
+import { Condominium } from './condominium';
 
 export interface Order {
   id?: string;
@@ -7,14 +8,16 @@ export interface Order {
   code: string | undefined | null;
   status?: Status;
   sender: string;
-  addresseeId: string;
   sign?: string;
   receiptDateHour?: Date;
   deletedAt?: Date;
   updatedAt?: Date;
+  addresseeId: string;
   addressee?: Resident;
   img?: string;
   description?: string;
   trackingCode?: string;
   signDateHour?: Date;
+  condominiumId: string;
+  condominium?: Condominium;
 }
