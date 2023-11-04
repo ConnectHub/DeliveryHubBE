@@ -6,6 +6,7 @@ import { DashboardRepository } from '../repository/dashboard.repository';
 import { RequestInterface } from 'src/application/auth/interfaces';
 import { ChartDataInterface } from '../interfaces';
 import { DashboardViewModel } from '../view-model/dashboard-view-model';
+import { CondominiumRepository } from 'src/application/condominium/repository/condominium.repository';
 
 describe('dashboardController', () => {
   let dashboardService: DashboardService;
@@ -14,7 +15,7 @@ describe('dashboardController', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [PrismaModule],
       controllers: [DashboardController],
-      providers: [DashboardService, DashboardRepository],
+      providers: [DashboardService, DashboardRepository, CondominiumRepository],
       exports: [DashboardService],
     }).compile();
 
@@ -179,7 +180,11 @@ describe('dashboardController', () => {
           month: 'Dezembro',
           orderCount: 10,
         },
-      ];
+      ] as ChartDataInterface[];
+
+      const formattedTotalOrdersByMonths = mockTotalOrdersByMonths.map(
+        DashboardViewModel.toHttp,
+      );
 
       jest
         .spyOn(dashboardService, 'totalOrdersByMonths')
@@ -187,7 +192,7 @@ describe('dashboardController', () => {
 
       const result = await dashboardController.listOrdersByMonths(mockRequest);
 
-      expect(result).toEqual(mockTotalOrdersByMonths);
+      expect(result).toEqual(formattedTotalOrdersByMonths);
       expect(dashboardService.totalOrdersByMonths).toHaveBeenCalledWith(
         mockRequest.user.condominiumId,
       );

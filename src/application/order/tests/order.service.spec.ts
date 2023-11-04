@@ -59,6 +59,7 @@ describe('OrderService', () => {
         code: 'ABC123',
         sender: 'Sender Name',
         addresseeId: '456',
+        condominiumId: '789',
       };
       const generatedCode = 'ABC123';
 
