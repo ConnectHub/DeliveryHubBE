@@ -39,13 +39,14 @@ export class OrderRepository implements OrderRepositoryInterface {
   }
 
   async create(order: Order): Promise<Order> {
-    const { addressee, ...rest } = order;
+    const { addressee, condominium, ...rest } = order;
     return await this.prisma.order.create({
       data: {
         ...rest,
       },
       include: {
         addressee: true,
+        condominium: true,
       },
     });
   }
