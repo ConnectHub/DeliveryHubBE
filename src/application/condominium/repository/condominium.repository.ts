@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Condominium } from 'src/domain/entities/condominium';
 import { CondominiumRepositoryInterface } from 'src/domain/repositories/condominium';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class CondominiumRepository implements CondominiumRepositoryInterface {
