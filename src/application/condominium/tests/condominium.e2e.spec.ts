@@ -2,8 +2,11 @@ import * as request from 'supertest';
 import { Condominium } from 'src/domain/entities/condominium';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { CondominiumService } from '../condominium.service';
 import { CondominiumModule } from '../condominium.module';
+import { CreateCondominiumDto } from '../dto/create-condominium.dto';
+import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { CondominiumService } from '../condominium.service';
+import { CondominiumViewModel } from '../view-model/condominium-view-model';
 
 describe('Condominium (e2e)', () => {
   let app: INestApplication;
@@ -11,20 +14,29 @@ describe('Condominium (e2e)', () => {
     listAllCondominiums: () =>
       [
         {
-          id: '1',
+          id: '1234',
           name: 'Condominium 1',
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
         },
         {
-          id: '2',
+          id: '5678',
           name: 'Condominium 2',
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
         },
       ] as Condominium[],
+    createCondominium: (condominium: CreateCondominiumDto) => {
+      return {
+        id: '1234',
+        name: condominium.name,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+      } as Condominium;
+    },
   };
 
   beforeAll(async () => {
@@ -36,30 +48,47 @@ describe('Condominium (e2e)', () => {
       .compile();
 
     app = moduleRef.createNestApplication();
+    const prismaService = app.get<PrismaService>(PrismaService);
+    await prismaService.$connect();
     await app.init();
   });
 
-  it(`/GET condominium`, () => {
-    return request(app.getHttpServer())
-      .get('/condominium/list')
-      .expect(200)
-      .expect((res) => {
-        expect(res.body).toBeDefined();
+  describe(`/POST condominium`, () => {
+    const createCondominiumDto: CreateCondominiumDto = {
+      name: 'Cond test 1',
+    };
 
-        for (const item of res.body) {
-          expect(item.id).toBeDefined();
-          expect(item.name).toBeDefined();
-          expect(item.createdAt).toBeDefined();
-          expect(item.key).toBeDefined();
-          expect(item.label).toBeDefined();
-          expect(item.value).toBeDefined();
-          expect(item.updatedAt).toBeDefined();
-          expect(item.deletedAt).toBeUndefined();
-        }
-      });
+    const expectOutput = CondominiumViewModel.toHttp(
+      condominiumService.createCondominium(createCondominiumDto),
+    );
+    it('should create a condominium', () => {
+      return request(app.getHttpServer())
+        .post('/condominium/create/')
+        .send(createCondominiumDto)
+        .expect(201)
+        .expect((res) => {
+          expect(JSON.stringify(res.body)).toBe(JSON.stringify(expectOutput));
+        });
+    });
+  });
+
+  describe(`/GET condominium`, () => {
+    it('should return a list of condominiums', () => {
+      const expectOutput = condominiumService
+        .listAllCondominiums()
+        .map(CondominiumViewModel.toHttp);
+      return request(app.getHttpServer())
+        .get('/condominium/list')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body).toEqual(expect.arrayContaining(expectOutput));
+        });
+    });
   });
 
   afterAll(async () => {
     await app.close();
+    const prismaService = app.get<PrismaService>(PrismaService);
+    await prismaService.$disconnect();
   });
 });
