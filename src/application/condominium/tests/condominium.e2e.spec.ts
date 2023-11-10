@@ -54,7 +54,7 @@ describe('Condominium (e2e)', () => {
   });
 
   describe(`/POST condominium`, () => {
-    const createCondominiumDto: CreateCondominiumDto = {
+    const createCondominiumReq: CreateCondominiumDto = {
       name: 'Cond test 1',
     };
 
