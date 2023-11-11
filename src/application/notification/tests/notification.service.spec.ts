@@ -1,12 +1,12 @@
 import { BullModule } from '@nestjs/bull';
 import { TestingModule, Test } from '@nestjs/testing';
-import { MessagingModule } from 'src/infra/messaging/messaging.module';
-import { PrismaModule } from 'src/infra/prisma/prisma.module';
+import { MessagingModule } from '@/infra/messaging/messaging.module';
+import { PrismaModule } from '@/infra/prisma/prisma.module';
 import { NotificationService } from '../notification.service';
 import { NotificationConsumer } from '../processors/notification.consumer';
 import { NotificationErrorRepository } from '../repository/notification-errors-repository';
 import { NotificationTemplate } from '../templates/notification-messsage-template';
-import { Messaging } from 'src/infra/messaging/messaging';
+import { Messaging } from '@/infra/messaging/messaging';
 
 describe('NotificationService', () => {
   let notificationService: NotificationService;

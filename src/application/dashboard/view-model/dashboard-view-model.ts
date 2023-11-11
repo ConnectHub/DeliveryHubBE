@@ -1,4 +1,4 @@
-import { translateStatus } from 'src/application/order/translator/order.translator';
+import { translateStatus } from '@/application/order/translator/order.translator';
 import { ChartDataInterface } from '../interfaces';
 import { translateMonth } from '../translator/month.translator';
 

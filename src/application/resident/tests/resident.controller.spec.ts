@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ResidentController } from '../resident.controller';
 import { ResidentService } from '../resident.service';
 import { ResidentRepository } from '../repository/resident.repository';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import { CreateResidentDto } from '../dto/create-resident.dto';
-import { Resident } from 'src/domain/entities/resident';
-import { RequestInterface } from 'src/application/auth/interfaces';
+import { Resident } from '@/domain/entities/resident';
+import { RequestInterface } from '@/application/auth/interfaces';
 import { ResidentViewModel } from '../view-model/resident-view-model';
 
 describe('ResidentController', () => {

@@ -1,9 +1,9 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { PrismaModule } from 'src/infra/prisma/prisma.module';
+import { PrismaModule } from '@/infra/prisma/prisma.module';
 import { CondominiumController } from '../condominium.controller';
 import { CondominiumService } from '../condominium.service';
 import { CondominiumRepository } from '../repository/condominium.repository';
-import { Condominium } from 'src/domain/entities/condominium';
+import { Condominium } from '@/domain/entities/condominium';
 import { CondominiumNotFound } from '../errors/condominium-not-found';
 import { UpdateCondominiumDto } from '../dto/update-condominium.dto';
 import { CreateCondominiumDto } from '../dto/create-condominium.dto';

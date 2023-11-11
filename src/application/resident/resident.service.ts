@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ResidentRepository } from './repository/resident.repository';
-import { Resident } from 'src/domain/entities/resident';
+import { Resident } from '@/domain/entities/resident';
 import { ResidentNotFound } from './errors/resident-not-found';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
-import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
+import { FormatPhoneNumber } from '@/infra/utils/format-phone-number';
 
 @Injectable()
 export class ResidentService {

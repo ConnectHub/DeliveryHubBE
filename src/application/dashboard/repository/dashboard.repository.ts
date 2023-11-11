@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DashboardRepositoryInterface } from 'src/domain/repositories/dashboard';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { DashboardRepositoryInterface } from '@/domain/repositories/dashboard';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import { ChartDataInterface } from '../interfaces';
 
 @Injectable()

@@ -1,12 +1,12 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { PrismaModule } from 'src/infra/prisma/prisma.module';
+import { PrismaModule } from '@/infra/prisma/prisma.module';
 import { DashboardController } from '../dashboard.controller';
 import { DashboardService } from '../dashboard.service';
 import { DashboardRepository } from '../repository/dashboard.repository';
-import { RequestInterface } from 'src/application/auth/interfaces';
+import { RequestInterface } from '@/application/auth/interfaces';
 import { ChartDataInterface } from '../interfaces';
 import { DashboardViewModel } from '../view-model/dashboard-view-model';
-import { CondominiumRepository } from 'src/application/condominium/repository/condominium.repository';
+import { CondominiumRepository } from '@/application/condominium/repository/condominium.repository';
 
 describe('dashboardController', () => {
   let dashboardService: DashboardService;

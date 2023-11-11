@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Order } from 'src/domain/entities/order';
+import { Order } from '@/domain/entities/order';
 import { FormatDate } from '../../../infra/utils/format-date';
 import { translateStatus } from '../translator/order.translator';
 

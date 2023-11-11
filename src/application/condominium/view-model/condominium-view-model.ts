@@ -1,5 +1,5 @@
 import { FormatDate } from '../../../infra/utils/format-date';
-import { Condominium } from 'src/domain/entities/condominium';
+import { Condominium } from '@/domain/entities/condominium';
 export class CondominiumViewModel {
   static toHttp(condominium: Condominium) {
     return {

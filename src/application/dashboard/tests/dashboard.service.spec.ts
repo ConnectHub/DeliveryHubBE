@@ -1,13 +1,13 @@
 import { Test } from '@nestjs/testing';
-import { PrismaModule } from 'src/infra/prisma/prisma.module';
+import { PrismaModule } from '@/infra/prisma/prisma.module';
 import { DashboardController } from '../dashboard.controller';
 import { DashboardService } from '../dashboard.service';
 import { DashboardRepository } from '../repository/dashboard.repository';
 import { ChartDataInterface } from '../interfaces';
-import { MonthNames } from 'src/infra/utils/format-month';
+import { MonthNames } from '@/infra/utils/format-month';
 import { listOrdersByMonth } from '../utils/list-of-order-by-month';
-import { CondominiumRepository } from 'src/application/condominium/repository/condominium.repository';
-import { Condominium } from 'src/domain/entities/condominium';
+import { CondominiumRepository } from '@/application/condominium/repository/condominium.repository';
+import { Condominium } from '@/domain/entities/condominium';
 
 describe('DashboardService', () => {
   let dashboardService: DashboardService;

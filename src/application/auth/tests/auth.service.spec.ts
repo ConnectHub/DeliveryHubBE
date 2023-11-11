@@ -2,12 +2,12 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtService, JwtModule } from '@nestjs/jwt';
 import { TestingModule, Test } from '@nestjs/testing';
 import { env } from 'process';
-import { UserModule } from 'src/application/user/user.module';
-import { UserService } from 'src/application/user/user.service';
+import { UserModule } from '@/application/user/user.module';
+import { UserService } from '@/application/user/user.service';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../guard/auth.guard';
-import { User } from 'src/domain/entities/user';
+import { User } from '@/domain/entities/user';
 import * as bcrypt from 'bcrypt';
 import { UserUnauthorized } from '../errors/user-unauthorized';
 

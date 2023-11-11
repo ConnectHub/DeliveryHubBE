@@ -10,7 +10,7 @@ import { PrismaService } from '../../../infra/prisma/prisma.service';
 import { RandomStringGenerator } from '../helpers/generate-random-string';
 import { NotificationModule } from '../../notification/notification.module';
 import { UploadModule } from '../../upload/upload.module';
-import { UploadService } from 'src/application/upload/upload.service';
+import { UploadService } from '@/application/upload/upload.service';
 
 describe('OrderService', () => {
   let orderService: OrderService;

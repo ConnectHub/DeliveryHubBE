@@ -1,4 +1,4 @@
-import { ChartDataInterface } from 'src/application/dashboard/interfaces';
+import { ChartDataInterface } from '@/application/dashboard/interfaces';
 
 export interface DashboardRepositoryInterface {
   allDeliveredOrders(id: string): Promise<number>;

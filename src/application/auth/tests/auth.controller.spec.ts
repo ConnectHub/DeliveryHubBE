@@ -2,7 +2,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { env } from 'process';
-import { UserModule } from 'src/application/user/user.module';
+import { UserModule } from '@/application/user/user.module';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../auth.service';
 import { AuthGuard } from '../guard/auth.guard';

@@ -1,10 +1,10 @@
 import * as request from 'supertest';
-import { Condominium } from 'src/domain/entities/condominium';
+import { Condominium } from '@/domain/entities/condominium';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { CondominiumModule } from '../condominium.module';
 import { CreateCondominiumDto } from '../dto/create-condominium.dto';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import { CondominiumService } from '../condominium.service';
 import { CondominiumViewModel } from '../view-model/condominium-view-model';
 
@@ -59,12 +59,12 @@ describe('Condominium (e2e)', () => {
     };
 
     const expectOutput = CondominiumViewModel.toHttp(
-      condominiumService.createCondominium(createCondominiumDto),
+      condominiumService.createCondominium(createCondominiumReq),
     );
     it('should create a condominium', () => {
       return request(app.getHttpServer())
         .post('/condominium/create/')
-        .send(createCondominiumDto)
+        .send(createCondominiumReq)
         .expect(201)
         .expect((res) => {
           expect(JSON.stringify(res.body)).toBe(JSON.stringify(expectOutput));

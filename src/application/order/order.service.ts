@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Order } from 'src/domain/entities/order';
+import { Order } from '@/domain/entities/order';
 import { OrderRepository } from './repository/order.repository';
 import { Status } from '@prisma/client';
 import { OrderNotFound } from './errors/order-not-found';
