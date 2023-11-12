@@ -7,6 +7,7 @@ import { CreateCondominiumDto } from '../dto/create-condominium.dto';
 import { PrismaService } from '@/infra/prisma/prisma.service';
 import { CondominiumService } from '../condominium.service';
 import { CondominiumViewModel } from '../view-model/condominium-view-model';
+import { CondominiumNotFound } from '../errors/condominium-not-found';
 
 describe('Condominium (e2e)', () => {
   let app: INestApplication;
@@ -28,6 +29,18 @@ describe('Condominium (e2e)', () => {
           deletedAt: null,
         },
       ] as Condominium[],
+    findById(id: string) {
+      const cond = {
+        id: '1234',
+        name: 'Condominium 1',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null,
+      };
+
+      if (id !== cond.id) throw new CondominiumNotFound();
+      return cond;
+    },
     createCondominium: (condominium: CreateCondominiumDto) => {
       return {
         id: '1234',
@@ -53,7 +66,7 @@ describe('Condominium (e2e)', () => {
     await app.init();
   });
 
-  describe(`/POST condominium`, () => {
+  describe(`/POST condominium/create`, () => {
     const createCondominiumReq: CreateCondominiumDto = {
       name: 'Cond test 1',
     };
@@ -72,7 +85,31 @@ describe('Condominium (e2e)', () => {
     });
   });
 
-  describe(`/GET condominium`, () => {
+  describe(`/GET condominium/:id`, () => {
+    it('should return a condominium', () => {
+      const expectOutput = CondominiumViewModel.toHttp(
+        condominiumService.findById('1234'),
+      );
+      return request(app.getHttpServer())
+        .get('/condominium/1234')
+        .expect(200)
+        .expect((res) => {
+          expect(JSON.stringify(res.body)).toBe(JSON.stringify(expectOutput));
+        });
+    });
+    it('should return Condominium not found', () => {
+      return request(app.getHttpServer())
+        .get('/condominium/9999')
+        .expect(404)
+        .expect((res) => {
+          const error = res.body;
+          expect(error.message).toEqual('Condominium Not Found');
+          expect(error.statusCode).toEqual(404);
+        });
+    });
+  });
+
+  describe(`/GET condominium/list`, () => {
     it('should return a list of condominiums', () => {
       const expectOutput = condominiumService
         .listAllCondominiums()
