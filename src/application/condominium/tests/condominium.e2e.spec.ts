@@ -63,6 +63,10 @@ describe('Condominium (e2e)', () => {
       if (!prevCondominium) throw new CondominiumNotFound();
       return updatedCond;
     },
+    deleteCondominium: (id: string) => {
+      const prevCondominium = condominiumService.findById(id);
+      if (!prevCondominium) throw new CondominiumNotFound();
+    },
   };
 
   beforeAll(async () => {
@@ -161,6 +165,24 @@ describe('Condominium (e2e)', () => {
     it('should return Condominium not found', () => {
       return request(app.getHttpServer())
         .get('/condominium/9999')
+        .expect(404)
+        .expect((res) => {
+          const error = res.body;
+          expect(error.message).toEqual('Condominium Not Found');
+          expect(error.statusCode).toEqual(404);
+        });
+    });
+  });
+
+  describe('/DELETE condominium/:id', () => {
+    it('should delete a condominium', () => {
+      return request(app.getHttpServer())
+        .delete('/condominium/1234')
+        .expect(200);
+    });
+    it('should return Condominium not found', () => {
+      return request(app.getHttpServer())
+        .delete('/condominium/9999')
         .expect(404)
         .expect((res) => {
           const error = res.body;
