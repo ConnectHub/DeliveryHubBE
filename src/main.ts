@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './infra/filters/global-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { createLogger, transports, format } from 'winston';
+import { DatabaseInterceptor } from './infra/errors/interceptors/database.interceptor';
+import { ConflictInterceptor } from './infra/errors/interceptors/conflict.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +21,8 @@ async function bootstrap() {
     ),
   });
   app.useGlobalFilters(new GlobalExceptionFilter(logger));
+  app.useGlobalInterceptors(new ConflictInterceptor());
+  app.useGlobalInterceptors(new DatabaseInterceptor());
   app.enableShutdownHooks();
   app.enableCors({
     origin: '*',

@@ -23,7 +23,7 @@ export class UserService {
 
   async createUser(user: User): Promise<User> {
     const prevUser = await this.findUserByLogin(user.login);
-    if (prevUser) throw new UserAlreadyExist();
+    //if (prevUser) throw new UserAlreadyExist();
     user.password = await this.hashPassword(user.password);
     return await this.userRepository.create(user);
   }
