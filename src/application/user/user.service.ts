@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/domain/entities/user';
+import { User } from '@/domain/entities/user';
 import { UserRepository } from './repository/user.repository';
 import { genSalt, hash } from 'bcrypt';
 import { UserAlreadyExist } from './errors/user-already-exists';

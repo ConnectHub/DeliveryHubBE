@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import { randomUUID } from 'crypto';
-import { env } from 'src/infra/env/env.service';
+import { env } from '@/infra/env/env.service';
 
 @Injectable()
 export class UploadService {

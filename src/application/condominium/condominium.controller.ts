@@ -26,8 +26,8 @@ export class CondominiumController {
 
   @Get('list')
   async list() {
-    const orders = await this.condominiumService.listAllCondominiums();
-    return orders.map(CondominiumViewModel.toHttp);
+    const condominiums = await this.condominiumService.listAllCondominiums();
+    return condominiums.map(CondominiumViewModel.toHttp);
   }
 
   @Get(':id')

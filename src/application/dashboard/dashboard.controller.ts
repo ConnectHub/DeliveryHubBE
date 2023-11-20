@@ -36,9 +36,10 @@ export class DashboardController {
 
   @Get('listOrdersByMonths')
   async listOrdersByMonths(@Request() req: RequestInterface) {
-    return await this.dashboardService.totalOrdersByMonths(
+    const list = await this.dashboardService.totalOrdersByMonths(
       req.user.condominiumId,
     );
+    return list.map(DashboardViewModel.toHttp);
   }
 
   @Get('listOrdersByCondominium')

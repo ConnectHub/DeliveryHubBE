@@ -1,7 +1,7 @@
 import { FormatDate } from '../../../infra/utils/format-date';
-import { Resident } from 'src/domain/entities/resident';
+import { Resident } from '@/domain/entities/resident';
 import { ApiProperty } from '@nestjs/swagger';
-import { FormatPhoneNumber } from 'src/infra/utils/format-phone-number';
+import { FormatPhoneNumber } from '@/infra/utils/format-phone-number';
 export class ResidentViewModel {
   @ApiProperty()
   id: string;

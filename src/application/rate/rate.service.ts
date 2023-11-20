@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { RateRepository } from './repository/rate.repository';
-import { Rate } from 'src/domain/entities/rate';
+import { Rate } from '@/domain/entities/rate';
 import { UserService } from '../user/user.service';
 
 @Injectable()

@@ -3,6 +3,7 @@ import { UserUnauthorized } from './errors/user-unauthorized';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserService } from '../user/user.service';
+import { LoginResponseDto } from './dto/loginResponse.dto';
 
 @Injectable()
 export class AuthService {
@@ -13,14 +14,7 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async signIn(
-    login: string,
-    password: string,
-  ): Promise<{
-    authToken: string;
-    rate: boolean;
-    username: string;
-  }> {
+  async signIn(login: string, password: string): Promise<LoginResponseDto> {
     this.logger.log(`Signing in user with login ${login}`);
     const user = await this.userService.findUserByLogin(login);
     if (!user) throw new UserUnauthorized();

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DashboardRepositoryInterface } from 'src/domain/repositories/dashboard';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { DashboardRepositoryInterface } from '@/domain/repositories/dashboard';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import { ChartDataInterface } from '../interfaces';
 
 @Injectable()
@@ -60,23 +60,19 @@ export class DashboardRepository implements DashboardRepositoryInterface {
         receiptDateHour: true,
       },
       where: { addressee: { condominiumId } },
+      orderBy: { receiptDateHour: 'asc' },
     });
   }
 
   async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
-    return await this.prisma.order.findMany({
-      select: {
-        addressee: {
-          select: {
-            condominiumId: true,
-            condominium: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+    const list = await this.prisma.order.groupBy({
+      by: ['condominiumId'],
+      where: { deletedAt: null },
+      _count: true,
     });
+    return list.map((item) => ({
+      condominiumId: item.condominiumId,
+      orderCount: item._count || 0,
+    }));
   }
 }

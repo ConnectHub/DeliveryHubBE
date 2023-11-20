@@ -6,7 +6,7 @@ import { Order } from '../../domain/entities/order';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { OrderCreatedTemplate } from './interfaces';
-import { Messaging } from 'src/infra/messaging/messaging';
+import { Messaging } from '@/infra/messaging/messaging';
 
 @Injectable()
 export class NotificationService {

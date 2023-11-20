@@ -10,6 +10,16 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=mydatabase
 
+  dbtest:
+    image: postgres
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydatabase
+
   redis:
     image: redis:alpine
     restart: always
