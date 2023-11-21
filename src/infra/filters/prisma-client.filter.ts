@@ -60,7 +60,14 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       }
 
       default:
-        super.catch(exception, host);
+        const status = response.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+        response.status(status).json({
+          statusCode: status,
+          prismaCode: exception.code,
+          message: 'A prisma error ocurred!',
+          timestamp: new Date().toISOString(),
+          path: request.url,
+        });
         break;
     }
   }
