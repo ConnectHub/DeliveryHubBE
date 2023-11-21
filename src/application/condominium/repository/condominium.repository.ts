@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Condominium } from 'src/domain/entities/condominium';
-import { CondominiumRepositoryInterface } from 'src/domain/repositories/condominium';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { Condominium } from '@/domain/entities/condominium';
+import { CondominiumRepositoryInterface } from '@/domain/repositories/condominium';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class CondominiumRepository implements CondominiumRepositoryInterface {
@@ -13,12 +13,13 @@ export class CondominiumRepository implements CondominiumRepositoryInterface {
   }
 
   async update(condominium: Condominium): Promise<Condominium> {
-    const { id, ...rest } = condominium;
     return await this.prisma.condominium.update({
       where: {
-        id,
+        id: condominium.id,
       },
-      data: rest,
+      data: {
+        ...condominium,
+      },
     });
   }
 

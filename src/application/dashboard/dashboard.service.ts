@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { DashboardRepository } from './repository/dashboard.repository';
 import { ChartDataInterface } from './interfaces';
-import { FormatMonth } from '../../infra/utils/format-month';
+import { MonthNames } from '../../infra/utils/format-month';
+import { CondominiumRepository } from '../condominium/repository/condominium.repository';
+import { listOrdersByMonth } from './utils/list-of-order-by-month';
 
 @Injectable()
 export class DashboardService {
-  constructor(private readonly dashboardRepository: DashboardRepository) {}
+  constructor(
+    private readonly dashboardRepository: DashboardRepository,
+    private readonly condominiumRepository: CondominiumRepository,
+  ) {}
 
   async allDeliveredOrders(condominiumId: string): Promise<number> {
     return await this.dashboardRepository.allDeliveredOrders(condominiumId);
@@ -32,46 +37,35 @@ export class DashboardService {
       condominiumId,
     );
 
-    const monthNames = FormatMonth.monthNames;
-    const monthCounts = {};
-
-    monthNames.forEach((monthName) => {
-      monthCounts[monthName] = 0;
-    });
-
-    ordersByMonths.forEach((order: ChartDataInterface) => {
+    ordersByMonths.forEach((order) => {
       const orderDate = new Date(order.receiptDateHour).getMonth();
-      const monthName = monthNames[orderDate];
-      monthCounts[monthName]++;
+      order.month = MonthNames.format(orderDate);
+
+      listOrdersByMonth.map((item) => {
+        if (item.month === order.month) {
+          item.orderCount++;
+        }
+      });
     });
 
-    return Object.keys(monthCounts).map((monthName) => ({
-      month: monthName,
-      orderCount: monthCounts[monthName],
-    }));
+    return listOrdersByMonth;
   }
 
-  async listOrdersByCondominium(): Promise<ChartDataInterface[]> {
+  async listOrdersByCondominium(): Promise<any> {
     const ordersByCondominiums =
       await this.dashboardRepository.listOrdersByCondominium();
 
-    return ordersByCondominiums.reduce((result, order) => {
-      const condominiumId = order.addressee?.condominiumId;
-      const condominiumName = order.addressee?.condominium?.name;
-
-      if (condominiumId && condominiumName) {
-        const foundCondominium = result.find(
-          (item) => item.condominiumName === condominiumName,
+    await Promise.all(
+      ordersByCondominiums.map(async (order) => {
+        const condominium = await this.condominiumRepository.findById(
+          order.condominiumId,
         );
+        order.condominiumName = condominium.name;
+        delete order.condominiumId;
+        return order;
+      }),
+    );
 
-        if (foundCondominium) {
-          foundCondominium.value += 1;
-        } else {
-          result.push({ condominiumName, value: 1 });
-        }
-      }
-
-      return result;
-    }, []);
+    return ordersByCondominiums;
   }
 }

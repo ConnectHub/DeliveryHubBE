@@ -1,28 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OrderService } from './order.service';
-import { OrderRepository } from './repository/order.repository';
-import { OrderNotFound } from './errors/order-not-found';
-import { OrderAlreadyBeenDelivered } from './errors/order-already-been-delivered';
-import { OrderCodesAreDifferent } from './errors/order-codes-are-different';
-import { Order } from '../../domain/entities/order';
+import { OrderService } from '../order.service';
+import { OrderRepository } from '../repository/order.repository';
+import { OrderNotFound } from '../errors/order-not-found';
+import { OrderAlreadyBeenDelivered } from '../errors/order-already-been-delivered';
+import { OrderCodesAreDifferent } from '../errors/order-codes-are-different';
+import { Order } from '../../../domain/entities/order';
 import { Status } from '@prisma/client';
-import { PrismaService } from '../..//infra/prisma/prisma.service';
-import { RandomStringGenerator } from './helpers/generate-random-string';
-import { NotificationModule } from '../notification/notification.module';
-import { UploadModule } from '../upload/upload.module';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
+import { RandomStringGenerator } from '../helpers/generate-random-string';
+import { NotificationModule } from '../../notification/notification.module';
+import { UploadModule } from '../../upload/upload.module';
+import { UploadService } from '@/application/upload/upload.service';
 
 describe('OrderService', () => {
   let orderService: OrderService;
   let orderRepository: OrderRepository;
+  let uploadService: UploadService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [OrderService, OrderRepository, PrismaService],
+      providers: [OrderService, OrderRepository, PrismaService, UploadService],
       imports: [NotificationModule, UploadModule],
     }).compile();
 
     orderService = module.get<OrderService>(OrderService);
     orderRepository = module.get<OrderRepository>(OrderRepository);
+    uploadService = module.get<UploadService>(UploadService);
   });
 
   describe('findOrderById', () => {
@@ -49,13 +52,14 @@ describe('OrderService', () => {
   });
 
   describe('createOrder', () => {
-    jest.mock('./helpers/generate-random-string');
+    jest.mock('../helpers/generate-random-string');
     it('should create a new order', async () => {
       const mockOrder: Order = {
         id: '123',
         code: 'ABC123',
         sender: 'Sender Name',
         addresseeId: '456',
+        condominiumId: '789',
       };
       const generatedCode = 'ABC123';
 
@@ -99,7 +103,10 @@ describe('OrderService', () => {
   });
 
   describe('acceptOrder', () => {
-    const mockOrder = { status: Status.PENDING, code: 'ABC123' } as Order;
+    const mockOrder = {
+      status: Status.PENDING,
+      code: 'ABC123',
+    } as Order;
 
     beforeEach(() => {
       jest.spyOn(orderRepository, 'findByUrl').mockResolvedValue(mockOrder);
@@ -108,9 +115,11 @@ describe('OrderService', () => {
     it('should accept an order', async () => {
       const code = 'ABC123';
       const url = 'https://example.com/order';
+      const file = `https://tsttst.s3.amazonaws.com/example.png`;
 
-      const file = 'base64encodedimage';
       const updatedOrder = { ...mockOrder, status: Status.DELIVERED };
+
+      jest.spyOn(uploadService, 'uploadSign').mockResolvedValue(file);
       jest
         .spyOn(orderRepository, 'updateStatus')
         .mockResolvedValue(updatedOrder);
@@ -119,7 +128,12 @@ describe('OrderService', () => {
 
       expect(result).toBe(updatedOrder);
       expect(orderRepository.findByUrl).toHaveBeenCalledWith(url);
-      expect(orderRepository.updateStatus).toHaveBeenCalledWith(url);
+      expect(orderRepository.updateStatus).toHaveBeenCalledWith(
+        url,
+        expect.stringMatching(
+          /^https:\/\/tsttst\.s3\.amazonaws\.com\/.*\.png$/,
+        ),
+      );
     });
 
     it('should throw OrderNotFound error if order is not found', async () => {
@@ -171,7 +185,7 @@ describe('OrderService', () => {
 
   describe('findByUrl', () => {
     it('should find an order by URL', async () => {
-      const url = 'https://example.com/order';
+      const url = 'https://example.com/clndgmyd50003tdko9q2eeq1a';
       const mockOrder = { url } as Order;
       jest.spyOn(orderRepository, 'findByUrl').mockResolvedValue(mockOrder);
 
@@ -182,7 +196,7 @@ describe('OrderService', () => {
     });
 
     it('should throw OrderNotFound error if order is not found', async () => {
-      const url = 'https://example.com/order';
+      const url = 'https://example.com/clndgmyd50003tdko9q2eeq1a';
       jest.spyOn(orderRepository, 'findByUrl').mockResolvedValue(undefined);
 
       await expect(orderService.findByUrl(url)).rejects.toThrow(OrderNotFound);

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CondominiumRepository } from './repository/condominium.repository';
 import { CondominiumNotFound } from './errors/condominium-not-found';
-import { Condominium } from 'src/domain/entities/condominium';
+import { Condominium } from '@/domain/entities/condominium';
 
 @Injectable()
 export class CondominiumService {
@@ -22,7 +22,8 @@ export class CondominiumService {
 
   async updateCondominium(condominium: Condominium): Promise<Condominium> {
     this.logger.log(`Updating condominium with id ${condominium.id}`);
-    await this.findById(condominium.id);
+    const prevCondominium = await this.findById(condominium.id);
+    if (!prevCondominium) throw new CondominiumNotFound();
     return await this.condominiumRepository.update(condominium);
   }
 
@@ -32,7 +33,8 @@ export class CondominiumService {
 
   async deleteCondominium(id: string): Promise<void> {
     this.logger.log(`Deleting condominium with id ${id}`);
-    await this.findById(id);
+    const condominium = await this.findById(id);
+    if (!condominium) throw new CondominiumNotFound();
     await this.condominiumRepository.delete(id);
   }
 }

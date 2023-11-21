@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Resident } from 'src/domain/entities/resident';
-import { ResidentRepositoryInterface } from 'src/domain/repositories/resident';
-import { PrismaService } from 'src/infra/prisma/prisma.service';
+import { Resident } from '@/domain/entities/resident';
+import { ResidentRepositoryInterface } from '@/domain/repositories/resident';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 
 @Injectable()
 export class ResidentRepository implements ResidentRepositoryInterface {

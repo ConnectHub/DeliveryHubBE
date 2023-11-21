@@ -44,11 +44,16 @@ export class OrderController {
 
   @ApiCreatedResponse({ type: OrderViewModel })
   @Post('create')
-  async create(@Body() order: CreateOrderDto) {
+  async create(
+    @Body() order: CreateOrderDto,
+    @Request() req: RequestInterface,
+  ) {
+    const condominiumId = req.user.condominiumId;
     const { imgSrc, ...rest } = order;
     const newOrder = await this.orderService.createOrder({
       ...rest,
       img: order.imgSrc,
+      condominiumId,
     });
     await this.notificationService.addNotificationQueue(newOrder);
     return OrderViewModel.toHttp(newOrder);

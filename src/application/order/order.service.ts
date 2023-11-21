@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Order } from 'src/domain/entities/order';
+import { Order } from '@/domain/entities/order';
 import { OrderRepository } from './repository/order.repository';
 import { Status } from '@prisma/client';
 import { OrderNotFound } from './errors/order-not-found';
@@ -24,8 +24,8 @@ export class OrderService {
   }
 
   async createOrder(order: Order): Promise<Order> {
-    this.logger.log(`Creating order with code ${order.code}`);
     order.code = new RandomStringGenerator().generate(6);
+    this.logger.log(`Creating order with code ${order.code}`);
     if (order.img) order.img = await this.uploadService.uploadFile(order.img);
     return await this.orderRepository.create(order);
   }
