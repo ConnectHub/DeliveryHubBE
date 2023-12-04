@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './infra/filters/global-exception.filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { createLogger, transports, format } from 'winston';
+import { PrismaClientExceptionFilter } from './infra/filters/prisma-client.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,7 @@ async function bootstrap() {
     ),
   });
   app.useGlobalFilters(new GlobalExceptionFilter(logger));
+  app.useGlobalFilters(new PrismaClientExceptionFilter(logger));
   app.enableShutdownHooks();
   app.enableCors({
     origin: '*',
