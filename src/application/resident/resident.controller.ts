@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Request,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ResidentService } from './resident.service';
 import { CreateResidentDto } from './dto/create-resident.dto';
@@ -16,6 +17,7 @@ import { FindByDataDto } from './dto/find-by-infos.dto';
 import { ResidentViewModel } from './view-model/resident-view-model';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { RequestInterface } from '../auth/interfaces';
+import { ErrorInterceptor } from '@/infra/utils/error-interceptor';
 
 @ApiTags('resident')
 @Controller('resident')
@@ -39,8 +41,9 @@ export class ResidentController {
 
   @ApiOkResponse({ type: ResidentViewModel })
   @Get(':id')
+  @UseInterceptors(ErrorInterceptor)
   async findById(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.residentService.findById(id);
+    return this.residentService.findById(id);
   }
 
   @ApiOkResponse({ type: ResidentViewModel })

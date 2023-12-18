@@ -1,15 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ResidentRepository } from './repository/resident.repository';
-import { Resident } from '@/domain/entities/resident';
-import { ResidentNotFound } from './errors/resident-not-found';
+import { Resident, resident } from '@/domain/entities/resident';
 import { ResidentAlreadyExist } from './errors/resident-already-exists';
 import { FormatPhoneNumber } from '@/infra/utils/format-phone-number';
+import { ResidentErrors } from './errors/resident-error';
 
 @Injectable()
 export class ResidentService {
   private readonly logger = new Logger(ResidentService.name);
 
-  constructor(private residentRepository: ResidentRepository) {}
+  constructor(
+    private readonly residentRepository: ResidentRepository,
+    private readonly residentErrors: ResidentErrors,
+  ) {}
 
   async createResident(resident: Resident): Promise<Resident> {
     this.logger.log(`Creating resident with name ${resident.name}`);
@@ -34,10 +37,10 @@ export class ResidentService {
     await this.residentRepository.delete(id);
   }
 
-  async findById(id: string): Promise<Resident> {
-    const resident = await this.residentRepository.findById(id);
-    if (!resident) throw new ResidentNotFound();
-    return resident;
+  async findById(id: string): Promise<resident> {
+    return this.residentErrors.verifyResidentExistence(
+      await this.residentRepository.findById(id),
+    );
   }
 
   async updateResidentInfos(residentInfos: Resident): Promise<Resident> {

@@ -1,3 +1,5 @@
+import { ApplicationError } from '@/infra/utils/error-interceptor';
+
 export interface Resident {
   id?: string;
   name: string;
@@ -9,3 +11,5 @@ export interface Resident {
   updatedAt?: Date;
   deletedAt?: Date;
 }
+
+export type resident = Resident | ApplicationError;
