@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1706582532955,
+      "tag": "0000_illegal_roland_deschain",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706583713394,
+      "tag": "0001_odd_vance_astro",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706583808695,
+      "tag": "0002_sturdy_whizzer",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1706583922716,
+      "tag": "0003_aberrant_jazinda",
+      "breakpoints": true
+    }
+  ]
+}

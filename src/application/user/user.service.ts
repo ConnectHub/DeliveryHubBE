@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@/domain/entities/user';
-import { UserRepository } from './repository/user.repository';
 import { genSalt, hash } from 'bcrypt';
+import { UserRepository } from './repository/user.repository.drizzle';
 import { UserAlreadyExist } from './errors/user-already-exists';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
+
   async findUserByLogin(login: string): Promise<User> {
     return await this.userRepository.findUserByLogin(login);
   }
@@ -23,7 +24,7 @@ export class UserService {
 
   async createUser(user: User): Promise<User> {
     const prevUser = await this.findUserByLogin(user.login);
-    //if (prevUser) throw new UserAlreadyExist();
+    if (prevUser) throw new UserAlreadyExist();
     user.password = await this.hashPassword(user.password);
     return await this.userRepository.create(user);
   }

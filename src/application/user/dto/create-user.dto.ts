@@ -1,4 +1,4 @@
-import { Role } from '@prisma/client';
+import { Role } from '@/domain/entities/user';
 import {
   IsEmail,
   IsEnum,

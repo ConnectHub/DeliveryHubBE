@@ -14,6 +14,7 @@ import { DashboardModule } from './application/dashboard/dashboard.module';
 import { EnvModule } from './infra/env/env.module';
 import { env } from './infra/env/env.service';
 import * as redisStore from 'cache-manager-redis-store';
+import { DrizzleModule } from './infra/drizzle/drizzle.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import * as redisStore from 'cache-manager-redis-store';
     RateModule,
     UserModule,
     DashboardModule,
+    DrizzleModule,
   ],
   providers: [
     {

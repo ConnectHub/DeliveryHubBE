@@ -6,6 +6,7 @@ import { PrismaService } from '@/infra/prisma/prisma.service';
 @Injectable()
 export class UserRepository implements UserRepositoryInterface {
   constructor(private readonly prisma: PrismaService) {}
+
   async create(user: User): Promise<User> {
     return await this.prisma.user.create({
       data: user,
